@@ -16,4 +16,4 @@
 
 ### 4.1. PAXOS 
 
-PAXOS is a suite of algorithms that was put for
+PAXOS is a suite of algorithms that is commonly used for agreeing 
