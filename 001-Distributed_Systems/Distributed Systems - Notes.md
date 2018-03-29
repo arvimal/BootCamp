@@ -19,17 +19,3 @@
 PAXOS is a suite of algorithms that is commonly used for agreeing on something, in Distributed Systems.
 
 Ceph uses PAXOS to agree upon consensus for the Monitor nodes. 
-
-And I should say that **QOwnNotes** works really well, synced with DropBox.
-
-`
-	#!/usr/bin/env python3
-	
-	import calendar
-	
-	cal = calendar.TextCalendar(calendar.SUNDAY)
-	
-	print(cal.formatyear(2018))
-`
-
-for code, use the github project to turn code into jpg images, and use that.
