@@ -178,10 +178,10 @@ Day 2
 TCP - Transmission Control Protocol
 
 * http://www.lovemytool.com/blog/2010/06/practical-tcp-series-the-connection-setup-by-chris-greer.html
-* ''http://www.lovemytool.com/blog/2010/07/practical-tcp-series-tcp-flags-by-chris-greer.html''
-* ''http://www.lovemytool.com/blog/2010/07/practical-tcp-series-the-tcp-window-by-chris-greer.html''
-* ''http://www.lovemytool.com/blog/2010/08/practical-tcp-series-sequence-and-acknowledgement-numbers-by-chris-greer.html''
-''http://www.lovemytool.com/blog/2010/09/practical-tcp-series-connection-teardown-expected-and-unexpected-by-chris-greer.html''
+* http://www.lovemytool.com/blog/2010/07/practical-tcp-series-tcp-flags-by-chris-greer.html
+* http://www.lovemytool.com/blog/2010/07/practical-tcp-series-the-tcp-window-by-chris-greer.html
+* http://www.lovemytool.com/blog/2010/08/practical-tcp-series-sequence-and-acknowledgement-numbers-by-chris-greer.html
+* http://www.lovemytool.com/blog/2010/09/practical-tcp-series-connection-teardown-expected-and-unexpected-by-chris-greer.html
 
 
 ### L4 - Transport Layer - UDP
@@ -195,9 +195,11 @@ TCP - Transmission Control Protocol
 
 ### Packet Capturing
 
-tcpdump -s 0 -n -i ethX -w /tmp/$(hostname)-$(date +"%Y-%m-%d-%H-%M-%S").pcap
+`
+	# tcpdump -s 0 -n -i ethX -w /tmp/$(hostname)-$(date +"%Y-%m-%d-%H-%M-%S").pcap
+`
 
-Walkthru of all options:
+## Walkthru of all options:
 
 
 `-s 0`
