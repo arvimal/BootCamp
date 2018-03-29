@@ -12,7 +12,7 @@ Day 1
 
 ### History
 
-''http://en.wikipedia.org/wiki/Computer_networking#History''
+[Networking - History - Wikipedia](http://en.wikipedia.org/wiki/Computer_networking#History)
 
 * 1950s - individual computers, electronically separate, all with their own message format, no common protocol
 * Circuit switching vs Packet switching
