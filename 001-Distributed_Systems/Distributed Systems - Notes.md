@@ -18,4 +18,6 @@
 
 PAXOS is a suite of algorithms that is commonly used for agreeing on something, in Distributed Systems.
 
-Ceph uses PAXOS to agree upon consen
+Ceph uses PAXOS to agree upon consensus for the Monitor nodes. 
+
+And i
