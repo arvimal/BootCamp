@@ -32,3 +32,4 @@ And I should say that **QOwnNotes** works really well, synced with DropBox.
 	print(cal.formatyear(2018))
 `
 
+for code, use the github project to turn code in
