@@ -25,7 +25,10 @@ Day 1
 * Most communication is TCP/IP over packet-switched Ethernet networks
 * It seems common to shoehorn new technologies into existing moulds (Ethernet, Gigabit Ethernet) rather than learn new technologies (ATM, Infiniband)
 * As well as build additional standards and fixes and additions onto existing technologies (eg: TCP and all its related options like Window Scaling, Timestamps, etc)
-* On the internet we've exhausted IPv4 address space - ''http://imgs.xkcd.com/comics/map_of_the_internet.jpg'' - IPv6 penetration is only a few percent
+* On the internet we've exhausted IPv4 address space - IPv6 penetration is only a few percent
+
+![map_of_the_internet](file://media/660512049.jpeg)
+
 * Is the internet unregulated "for all", or is it controlled by corporate/political entities?
 * Privacy and encryption concerns, mostly around social networking and the NSA
 
@@ -39,7 +42,7 @@ Day 1
 
 ### OSI Model
 
-''http://en.wikipedia.org/wiki/OSI_model''
+* [OSI Model - Wikipedia](http://en.wikipedia.org/wiki/OSI_model)
 
 * Layer 1 - Physical - plugs, cables, network interface cards, switchports, backplanes
 * Layer 2 - Data link - MAC addresses - switching - switches, bridges, VLANs
