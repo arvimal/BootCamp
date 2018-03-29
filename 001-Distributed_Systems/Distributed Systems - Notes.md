@@ -14,4 +14,5 @@
 
 ## 4. Algorithms 
 
-### 4.1. PA
+### 4.1. PAXOS 
+
