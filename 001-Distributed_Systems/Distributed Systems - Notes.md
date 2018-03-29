@@ -16,4 +16,6 @@
 
 ### 4.1. PAXOS 
 
-PAXOS is a suite of algorithms that is commonly used for agreeing 
+PAXOS is a suite of algorithms that is commonly used for agreeing on something, in Distributed Systems.
+
+This was 
