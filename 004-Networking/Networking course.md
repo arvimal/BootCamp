@@ -231,10 +231,10 @@ We'd much prefer a smaller file size, say about 250Mb.
 tcpdump -C 250 -W 10 -s 0 -n -i ethX -w /tmp/$(hostname)-$(date +"%Y-%m-%d-%H-%M-%S").pcap
 
 
--C 250 Capture into 250Mb files.
+`-C 250` - Capture into 250Mb files.
 
 
--W 10 Capture 10 files numbered 01 to 10, then overwrite 01 with 11, overwrite 02 with 12, and so on.
+`-W 10` - Capture 10 files numbered 01 to 10, then overwrite 01 with 11, overwrite 02 with 12, and so on.
 
 
 ### Packet Analyzing
