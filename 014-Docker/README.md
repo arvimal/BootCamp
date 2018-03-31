@@ -1,4 +1,4 @@
 # Docker
 
 **References**
-1. Bood by Jim Turnbull 
+1. `The Docker Book`, by Jim Turnbull
