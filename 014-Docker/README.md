@@ -39,7 +39,12 @@
 
 ## Images and containers
 * Images are the files which are created from an installation, which are stripped-down.
-	* Images are the source of your containers. 
-	* The containers are launced from images.
-	* Images can be stored in a registry.
-	* A container is the running instance of an image.
+* Images are the source of your containers. 
+* The containers are launced from images.
+* Images can be stored in a registry.
+* A container is the running instance of an image.
+
+##### NOTE:
+* Containers are started from images, hence is analogous to processes spawned from a binary.
+* Containers, even if stopped, are available to be started again. ie.. A once-started container need not be spawned from the image again. It will be present till it's deleted using `docker rm <container-name> [or container id]`.
+* Docker images downloaded from any registries are stored in /var/lib/docker/devicemapper/devicemapper/data, which is an EXT4 filesystem.
