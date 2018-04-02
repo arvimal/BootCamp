@@ -1,6 +1,7 @@
 # Docker
 
 **References**
+
 1. `The Docker Book`, by Jim Turnbull
 2. `KataCoda` - Docker Courses
 
@@ -15,7 +16,7 @@
 
 ## Docker
 
-* Docker was a venture by `Docker Inc`, released in 2013.
-* Docker consists primarily as the `docker` daemon.
+* Docker was created by `Docker Inc`, released in 2013.
+* Docker consists of the `docker` daemon, and a client i
 * The `docker` client interface provides several switches to work with the daemon.
 *
