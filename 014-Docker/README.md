@@ -27,4 +27,5 @@
 ## Applications, in Docker
 
 * Applications get bundled in a container image with all its dependencies.
-* `docker pull` 
+* The container image is hosted on a Registry.
+* `docker pull` or `docker run` gets the container image from the reg
