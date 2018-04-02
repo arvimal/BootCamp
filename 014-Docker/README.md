@@ -50,3 +50,4 @@
 * Each image is made up of layers.
 * The lowest layer is the root filesystem.
 * Top layer is writable and created when a container is launched.
+
