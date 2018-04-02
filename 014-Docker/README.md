@@ -16,7 +16,6 @@
 
 ## Docker, and how it works
 
-* Docker was created by `Docker Inc`, released in 2013.
 * Docker consists of the `docker` daemon, and a client interface.
 * The `docker` client interface provides several switches to work with the daemon.
 * Docker uses images that can be pulled from either a private or a public registry.
