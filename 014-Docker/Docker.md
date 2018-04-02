@@ -2,6 +2,7 @@
 
 **References**
 1. `The Docker Book`, by Jim Turnbull
+2. `KataCoda` - Docker Courses
 
 
 ## Introduction
