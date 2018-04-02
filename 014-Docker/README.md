@@ -36,4 +36,10 @@
 * `docker pull` or `docker run` gets the container image from the registry.
 * The downloaded image is pulled and stored in `/var/lib/docker` on the local host.
 * The Container when started from the Container image is a process which specific privileges, and is isolated from other processes on the host machine.
-* 
+
+## Images and containers
+* Images are the files which are created from an installation, which are stripped-down.
+	* Images are the source of your containers. 
+	* The containers are launced from images.
+	* Images can be stored in a registry.
+	* A container is the running instance of an image.
