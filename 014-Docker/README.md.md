@@ -22,4 +22,5 @@
 * Docker uses images that can be pulled from either a private or a public registry.
 * Containers (multiple ones) can be started off these images.
 * Once the containers are done with, they can be stopped and deleted.
-* Containers that are n
+* Containers that are not deleted, can be started again.
+
