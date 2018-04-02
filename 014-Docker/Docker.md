@@ -20,4 +20,6 @@
 * Docker consists of the `docker` daemon, and a client interface.
 * The `docker` client interface provides several switches to work with the daemon.
 * Docker uses images that can be pulled from either a private or a public registry.
-* Containers (multiple onescan be started off this images
+* Containers (multiple ones) can be started off these images.
+* Once the containers are done with, they can be stopped and deleted.
+* Containers that are n
