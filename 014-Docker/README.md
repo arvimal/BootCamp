@@ -14,7 +14,7 @@
 * Containers run using the Linux Kernel's CGroup and Namespace features.
 * Containers can run on full-blown OSs, cloud servers (Azure, OpenShift, AWS)  etc.
 
-## Wo
+## Docker, and how it works
 
 * Docker was created by `Docker Inc`, released in 2013.
 * Docker consists of the `docker` daemon, and a client interface.
@@ -24,3 +24,4 @@
 * Once the containers are done with, they can be stopped and deleted.
 * Containers that are not deleted, can be started again.
 
+## 
