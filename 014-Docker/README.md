@@ -29,4 +29,5 @@
 * Applications get bundled in a container image with all its dependencies.
 * The container image is hosted on a Registry.
 * `docker pull` or `docker run` gets the container image from the registry.
-* The downloaded image is pulled and stored in `/var/lib/docker`
+* The downloaded image is pulled and stored in `/var/lib/docker` on the local host.
+* The Container when started from the Container image
