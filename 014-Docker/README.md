@@ -22,6 +22,12 @@
 * Containers (multiple ones) can be started off these images.
 * Once the containers are done with, they can be stopped and deleted.
 * Containers that are not deleted, can be started again.
+* Docker is different from Virtual machines since it doesn't need a Hypervisor to run on. The kernel on the host machine is the one responsible to control these.
+* The features such as CGroups, namespaces, and device-mapper in the Linux kernel makes Docker possible.
+* Docker containers are light-weight since it stays off the Hypervisor altogether.
+* Very fast compared to virtual machines, usually in sub-seconds.
+* No need for installation of the entire OS (its already done in the form of 'images')
+
 
 ## Applications, in Docker
 
