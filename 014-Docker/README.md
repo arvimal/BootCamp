@@ -29,7 +29,7 @@
 * No need for installation of the entire OS (its already done in the form of 'images')
 
 
-## Applications, in Docker
+## Applications, in Containers
 
 * Applications get bundled in a container image with all its dependencies.
 * The container image is hosted on a Registry.
