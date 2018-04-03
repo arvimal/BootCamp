@@ -39,7 +39,7 @@
 
 ## Images and containers
 * Images are the files which are created from an installation, which are stripped-down.
-* Images are the source of your containers. 
+* Images are the source of your containers.
 * The containers are launced from images.
 * Images can be stored in a registry.
 * A container is the running instance of an image.
