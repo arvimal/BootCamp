@@ -12,7 +12,8 @@
 	* Scaling applications over multiple containers.
 	* Organize containers into multiple logical units (Pods and Nodes).
 	* Re-launch applications that have failed.
-	* 
+	* Expose the applications on the Containers as Services.
+	* Load-balance requests coming 
 , deploying, and scaling Containers and Containerized applications.
 * Kubernetes help organize containers into logical units (Pods and Nodes).
 * Kubernetes can re-launch applications that have failed.
