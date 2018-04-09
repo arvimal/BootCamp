@@ -8,7 +8,7 @@ Operating System Concepts
 3. **Introduction to Operating Systems** - Udacity
 4. **Advanced Operating Systems** - Udacity
 
-##  Topics
+## Topics
 
 1. Introduction
 2. Process Management
