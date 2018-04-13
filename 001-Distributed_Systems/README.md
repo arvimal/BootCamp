@@ -1,10 +1,14 @@
-# Distributed Systems - Notes
-
-**These are notes on Distributed Systems, mainly written while studying the topic.**
+Distributed Systems
+===================
 
 ## 1. Introduction
 
 
+>Distributed Systems is a collection of independent computers that appears to its users as a single computer or entity.
+>- Andrew Tanenbaum
+
+
+### Three features of Distributed Systems
 
 ## 2. Types of Distributed Systems
 
