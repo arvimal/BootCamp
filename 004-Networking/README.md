@@ -231,6 +231,8 @@ UDP headers are very simple compared to TCP headers. They contain:
 
 ### 04. ICMP header format [Layer 3 - Network layer]
 
+The ICMP header format
+
 ![ICMP Header](/home/vimal/Dropbox/Ama-Preparation/Networking/Images/PING_ICMP_Wikipedia.png)
 
 
