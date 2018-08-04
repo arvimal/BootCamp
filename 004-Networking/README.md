@@ -162,7 +162,7 @@ The layers are:
 6. Data link layer
 7. Physical layer
 
-![Description of OSI layers](/home/vimal/Dropbox/Ama-Preparation/Networking/Images/OSI-model-Wikipedia.png)
+![Description of OSI layers](./Images/OSI-model-Wikipedia.png)
 
 #### 01.1. Data units in each layer
 
@@ -219,7 +219,7 @@ NOTE: Cisco says that the term `Packet` can be used generically. But, the generi
 
 UDP header length is 8 bytes.
 
-![UDP Datagram header format](/home/vimal/Dropbox/Ama-Preparation/Networking/Images/UDP-Header-Fields-with-Example-Content.png)
+![UDP Datagram header format](./Images/UDP-Header-Fields-with-Example-Content.png)
 
 UDP headers are very simple compared to TCP headers. They contain:
 
@@ -233,7 +233,7 @@ UDP headers are very simple compared to TCP headers. They contain:
 
 The ICMP header format
 
-![ICMP Header](/home/vimal/Dropbox/Ama-Preparation/Networking/Images/PING_ICMP_Wikipedia.png)
+![ICMP Header](./Images/PING_ICMP_Wikipedia.png)
 
 
 ### 05. IP header [Layer 3 - Network layer]
@@ -248,7 +248,7 @@ Hence, an Ethernet frame is a container that essentially carries IP packets, and
 
 The structure of an Ethernet frame is (PSDSTDF)
 
-![Structure of an Ethernet Frame](/home/vimal/Dropbox/Ama-Preparation/Networking/Images/Ethernet-Frame.png)
+![Structure of an Ethernet Frame](./Images/Ethernet-Frame.png)
 
 1. **Preamble**    : 7 bytes (Alternating 1 and 0) # This helps in syncing each end hosts of the ethernet.
 2. **SFD**         : 1 bytes (Start Frame Delimited field) This signals that the next incoming part denotes the Destination MAC address.
@@ -311,7 +311,7 @@ The remaining four lower layers have specific names, hence PDU of Transport laye
 
 Each layer adds or removes information/metadata to the original PDU, which the data traverses along the stack.
 
-![PDU Flow through OSI](/home/vimal/Dropbox/Ama-Preparation/Networking/Images/PDU-through-OSI-layers.png)
+![PDU Flow through OSI](./Images/PDU-through-OSI-layers.png)
 
 A "Segment" sits inside a "Packet", is passed down to the next layer `Data link` layer. Data link layer will add its own control and functional fields on top of the packet (called headers) to create a "Frame".
 
@@ -431,7 +431,7 @@ A connection is established following the TCP handshake, packets are send with s
 
 * TCP connections are established via a three-way TCP handshake, send over TCP Segments.
 
-![TCP Handshake](/home/vimal/Dropbox/Ama-Preparation/Networking/Images/TCP-Handshake.png)
+![TCP Handshake](./Images/TCP-Handshake.png)
 
 * A very short description on what happens, is as following:
     1. [SYN] : Machine1 initiate a connection with Machine2 by sending a segment with SYN field (Synchronize Sequence Number), and the sequence number the TCP segments will start.
@@ -481,7 +481,7 @@ References:
 
 ##### 13.2.4. TCP connection termination [FIN, ACK, FIN, ACK]
 
-![TCP Session Termination](/home/vimal/Dropbox/Ama-Preparation/Networking/Images/TCP-Session-Close.png)
+![TCP Session Termination](./Images/TCP-Session-Close.png)
 
 The TCP connection termination involves the following:
 1. To close the TCP connection, the Client sends a TCP segment with the `FIN` [Finish] bit set, in the TCP header. Client state changes to `FIN-WAIT-1` state.
@@ -593,12 +593,12 @@ A single TRUNK port/connection can carry dozens on VLAN traffic without any prob
 #### 40.2. Ethernet Frame with VLAN tagging
 
 
-![Structure of an Ethernet Frame](/home/vimal/Dropbox/Ama-Preparation/Networking/Images/Ethernet-Frame.png)
+![Structure of an Ethernet Frame](./Images/Ethernet-Frame.png)
 
 
 The VLAN tags are set in the `802.1Q tag` which is optional and not set by default in a Ethernet Frame.
 
-![How does the Ethernet Frame look with the VLAN tags added](/home/vimal/Dropbox/Ama-Preparation/Networking/Images/Ethernet_802.1Q_Insert.svg.png)
+![How does the Ethernet Frame look with the VLAN tags added](./Images/Ethernet_802.1Q_Insert.svg.png)
 
 
 #### 40.3. Trunking Modes
@@ -655,7 +655,7 @@ When the ping program begins execution, it opens a raw socket sensitive only to 
 
 #### 15.3. ICMP Packet Structure (set over IPv4 header)
 
-![ICMP Header](/home/vimal/Dropbox/Ama-Preparation/Networking/Images/PING_ICMP_Wikipedia.png)
+![ICMP Header](./Images/PING_ICMP_Wikipedia.png)
 
 * A `ping` ECHO_REQUEST is set when the section `Type of Message` in the ICMP header is set to a value of 8.
 * A `ping` ECHO_REPLY is set when the section `Type of Message` in the ICMP header is set to a value of 0.
@@ -779,7 +779,7 @@ Whenever a browser initiates a connection with a SSL secured website , it will f
 The secure connection between a client and a server is established by an SSL handshake.
 
 
-![SSL Handshake](/home/vimal/Dropbox/Ama-Preparation/Networking/Images/SSLTLS_handshake.png)
+![SSL Handshake](./Images/SSLTLS_handshake.png)
 
 The steps involved in the SSL handshake are as follows (note that the following steps assume the use of the cipher suites listed in Cipher Suites with RSA Key Exchange: Triple DES, RC4, RC2, DES):
 
@@ -862,7 +862,7 @@ HTTPS URLs begin with "https://" and use port 443 by default, whereas HTTP URLs 
 
 
 
-![HTTPS](/home/vimal/Dropbox/Ama-Preparation/Networking/Images/HTTP-over-SSL.png)
+![HTTPS](./Images/HTTP-over-SSL.png)
 
 
 1. An end-user asks their browser to make a secure connection to a website (e.g.https://www.example.com)
@@ -972,7 +972,7 @@ DHCP operations fall into four phases: [DORA - Discover, Offer, Request, Acknowl
 3. R - DHCP_REQUEST
 4. A - DHCP_ACKNOWLEDGMENT
 
-![DHCP Request](/home/vimal/Dropbox/Ama-Preparation/Networking/Images/DHCP_session.svg)
+![DHCP Request](./Images/DHCP_session.svg)
 
 1. **DHCP_DISCOVER** (Source Address 0.0.0.0, Dest Address 255.255.255.255, Source Port 68, Destination Port 67, Protocol UDP)
 
@@ -1028,7 +1028,7 @@ Oct 23 12:32:49 montypython NetworkManager[1125]: <info>  [1508742169.3467] dhcp
 
 A Recursive query is through which, a DNS server will do all the work till fetching the answer for you. The resolver sends an `Iterative query` to the first DNS server it is configured to work with. Usually if it's the DNS server on the ISP, this is configured to be both a Caching Name server as well as a Reqursive querying DNS server.
 
-![Recursive DNS Query](/home/vimal/Dropbox/Ama-Preparation/Networking/Images/Recursive-DNS-Query.png)
+![Recursive DNS Query](./Images/Recursive-DNS-Query.png)
 
 Reference:
 1. [http://www.slashroot.in/difference-between-iterative-and-recursive-dns-query](http://www.slashroot.in/difference-between-iterative-and-recursive-dns-query)
