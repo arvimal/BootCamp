@@ -166,52 +166,52 @@ The layers are:
 
 #### 01.1. Data units in each layer
 
-* 7. Application layer - Data Units
-* 6. Presentation layer- Data Units
-* 5. Session layer     - Data Units
-* 4. Transport layer   - TCP Segments, UDP Datagrams
-* 3. Network layer     - Packets (Datagrams) (IP)
-* 2. Data Link layer   - Frames (Switches)
-* 1. Physical layer    - Bits   (N/W interfaces)
+* Application layer - Data Units
+* Presentation layer- Data Units
+* Session layer     - Data Units
+* Transport layer   - TCP Segments, UDP Datagrams
+* Network layer     - Packets (Datagrams) (IP)
+* Data Link layer   - Frames (Switches)
+* Physical layer    - Bits   (N/W interfaces)
 
 NOTE: Cisco says that the term `Packet` can be used generically. But, the generic term is `Protocol Data Unit` or PDU.
 
 #### 01.2. Protocols in each OSI layer
 
-* 7. Application layer (Data Units) (Devices : Computers, Mobile phones, IoT devices)
+* Application layer (Data Units) (Devices : Computers, Mobile phones, IoT devices)
     * Protocols : HTTP, FTP, SMTP, POP, IMAP, DNS, Telnet etc.
 
-* 6. Presentation layer (Data Units) (Devices : NIL)
+* Presentation layer (Data Units) (Devices : NIL)
     * Any Encryption standards
     * Any data compression/manipulation standards (JPEG, GIF, Unicode, MKV, AVI, Quicktime)
 
-* 5. Session layer (Data Units) (Devices : NIL)
+* Session layer (Data Units) (Devices : NIL)
     * Protocols maintaining sessions (NFS, RPC etc)
 
-* 4. Transport layer (TCP Segments, UDP Datagrams) (Devices : NIL)
+* Transport layer (TCP Segments, UDP Datagrams) (Devices : NIL)
     * TCP and UDP
 
-* 3. Network layer (Packets) (Devices : Routers / Layer3 Switches)
+* Network layer (Packets) (Devices : Routers / Layer3 Switches)
     * Protocols dealing with packets and routing (IPv4, IPv6, AppleTalk)
     * `PING` works in `Network Layer`.
 
-* 2. Data Link layer (Frames) (Devices : Switches)
+* Data Link layer (Frames) (Devices : Switches)
     * Protocols dealing with MAC addresses
         * MAC - Media Access Control
         * LLC - Logical Link Control
 
-* 1. Physical layer (Bits) (Devices : N/W interfaces, HUBs)
+* Physical layer (Bits) (Devices : N/W interfaces, HUBs)
     * Standards for cabling, connections, connectors etc..
 
 #### 01.3. Devices in each OSI layer
 
-* 7. Application layer - Data Units
-* 6. Presentation layer- Data Units
-* 5. Session layer     - Data Units
-* 4. Transport layer   - Firewalls based on ports/services
-* 3. Network layer     - Routers and Layer3 Switches (Packets/Datagrams)
-* 2. Data Link layer   - Switches (Frames) (SwitchPort to MAC mapping)
-* 1. Physical layer    - N/W interfaces, Hubs, Cables, Fibre Channel, Wireless devices (Bits)
+* Application layer - Data Units
+* Presentation layer- Data Units
+* Session layer     - Data Units
+* Transport layer   - Firewalls based on ports/services
+* Network layer     - Routers and Layer3 Switches (Packets/Datagrams)
+* Data Link layer   - Switches (Frames) (SwitchPort to MAC mapping)
+* Physical layer    - N/W interfaces, Hubs, Cables, Fibre Channel, Wireless devices (Bits)
 
 ### 02. TCP header [Layer 4 - Transport layer]
 
