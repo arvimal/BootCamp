@@ -1,6 +1,4 @@
-## How does a Linux machine boots up?
-
-### The Linux Boot process
+## The Linux Boot process
 
 **1. Power up the machine**
 
