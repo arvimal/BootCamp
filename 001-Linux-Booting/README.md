@@ -2,20 +2,18 @@
 
 ### 1. The Linux Boot process
 
-1. The Boot process starts when a user powers up the machine.
+**1. The Boot process starts when a user powers up the machine.**
 
-2. The Motherboard sends a signal to the Power Supply
-
-3. Power supply starts up, and regulates itself into the operating voltage.
+**2. Power supply starts up, and regulates itself into the operating voltage.**
     * This may take less than a millisecond.
 
-4. The Power supply system sends the [PowerGood](https://en.wikipedia.org/wiki/Power_good_signal) signal to the Motherboard.
+**3. The Power supply system sends the [PowerGood](https://en.wikipedia.org/wiki/Power_good_signal) signal to the Motherboard.**
     * The ATX specification defines the Power-Good signal as a +5-volt (V) signal generated in the power supply when it has passed its internal self-tests and the output voltages have stabilized.
     * The Power Good signal (power-good) prevents a computer from attempting to operate on improper voltages and damage itself by alerting it to an improper power supply.
 
-5. The Motherboard starts the Processor, once it recieves the `Power Good` signal.
+**4. The Motherboard starts the Processor, once it recieves the `Power Good` signal.**
 
-6. The Processor resets its internal registers, and fill it with pre-defined information.
+**5. The Processor resets its internal registers, and fill it with pre-defined information.**
     * 80386 series and later series set the following registers and corresponding data.
 
 ```text
@@ -24,12 +22,12 @@
         CS base (16 Bit register)      - 0xffff0000
 ```
 
-7. The Processor starts in [Real Mode](https://en.wikipedia.org/wiki/Real_mode).
+**6. The Processor starts in [Real Mode](https://en.wikipedia.org/wiki/Real_mode).**
     * `Real` mode is characterized by a 20-bit segmented memory address space (giving exactly 1 MiB of addressable memory).
     * This gives it unlimited direct software access to all addressable memory, the I/O addresses, and hardware.
     * `Real` mode provides no support for memory protection, multitasking, or code privilege levels. Thus, all x86 CPUs start in `Real mode` with no memory protection, fixed 64 KiB segments, and only 20-bit (1024 KiB = 1 MiB) addressing.
 
-8. The x86 CPU adds both the **CS Selector** and **CS Base** register contents and expects to find the first instruction after reset, there.
+**7. The x86 CPU adds both the **CS Selector** and **CS Base** register contents and expects to find the first instruction after reset, there.**
 
     * All the registers, while in 8086, were 16-bit registers.
     * This meant that only 64KiB addresses could be addressed in a single go.
@@ -56,7 +54,7 @@ This address is called the `Reset vector`. The reset vector is the default locat
 
 The address contains a `jump` instruction, which points to the BIOS entry point in a `Read-Only Memory` chip (ROM) on the Motherboard. The BIOS is initialized and it starts up.
 
-9. BIOS starts
+**8. BIOS starts**
 * Once the BIOS starts, it does the `Power-On Self Test` and verifies all hardware.
 * Information on the bootable disk or boot order is maintained in the BIOS.
 * If the boot device is a disk, the BIOS tries to find a boot sector. An HDD sector is 512 Bytes.
@@ -66,12 +64,12 @@ The address contains a `jump` instruction, which points to the BIOS entry point 
 **NOTE:**
     BIOS/UEFI cannot directly go ahead and read a disk, unless it has some way of addressing them. Almost all HDD manufacturers provide disk hardware that enable BIOS to utilize them, and access the HDD sectors through LBA (Logical Block Addressing). This is comparitively slow, but helps the BIOS to read the disks and pass control over to a Boot Loader.
 
-10. BIOS hands over control to the `Boot Sector code` (aka `Master Boot Code`) (GRUB Stage1)
+**9. BIOS hands over control to the `Boot Sector code` (aka `Master Boot Code`) (GRUB Stage1)**
 * BIOS loads the first sector (Sector #0 of 512B) of the bootable disk into RAM.
 * It reads the `Bootstrap` code (`boot.img`, in case of GRUB) residing within the first 446 Bytes.
 * The control is passed on to the `Bootstrap` code (boot.img) (GRUB Stage1), and executes in memory.
 
-11. GRUB starts
+**10. GRUB starts**
 * Once BIOS reads the first sector of the bootable disk via LBA addressing method, the Boot Strap code is called and executed (GRUB Stage1).
 
 * Stage 1 : (`boot.img` in MBR BootStrap code area, ie.. Sector #0)
@@ -89,7 +87,7 @@ The address contains a `jump` instruction, which points to the BIOS entry point 
     * This includes the configuration file `grub.cfg`, the kernels (vmlinuz), and the initrd files etc..
     * The GRUB menu as per `grub.conf` is shown and user selects a kernel to boot from.
 
-12. The selected/default kernel loads, and initrd.
+**11. GRUB loads the selected/default kernel loads, and initrd.**
 
 * GRUB reads the entry for the kernel selected (by the user or default kernel), and loads the kernel mentioned with directive `linux16` to memory.
 * The kernel takes into consideration the kernel parameters set for `vmlinuz`, and acts accordingly.
@@ -115,7 +113,7 @@ The address contains a `jump` instruction, which points to the BIOS entry point 
 * Initrd contains the necessary drivers for the kernel, to access the connected devices as well as form a virtual filesystem in memory.
 * With a virtual filesystem running in memory, the kernel initializes `/sbin/init` (which was part of the initrd file).
 
-13. `init` or `systemd` starts
+**12. `init` or `systemd` starts**
 * `/sbin/init` starts, which is a symlink to `/usr/lib/systemd/systemd` in systems using `Systemd`.
 * `init` reads `/etc/inittab` for run levels, and go to the specific runlevel locations at `/etc/init.d/` to start the scripts marked to startup in that level.
 * `Systemd` looks for the targets it has to reach, and starts the units for it.
@@ -167,11 +165,11 @@ _**5. Master Boot Record**_
 Thus, **Total size =`446 + (4 x16) + 2` = 512 Bytes**
 
 _**6. Why does GRUB have multiple stages?**_
-* GRUB has multiple stages, `Stage 1` being in the `Bootstrap` section of the first sector of MBR formatted bootable disk.
-* The Bootstrap code has only a space of around 446 Bytes.
-* This is enough for simple bootloaders, but not so for bootloaders that support Menu-drive selection, supports multiple filesystems etc.
-* Hence, the first stage of Grub exists in the Bootstrap code area, and the remaining at multiple locations such as the sectors between Sector #0 and Filesystem partition, as well as the Active partition.
-* Although every MBR formatted HDD contains an MBR, the master boot code is used only if the disk contains the active, primary partition.
+1. GRUB has multiple stages, `Stage 1` being in the `Bootstrap` section of the first sector of MBR formatted bootable disk.
+2. The Bootstrap code has only a space of around 446 Bytes.
+3. This is enough for simple bootloaders, but not so for bootloaders that support Menu-drive selection, supports multiple filesystems etc.
+4. Hence, the first stage of Grub exists in the Bootstrap code area, and the remaining at multiple locations such as the sectors between Sector #0 and Filesystem partition, as well as the Active partition.
+5. Although every MBR formatted HDD contains an MBR, the master boot code is used only if the disk contains the active, primary partition.
 
 _**7. Difference between GRUB1 (Legacy) and GRUB2**_
 1. GRUB1 works only on x86 and x86_64 architecture. GRUB2 works on multiple architectures including SPARC and PowerPC.
@@ -180,24 +178,27 @@ _**7. Difference between GRUB1 (Legacy) and GRUB2**_
 4. GRUB1 could only read a few filesystems such as EXT, XFS, JFS, FAT, ReiserFS etc.., while GRUB2 supports additional FS such as Apple FS, NTFS etc.
 
 _**8. Difference between MBR and GPT partition methods**_
-* MBR (also called msdos partitions) uses 32-bits to store Block (LBA) addresses. For HDDs with 512 byte sectors, the MBR partition table entries allow a single partition upto 2TB.
-* GPT (Guid Partition Table) use logical block addressing (LBA) in place of the historical cylinder-head-sector (CHS) addressing.
-* On a system using GPT, the MBR is still maintained for backward compatibility. The protective MBR is contained in LBA 0, the GPT header is in LBA 1, and the GPT header has a pointer to the partition table, or Partition Entry Array, typically LBA 2.
-* The UEFI specification stipulates that a minimum of 16,384 bytes, regardless of sector size, be allocated for the Partition Entry Array.[4] On a disk having 512-byte sectors, a partition entry array size of 16,384 bytes and the minimum size of 128 bytes for each partition entry, LBA 34 is the first usable sector on the disk.
+1.  MBR (also called msdos partitions) uses 32-bits to store Block (LBA) addresses. For HDDs with 512 byte sectors, the MBR partition table entries allow a single partition upto 2TB.
+2. GPT (Guid Partition Table) use logical block addressing (LBA) in place of the historical cylinder-head-sector (CHS) addressing.
+3. On a system using GPT, the MBR is still maintained for backward compatibility. The protective MBR is contained in LBA 0, the GPT header is in LBA 1, and the GPT header has a pointer to the partition table, or Partition Entry Array, typically LBA 2.
+4. The UEFI specification stipulates that a minimum of 16,384 bytes, regardless of sector size, be allocated for the Partition Entry Array.[4] On a disk having 512-byte sectors, a partition entry array size of 16,384 bytes and the minimum size of 128 bytes for each partition entry, LBA 34 is the first usable sector on the disk.
 
 _**9. Difference between BIOS and EFI firmware systems**_
 
 _**10. Troubleshooting GRUB**_
 1. Press `e` from GRUB menu, to enter the GRUB configuration and edit it.
-2. Check the GRUB root where GRUB checks for the UUID, at the `set root=`hd<X>, <type>` parameter. The `type` would be usually `msdos` for MBR partitions and `gpt` for GPT partitions.
+2. Check the GRUB root where GRUB checks for the UUID, at the __set root=`hd<X>, <type>`__ parameter. The `type` would be usually `msdos` for MBR partitions and `gpt` for GPT partitions.
 3. Press `Ctrl + C` to access the GRUB command prompt.
     * `ls` and `ls -l` (for more details) to list the partitions on the disks, on the machine.
-
 4. Update/Edit grub.cfg
     * Any changes to grub.cfg won't be permanent. Hence, don't directly edit it.
-    *
+    * Add changes in /etc/default/grub
+    * Run `update-grub` to read the changes and automatically create grub.cfg file.
 
-GRUB 2 works like this: /etc/default/grub contains customization; /etc/grub.d/ scripts contain GRUB menu information and operating system boot scripts. When the update-grub command is run, it reads the contents of the grub file and the grub.d scripts and creates the grub.cfg file.
+GRUB 2 works as the following:
+* /etc/default/grub contains customizations
+* /etc/grub.d/ scripts contain GRUB menu information and operating system boot scripts.
+* When the `update-grub` command is run, it reads the contents of the grub file and the grub.d scripts and creates the grub.cfg file.
 
 ***
 ***
@@ -209,6 +210,6 @@ GRUB 2 works like this: /etc/default/grub contains customization; /etc/grub.d/ s
 4. https://en.wikipedia.org/wiki/Memory_segmentation
 5. https://en.wikipedia.org/wiki/Master_boot_record
 6. https://technet.microsoft.com/en-us/library/cc976786.aspx
-7.
+
 
 
