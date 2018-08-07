@@ -180,10 +180,10 @@ _**7. Difference between GRUB1 (Legacy) and GRUB2**_
 4. GRUB1 could only read a few filesystems such as EXT, XFS, JFS, FAT, ReiserFS etc.., while GRUB2 supports additional FS such as Apple FS, NTFS etc.
 
 _**8. Difference between MBR and GPT partition methods**_
-    * MBR (also called msdos partitions) uses 32-bits to store Block (LBA) addresses. For HDDs with 512 byte sectors, the MBR partition table entries allow a single partition upto 2TB.
-    * GPT (Guid Partition Table) use logical block addressing (LBA) in place of the historical cylinder-head-sector (CHS) addressing.
-    * On a system using GPT, the MBR is still maintained for backward compatibility. The protective MBR is contained in LBA 0, the GPT header is in LBA 1, and the GPT header has a pointer to the partition table, or Partition Entry Array, typically LBA 2.
-    * The UEFI specification stipulates that a minimum of 16,384 bytes, regardless of sector size, be allocated for the Partition Entry Array.[4] On a disk having 512-byte sectors, a partition entry array size of 16,384 bytes and the minimum size of 128 bytes for each partition entry, LBA 34 is the first usable sector on the disk.
+* MBR (also called msdos partitions) uses 32-bits to store Block (LBA) addresses. For HDDs with 512 byte sectors, the MBR partition table entries allow a single partition upto 2TB.
+* GPT (Guid Partition Table) use logical block addressing (LBA) in place of the historical cylinder-head-sector (CHS) addressing.
+* On a system using GPT, the MBR is still maintained for backward compatibility. The protective MBR is contained in LBA 0, the GPT header is in LBA 1, and the GPT header has a pointer to the partition table, or Partition Entry Array, typically LBA 2.
+* The UEFI specification stipulates that a minimum of 16,384 bytes, regardless of sector size, be allocated for the Partition Entry Array.[4] On a disk having 512-byte sectors, a partition entry array size of 16,384 bytes and the minimum size of 128 bytes for each partition entry, LBA 34 is the first usable sector on the disk.
 
 _**9. Difference between BIOS and EFI firmware systems**_
 
