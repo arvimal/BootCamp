@@ -1,20 +1,25 @@
 ## How does a Linux machine boots up?
 
-### 1. The Linux Boot process
+### The Linux Boot process
 
-**1. The Boot process starts when a user powers up the machine.**
+**1. Power up the machine**
+
+The Boot process starts when a user powers up the machine.
 
 **2. Power supply starts up, and regulates itself into the operating voltage.**
-    * This may take less than a millisecond.
+
+This may take less than a millisecond.
 
 **3. The Power supply system sends the [PowerGood](https://en.wikipedia.org/wiki/Power_good_signal) signal to the Motherboard.**
-    * The ATX specification defines the Power-Good signal as a +5-volt (V) signal generated in the power supply when it has passed its internal self-tests and the output voltages have stabilized.
-    * The Power Good signal (power-good) prevents a computer from attempting to operate on improper voltages and damage itself by alerting it to an improper power supply.
+* The ATX specification defines the Power-Good signal as a +5-volt (V) signal generated in the power supply when it has passed its internal self-tests and the output voltages have stabilized.
+
+* The Power Good signal (power-good) prevents a computer from attempting to operate on improper voltages and damage itself by alerting it to an improper power supply.
 
 **4. The Motherboard starts the Processor, once it recieves the `Power Good` signal.**
 
 **5. The Processor resets its internal registers, and fill it with pre-defined information.**
-    * 80386 series and later series set the following registers and corresponding data.
+
+* 80386 series and later series set the following registers and corresponding data.
 
 ```text
         IP (16 Bit register)           - 0xfff0
@@ -23,19 +28,18 @@
 ```
 
 **6. The Processor starts in [Real Mode](https://en.wikipedia.org/wiki/Real_mode).**
-    * `Real` mode is characterized by a 20-bit segmented memory address space (giving exactly 1 MiB of addressable memory).
-    * This gives it unlimited direct software access to all addressable memory, the I/O addresses, and hardware.
-    * `Real` mode provides no support for memory protection, multitasking, or code privilege levels. Thus, all x86 CPUs start in `Real mode` with no memory protection, fixed 64 KiB segments, and only 20-bit (1024 KiB = 1 MiB) addressing.
+* `Real` mode is characterized by a 20-bit segmented memory address space (giving exactly 1 MiB of addressable memory).
+* This gives it unlimited direct software access to all addressable memory, the I/O addresses, and hardware.
+* `Real` mode provides no support for memory protection, multitasking, or code privilege levels. Thus, all x86 CPUs start in `Real mode` with no memory protection, fixed 64 KiB segments, and only 20-bit (1024 KiB = 1 MiB) addressing.
 
 **7. The x86 CPU adds both the **CS Selector** and **CS Base** register contents and expects to find the first instruction after reset, there.**
 
-    * All the registers, while in 8086, were 16-bit registers.
-    * This meant that only 64KiB addresses could be addressed in a single go.
-    * The CS (Code Segment) registers had two types (Selector and Base) each 16 bits long.
-    * These together (16 bits + 16 bits) were able to address 32 bit address locations.
-    * Hence, the 8086 and any x86 CPUs were able to address approximately 4GB of memory.
-
-    * Before starting up, the x86 CPU had cleared its registers and set it to the following values
+* All the registers, while in 8086, were 16-bit registers.
+* This meant that only 64KiB addresses could be addressed in a single go.
+* The CS (Code Segment) registers had two types (Selector and Base) each 16 bits long.
+* These together (16 bits + 16 bits) were able to address 32 bit address locations.
+* Hence, the 8086 and any x86 CPUs were able to address approximately 4GB of memory.
+* Before starting up, the x86 CPU had cleared its registers and set it to the following values
 
 ```text
         IP (16 Bit register)           - 0xfff0
