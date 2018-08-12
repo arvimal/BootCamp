@@ -1,5 +1,3 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Networking](#networking)
@@ -142,8 +140,6 @@
   - [2. How do you distinguish a DNS problem from a network problem?](#2-how-do-you-distinguish-a-dns-problem-from-a-network-problem)
 - [Scenarios](#scenarios)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 ## Networking
 
 ### 01. OSI layers
@@ -162,7 +158,9 @@ The layers are:
 6. Data link layer
 7. Physical layer
 
-![Description of OSI layers](./Images/OSI-model-Wikipedia.png)
+![OSI-model-Wikipedia](Images/OSI-model-Wikipedia.png)
+
+
 
 #### 01.1. Data units in each layer
 
@@ -179,29 +177,36 @@ NOTE: Cisco says that the term `Packet` can be used generically. But, the generi
 #### 01.2. Protocols in each OSI layer
 
 * Application layer (Data Units) (Devices : Computers, Mobile phones, IoT devices)
-    * Protocols : HTTP, FTP, SMTP, POP, IMAP, DNS, Telnet etc.
+
+  * Protocols : HTTP, FTP, SMTP, POP, IMAP, DNS, Telnet etc.
 
 * Presentation layer (Data Units) (Devices : NIL)
-    * Any Encryption standards
-    * Any data compression/manipulation standards (JPEG, GIF, Unicode, MKV, AVI, Quicktime)
+
+  * Any Encryption standards
+  * Any data compression/manipulation standards (JPEG, GIF, Unicode, MKV, AVI, Quicktime)
 
 * Session layer (Data Units) (Devices : NIL)
-    * Protocols maintaining sessions (NFS, RPC etc)
+
+  * Protocols maintaining sessions (NFS, RPC etc)
 
 * Transport layer (TCP Segments, UDP Datagrams) (Devices : NIL)
-    * TCP and UDP
+
+  * TCP and UDP
 
 * Network layer (Packets) (Devices : Routers / Layer3 Switches)
-    * Protocols dealing with packets and routing (IPv4, IPv6, AppleTalk)
-    * `PING` works in `Network Layer`.
+
+  * Protocols dealing with packets and routing (IPv4, IPv6, AppleTalk)
+  * `PING` works in `Network Layer`.
 
 * Data Link layer (Frames) (Devices : Switches)
-    * Protocols dealing with MAC addresses
-        * MAC - Media Access Control
-        * LLC - Logical Link Control
+
+  * Protocols dealing with MAC addresses
+    * MAC - Media Access Control
+    * LLC - Logical Link Control
 
 * Physical layer (Bits) (Devices : N/W interfaces, HUBs)
-    * Standards for cabling, connections, connectors etc..
+
+  * Standards for cabling, connections, connectors etc..
 
 #### 01.3. Devices in each OSI layer
 
@@ -235,7 +240,6 @@ The ICMP header format
 
 ![ICMP Header](./Images/PING_ICMP_Wikipedia.png)
 
-
 ### 05. IP header [Layer 3 - Network layer]
 
 ### 06. Ethernet Frame header (64 Bytes) [Layer 2 - Data link Layer]
@@ -263,6 +267,7 @@ The structure of an Ethernet frame is (PSDSTDF)
 A frame that is smaller than the medium's minimum frame size (64 bytes) and also has a bad CRC check is called a Runt.
 
 #### 06.1. Reference
+
 1. [https://en.wikipedia.org/wiki/Ethernet_frame](https://en.wikipedia.org/wiki/Ethernet_frame)
 
 ### 07. What is a Network MTU? [All layer]
@@ -274,6 +279,7 @@ A frame that is smaller than the medium's minimum frame size (64 bytes) and also
 **_Usually, when an MTU is specified, ie..MTU = 1500 Bytes or 9000 Bytes, it refers to the size of the Ethernet Frame._**
 
 #### 07.1. Reference
+
 1. [https://www.lifewire.com/definition-of-mtu-817948](https://www.lifewire.com/definition-of-mtu-817948)
 2. [https://en.wikipedia.org/wiki/Maximum_transmission_unit](https://en.wikipedia.org/wiki/Maximum_transmission_unit)
 
@@ -286,6 +292,7 @@ Jumbo Frames can carry upto 9000 Bytes of payload. Using a larger MTU value (jum
 Large frame sizes such as in Jumbo Frames, are more prone to suffer undetected errors, which the simple CRC32 errors detection in Ethernet Frames cannot find and fix.
 
 **NOTE:**
+
 * The Ethernet Frame standard is defined by IEEE, in 802.x RFC.
 * Jumbo Frames (9000 Bytes) are not part of this compliance, and hence is not a part of the standard defined by IEEE.
 
@@ -296,10 +303,10 @@ While setting Jumbo Frames in your Ethernet device, please make sure that all th
 A method to get bot frame sizes to co-exist is to use them in different network segments, such as different VLANs.
 
 #### 08.2. Reference
+
 1. [http://www.slashroot.in/what-is-jumbo-frame-in-ethernet](http://www.slashroot.in/what-is-jumbo-frame-in-ethernet)
 2. [https://en.wikipedia.org/wiki/Jumbo_frame](https://en.wikipedia.org/wiki/Jumbo_frame)
 3. [https://web.archive.org/web/20060127004438/http://sd.wareonearth.com/~phil/jumbo.html](https://web.archive.org/web/20060127004438/http://sd.wareonearth.com/~phil/jumbo.html)
-
 
 ### 09. Difference between Segments, Packets, and Frames?
 
@@ -318,7 +325,8 @@ A "Segment" sits inside a "Packet", is passed down to the next layer `Data link`
 Frame is the name used to represent the Protocol Data Unit(PDU) at one of the lowest level in the reference model. Its the PDU at data link layer.
 
 Reference:
-    * http://www.slashroot.in/difference-between-segments-packets-and-frames
+
+* http://www.slashroot.in/difference-between-segments-packets-and-frames
 
 ### 10. IPv4 and IPv6, differences [Layer 4 - Transport Layer]
 
@@ -331,7 +339,7 @@ IPv6 was created to overcome the unavailability of routable IPv4 addresses. It w
 5. MTU discovery is performed for every session and agreed upon. So no packet fragmentation.
 6. Can co-exist over IPv4 by encapsulating the IPv6 traffic through a tunnel within IPv4.
 
-* Address structure:
+#### 10.1. Address structure:
 
 1. IPv6 has 128 bits in length, and is 4 times larger than IPv4 addresses.
 2. IPV6 bits are represented as a Hexa-decimal number.. 32 hexadecimal digits x 4 = 128 Bits, and seperated by a colon.
@@ -386,6 +394,7 @@ It chooses the longest destination prefix that matches. This is where CIDR netwo
 Static routes are the ones which we set in the network interface configuration file, and hence, which get set everytime the interface starts up.
 
 Dynamic routes are the ones which are provided by a DHCP server, and it may change (depending on the DHCP configuration)
+
     * How is a packet routed, if there are multiple routes to the same destination?
     * Explain the packet flow through a routed network.
     * Detail the IP route table
@@ -393,6 +402,7 @@ Dynamic routes are the ones which are provided by a DHCP server, and it may chan
     * Static routes and Dynamic routes (?)
 
 #### 12.1. Explain the flags in the output of `route`
+
     * U : Route is `UP`
     * H : Target is a HOST
     * G : Use Gateway
@@ -403,13 +413,11 @@ Dynamic routes are the ones which are provided by a DHCP server, and it may chan
     * C : Cache entry
     * ! : Reject this route
 
-
-
 #### 12.2. Routing protocols
 
     * RIP (Routing Information Protocol)
     * RIP2
-
+    
     * http://www.slashroot.in/routing-information-protocol-guide
     * http://www.slashroot.in/routing-information-protocol-configuration
 
@@ -434,20 +442,23 @@ A connection is established following the TCP handshake, packets are send with s
 ![TCP Handshake](./Images/TCP-Handshake.png)
 
 * A very short description on what happens, is as following:
-    1. [SYN] : Machine1 initiate a connection with Machine2 by sending a segment with SYN field (Synchronize Sequence Number), and the sequence number the TCP segments will start.
-    2. [SYN, ACK] Machine2 acknowledges with an `ACK` signal, and sends a `SYN` back
-    3. [ACK + Data] Machine1 receives the ACK, and send an acknowledgement `ACK` back.
+
+  1. [SYN] : Machine1 initiate a connection with Machine2 by sending a segment with SYN field (Synchronize Sequence Number), and the sequence number the TCP segments will start.
+  2. [SYN, ACK] Machine2 acknowledges with an `ACK` signal, and sends a `SYN` back
+  3. [ACK + Data] Machine1 receives the ACK, and send an acknowledgement `ACK` back.
 
 * In more detail:
-    1. The Client sets the `SYN` bit in the TCP header to request a TCP connection. The sequence number field is set to 0. Since the SYN bit is set, this sequence number is used as the initial sequence number.
-    2. `SYN` TCP segment is received by the Server.
-    3. Server sets the SYN and the ACK bits in the TCP header. Server sets the SYN and the ACK bits in the TCP header.
-    Server sends its initial sequence number as 100. Server also sets its `TCP Window Scale` to 65535 bytes. i.e. Server has buffer space for 65535 bytes of data. Also note that the ack sequence numer is set to 1. This signifies that the server expects a next byte sequence number of 1.
-    4. Client receives the SYN_ACK TCP segment.
-    5. Client now acknowledges the first segment with an `ACK` TCP segment, thus completing the three way handshake. The receive window is set to 5000. The `ACK` sequence number is set to 101, this means that the next expected sequence number is 101. At this point, the client assumes the TCP connection to be `ESTABLISHED`.
-    6. Server receives the `ACK` TCP segment, and moves to the `ESTABLISHED` state.
+
+  1. The Client sets the `SYN` bit in the TCP header to request a TCP connection. The sequence number field is set to 0. Since the SYN bit is set, this sequence number is used as the initial sequence number.
+  2. `SYN` TCP segment is received by the Server.
+  3. Server sets the SYN and the ACK bits in the TCP header. Server sets the SYN and the ACK bits in the TCP header.
+     Server sends its initial sequence number as 100. Server also sets its `TCP Window Scale` to 65535 bytes. i.e. Server has buffer space for 65535 bytes of data. Also note that the ack sequence numer is set to 1. This signifies that the server expects a next byte sequence number of 1.
+  4. Client receives the SYN_ACK TCP segment.
+  5. Client now acknowledges the first segment with an `ACK` TCP segment, thus completing the three way handshake. The receive window is set to 5000. The `ACK` sequence number is set to 101, this means that the next expected sequence number is 101. At this point, the client assumes the TCP connection to be `ESTABLISHED`.
+  6. Server receives the `ACK` TCP segment, and moves to the `ESTABLISHED` state.
 
 Reference:
+
     * [http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf](http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf)
 
 ##### 13.2.2. Explain TCP Windowing.
@@ -461,7 +472,7 @@ The simplest way of considering the window size is that it indicates the size of
 When the server receives data from the client, it places it into this buffer. The server must then do two distinct things with this data:
 
 1. Acknowledgment: The server must send an acknowledgment back to the client to indicate that the data was received.
-2.  Transfer: The server must process the data, transferring it to the destination application process.
+2. Transfer: The server must process the data, transferring it to the destination application process.
 
 Because some firewalls do not properly implement TCP Window Scaling, it can cause a user's Internet connection to malfunction intermittently for a few minutes, then appear to start working again for no reason. There is also an issue if a firewall doesn't support the TCP extensions.
 
@@ -476,6 +487,7 @@ Scaling can be turned off by issuing the command sysctl -w "net.ipv4.tcp_window_
 **NOTE:** More details on how it works, is in my notes.
 
 References:
+
 1. [http://www.slashroot.in/understanding-tcp-three-way-handshake](http://www.slashroot.in/understanding-tcp-three-way-handshake)
 2. [www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf](www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf)
 
@@ -484,6 +496,7 @@ References:
 ![TCP Session Termination](./Images/TCP-Session-Close.png)
 
 The TCP connection termination involves the following:
+
 1. To close the TCP connection, the Client sends a TCP segment with the `FIN` [Finish] bit set, in the TCP header. Client state changes to `FIN-WAIT-1` state.
 2. Server receives the `FIN`. Server responds back with `ACK` to acknowledge the `FIN`. Server changes state to `CLOSE-WAIT-1`. In this state the server waits for the server application to close the connection.
 3. Client receives the `ACK`. Client changes state to `FIN-WAIT-2`. In this state, the TCP connection from the client to server is closed. Client now waits close of TCP connection from the server end.
@@ -492,6 +505,7 @@ The TCP connection termination involves the following:
 6. Server receives the `ACK`, and moves the connection to `CLOSED` state.
 
 Reference:
+
     1. [http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf](http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf)
     2. [http://www.freesoft.org/CIE/Course/Section4/10.htm](http://www.freesoft.org/CIE/Course/Section4/10.htm)
 
@@ -592,20 +606,16 @@ A single TRUNK port/connection can carry dozens on VLAN traffic without any prob
 
 #### 40.2. Ethernet Frame with VLAN tagging
 
-
 ![Structure of an Ethernet Frame](./Images/Ethernet-Frame.png)
-
 
 The VLAN tags are set in the `802.1Q tag` which is optional and not set by default in a Ethernet Frame.
 
 ![How does the Ethernet Frame look with the VLAN tags added](./Images/Ethernet_802.1Q_Insert.svg.png)
 
-
 #### 40.3. Trunking Modes
 
 1. Access Mode     : Only on a single default VLAN.
 2. Trunk Mode      : Allow Trunking on that port, and allow all VLANs.
-
 
 #### 40.4. VLAN Pruning
 
@@ -616,8 +626,8 @@ This will allow all sort of traffic for every VLAN to be passed through it, whic
 The process of restricting specific VLANs on TRUNK ports is called VLAN Pruning.
 
 #### 40.4. References
-1. [https://en.wikipedia.org/wiki/IEEE_802.1Q](https://en.wikipedia.org/wiki/IEEE_802.1Q)
 
+1. [https://en.wikipedia.org/wiki/IEEE_802.1Q](https://en.wikipedia.org/wiki/IEEE_802.1Q)
 
 ### 15. PING
 
@@ -652,7 +662,6 @@ When the ping program begins execution, it opens a raw socket sensitive only to 
 * Sending a PING  - For sending ICMP `ECHO_REQUEST`, the program is required to format the ICMP message. The system will provide the IP header and the Ethernet (usually) header.
 * Receiving a PING - The program must examine all ICMP messages coming in, find the package which has the ICMP `ECHO_REQUEST`, and reply back with an ICMP `ECHO_RESPONSE`.
 
-
 #### 15.3. ICMP Packet Structure (set over IPv4 header)
 
 ![ICMP Header](./Images/PING_ICMP_Wikipedia.png)
@@ -676,13 +685,13 @@ PING www.google.com (216.58.196.100) 56(84) bytes of data.
 rtt min/avg/max/mdev = 51.154/56.511/60.316/4.131 ms
 ```
 
-
-  * 64 Bytes sent - Total data sent is 64 bytes (56 Bytes of data + 8 Bytes ICMP Header = 64)
-* `icmp_seq` - The sequence number of the ICMP `ECHO_REPLY` packets.
-* TTL - The TTL value of an IP packet represents the maximum number of IP routers that the packet can go through before being thrown away. In current practice you can expect each router in the Internet to decrement the TTL field by exactly one. Hence, the TTL printed in the ICMP `ECHO_REPLY` packets are the number of hops subtracted from the total possible TTL value, 225. The above example shows `255 - number_of_hops = 56`.
-* `time` - Round trip time of each packet
+* 64 Bytes sent - Total data sent is 64 bytes (56 Bytes of data + 8 Bytes ICMP Header = 64)
+  * `icmp_seq` - The sequence number of the ICMP `ECHO_REPLY` packets.
+  * TTL - The TTL value of an IP packet represents the maximum number of IP routers that the packet can go through before being thrown away. In current practice you can expect each router in the Internet to decrement the TTL field by exactly one. Hence, the TTL printed in the ICMP `ECHO_REPLY` packets are the number of hops subtracted from the total possible TTL value, 225. The above example shows `255 - number_of_hops = 56`.
+  * `time` - Round trip time of each packet
 
 #### 15.5. References
+
 1. [https://www.youtube.com/watch?v=glPuwhMNQ2s](https://www.youtube.com/watch?v=glPuwhMNQ2s)
 2. [https://en.wikipedia.org/wiki/Ping_(networking_utility)](https://en.wikipedia.org/wiki/Ping_(networking_utility))
 
@@ -717,8 +726,8 @@ Under the Internet Protocol, TTL is an 8-bit field. In the IPv4 header, TTL is t
 6. The second packet is send with a TTP of 2, which the first router passes to the second router, after reducing the TTL. The second router reduces the TTL once again, and upon finding that the TTL is 0, drops the packet, and sends a message back to the source. Thus the source knows the second router in the path.
 7. `traceroute` sends the final package with a TTL of `30`, which means that the final packet would only go upto 30 hops, and not proceed further. So if the destination is further than 30 hops, it times out.
 
-
 **IMPORTANT**
+
 1. Ideally `traceroute` uses ICMP messages in an IP packet with the TTL set, and in such cases, expect an ICMP reply back.
 2. But Fedora26 and CISCO routers/devices uses UDP datagrams to send the requests. The net effect is the same, and both still uses TTL to trace the path.
 
@@ -756,7 +765,6 @@ tcpdump: listening on enp0s25, link-type EN10MB (Ethernet), capture size 262144 
 2. [http://www.slashroot.in/how-does-traceroute-work-and-examples-using-traceroute-command](http://www.slashroot.in/how-does-traceroute-work-and-examples-using-traceroute-command)
 3. [https://www.youtube.com/watch?v=G05y9UKT69s&t=307s](https://www.youtube.com/watch?v=G05y9UKT69s&t=307s)
 
-
 ### 17. SSL/TLS
 
 `Transport Layer Security` (TLS) and its predecessor, `Secure Sockets Layer` (SSL), both frequently referred to as "SSL", are cryptographic protocols that provide communications security over a computer network.
@@ -766,6 +774,7 @@ tcpdump: listening on enp0s25, link-type EN10MB (Ethernet), capture size 262144 
 An SSL certificate is required on the server, so as to create an SSL connection from the client to the server. A `Certificate Authority` creates the SSL certificate for a domain name on request, after providing details on the identity of the domain.
 
 Create an SSL Certificate includes the following steps:
+
 1. Create a `CSR` (Certificate Signing Request). This is a data file that contains your details (Hostname, Country code, Admin email ID etc..) and the `Public Key`.
 2. The Certificate Authority validates the `CSR` file.
 3. Upon successful validation, the CA issues an SSL Certificate for the domain name.
@@ -778,47 +787,61 @@ Whenever a browser initiates a connection with a SSL secured website , it will f
 
 The secure connection between a client and a server is established by an SSL handshake.
 
-
 ![SSL Handshake](./Images/SSLTLS_handshake.png)
 
 The steps involved in the SSL handshake are as follows (note that the following steps assume the use of the cipher suites listed in Cipher Suites with RSA Key Exchange: Triple DES, RC4, RC2, DES):
 
 1. The client sends the server a `HELLO` message with the following:
-* Client's SSL version number
-* List of Cipher suits the client supports
 
-2. The server sends the client a `HELLO` message in return, with
-* Server's SSL version number
-* The list of Cipher suits it can support, and agrees on one version.
-* The SSL certificate (which also has the Public Key)
+2. Client's SSL version number
 
-***
+3. List of Cipher suits the client supports
+
+4. The server sends the client a `HELLO` message in return, with
+
+5. Server's SSL version number
+
+6. The list of Cipher suits it can support, and agrees on one version.
+
+7. The SSL certificate (which also has the Public Key)
+
+---
+
 **IMPORTANT**
 i. The SSL certificate is generated by an SSL authority like Comodo, Verisign etc.
 ii. The Server's SSL certificate is created by including/verifying the following details
+
     1. The Server's public key
     2. The Server's hostname
     3. Other details to verify authenticity (address, location etc)
 
-***
+---
 
 3. The client verifies the SSL certificate, from it's builtin list of certs. Every browser has a list of builtin certs.
-* If the client cannot verify the certificate, it warns the user that the certificate cannot be verified, and the user has to take a decision of accepting or rejecting the certificate.
-* If the server can be successfully authenticated, the client accepts this step.
-4. The client creates a `pre-master` key based on the Cipher both the client and server has agreed upon, and `encrypts` it with the public key of the server.
-5. The `pre-master` key is sent to the server.
-6. The `pre-master` key is received by the server, and decrypted using the `private` key.
-7. _**ADDITIONAL STEP**_ : If the server has requested client authentication (an optional step in the handshake), the client also signs another piece of data that is unique to this handshake and known by both the client and server. In this case, the client sends both the signed data and the client's own certificate to the server along with the encrypted pre-master secret. If the server has requested client authentication, the server attempts to authenticate the client. If the client cannot be authenticated, the session ends. If the client can be successfully authenticated, the server uses its private key to decrypt the pre-master secret, and then performs a series of steps (which the client also performs, starting from the same pre-master secret) to generate the master secret.
 
-8. Both the client and server has the pre-master key, and uses it to generate a `SESSION KEY` based on the agreed Cipher suite. This key would be used for this session. Since this is a single key, the encryption from now on is `Symmetric`.
-9. The client sends a message to the server informing it that future messages from the client will be encrypted with the session key. It then sends a separate (encrypted) message indicating that the client portion of the handshake is finished.
-10. The server sends a message to the client informing it that future messages from the server will be encrypted with the session key. It then sends a separate (encrypted) message indicating that the server portion of the handshake is finished.
-11. The SSL handshake is now complete and the session begins. The client and the server use the session keys to encrypt and decrypt the data they send to each other and to validate its integrity.
+4. If the client cannot verify the certificate, it warns the user that the certificate cannot be verified, and the user has to take a decision of accepting or rejecting the certificate.
+
+5. If the server can be successfully authenticated, the client accepts this step.
+
+6. The client creates a `pre-master` key based on the Cipher both the client and server has agreed upon, and `encrypts` it with the public key of the server.
+
+7. The `pre-master` key is sent to the server.
+
+8. The `pre-master` key is received by the server, and decrypted using the `private` key.
+
+9. _**ADDITIONAL STEP**_ : If the server has requested client authentication (an optional step in the handshake), the client also signs another piece of data that is unique to this handshake and known by both the client and server. In this case, the client sends both the signed data and the client's own certificate to the server along with the encrypted pre-master secret. If the server has requested client authentication, the server attempts to authenticate the client. If the client cannot be authenticated, the session ends. If the client can be successfully authenticated, the server uses its private key to decrypt the pre-master secret, and then performs a series of steps (which the client also performs, starting from the same pre-master secret) to generate the master secret.
+
+10. Both the client and server has the pre-master key, and uses it to generate a `SESSION KEY` based on the agreed Cipher suite. This key would be used for this session. Since this is a single key, the encryption from now on is `Symmetric`.
+
+11. The client sends a message to the server informing it that future messages from the client will be encrypted with the session key. It then sends a separate (encrypted) message indicating that the client portion of the handshake is finished.
+
+12. The server sends a message to the client informing it that future messages from the server will be encrypted with the session key. It then sends a separate (encrypted) message indicating that the server portion of the handshake is finished.
+
+13. The SSL handshake is now complete and the session begins. The client and the server use the session keys to encrypt and decrypt the data they send to each other and to validate its integrity.
 
 This is the normal operation condition of the secure channel. At any time, due to internal or external stimulus (either automation or user intervention), either side may renegotiate the connection, in which case, the process repeats itself.
 
 #### 17.3. Asymmetrical / Public-key cryptography
-
 
 #### 17.4. Symmetric Cryptography
 
@@ -842,6 +865,7 @@ Once the client creates the `pre-master` key, sends it over to the server by enc
 From there onwards, the encryption is done using the `Shared key` which is Symmetric, due to the use of a single key.
 
 #### 17.6. Reference
+
 1. [https://support.microsoft.com/en-us/help/257591/description-of-the-secure-sockets-layer-ssl-handshake](https://support.microsoft.com/en-us/help/257591/description-of-the-secure-sockets-layer-ssl-handshake)
 2. [https://www.ssl.com/article/ssl-tls-handshake-overview/](https://www.ssl.com/article/ssl-tls-handshake-overview/)
 3. [https://www.websecurity.symantec.com/security-topics/how-does-ssl-handshake-work](https://www.websecurity.symantec.com/security-topics/how-does-ssl-handshake-work)
@@ -851,7 +875,6 @@ From there onwards, the encryption is done using the `Shared key` which is Symme
 7. [https://en.wikipedia.org/wiki/Symmetric-key_algorithm](https://en.wikipedia.org/wiki/Symmetric-key_algorithm)
 8. [https://en.wikipedia.org/wiki/Public-key_cryptography](https://en.wikipedia.org/wiki/Public-key_cryptography)
 
-
 ### 18. HTTPS (HTTP over TLS or SSL)
 
 HTTPS (also called HTTP over Transport Layer Security [TLS], HTTP over SSL, and HTTP Secure) is a communications protocol for secure communication over a computer network which is widely used on the Internet.
@@ -860,24 +883,31 @@ HTTPS consists of communication over Hypertext Transfer Protocol (HTTP) within a
 
 HTTPS URLs begin with "https://" and use port 443 by default, whereas HTTP URLs begin with "http://" and use port 80 by default.
 
-
-
 ![HTTPS](./Images/HTTP-over-SSL.png)
 
-
 1. An end-user asks their browser to make a secure connection to a website (e.g.https://www.example.com)
-2. The browser obtains the IP address of the site from a DNS server then requests a secure connection to the website.
-3. The browser sends its information such as `SSL version`, the supported Cipher suite etc..
-4. The Web server sends the browser a copy of its SSL certificate, along with an agreement on the Cipher suite to use.
-5. The browser receives the SSL certificate and verifies
-* It is signed by a CA
-* It is still valid
-* It confirms to the security standards.
-* The domain name on the certificate matches the domain requested by the user.
 
-6. Once the browser confirms this, it creates a pre-master key, encrypts it with the Server's public key, and sends it to the server.
-7. The server receives it, decrypts it with it's private key.
-8. Using the pre-master key, they generate a session key, which is used for the session encryption.
+2. The browser obtains the IP address of the site from a DNS server then requests a secure connection to the website.
+
+3. The browser sends its information such as `SSL version`, the supported Cipher suite etc..
+
+4. The Web server sends the browser a copy of its SSL certificate, along with an agreement on the Cipher suite to use.
+
+5. The browser receives the SSL certificate and verifies
+
+6. It is signed by a CA
+
+7. It is still valid
+
+8. It confirms to the security standards.
+
+9. The domain name on the certificate matches the domain requested by the user.
+
+10. Once the browser confirms this, it creates a pre-master key, encrypts it with the Server's public key, and sends it to the server.
+
+11. The server receives it, decrypts it with it's private key.
+
+12. Using the pre-master key, they generate a session key, which is used for the session encryption.
 
 For more detailed information, read `Section 17.2. SSL/TSL Handshake`.
 
@@ -887,7 +917,6 @@ Reference:
 2. [https://www.instantssl.com/ssl.html](https://www.instantssl.com/ssl.html)
 3. [https://robertheaton.com/2014/03/27/how-does-https-actually-work/](https://robertheaton.com/2014/03/27/how-does-https-actually-work/)
 
-
 ### 19. HTTP Return codes
 
 A web-server working on HTTP protocol, uses a series of Status Codes to denote the state or status.
@@ -895,7 +924,6 @@ A web-server working on HTTP protocol, uses a series of Status Codes to denote t
 HTTP Status codes are divided into five categories.
 
 #### 19.1. 1xx Informational responses
-
 
 #### 19.2. 2xx Success
 
@@ -920,7 +948,6 @@ This class of status code indicates the client must take additional action to co
 3. **403 Forbidden**
 4. **404 Not Found**
 
-
 #### 19.5. 5xx Server errors
 
 The server failed to fulfill a request.
@@ -932,8 +959,8 @@ Response status codes beginning with the digit "5" indicate cases in which the s
 3. **503 Service Unavailable**
 
 #### 19.6. References
-1. [https://en.wikipedia.org/wiki/List_of_HTTP_status_codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
 
+1. [https://en.wikipedia.org/wiki/List_of_HTTP_status_codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
 
 ### 20. How does URL-forwarding or Geo-Redirection work?
 
@@ -952,6 +979,7 @@ A Geo-redirection is done due to multiple reasons:
 * The browser is supposed to send a second identical access request, to the new URL.
 
 **NOTE:**
+
 * The HTTP response status code 302 Found is a common way of performing URL redirection. But, it's not the 302 code that provides the new URL. It's the `HTTP 303 See Other` status code.
 * Popular browsers implemented HTTP 302 with the functionality of 303, hence a 302 will work as 303, and provide a re-direction.
 
@@ -1031,12 +1059,12 @@ A Recursive query is through which, a DNS server will do all the work till fetch
 ![Recursive DNS Query](./Images/Recursive-DNS-Query.png)
 
 Reference:
+
 1. [http://www.slashroot.in/difference-between-iterative-and-recursive-dns-query](http://www.slashroot.in/difference-between-iterative-and-recursive-dns-query)
 
 #### 22.2. Explain the various Resource Records in DNS.
 
 #### 22.3. How does a name resolution work?
-
 
 #### 22.4. What is a TTL, in DNS?
 
@@ -1049,7 +1077,6 @@ TTLs are used in `Traceroute` as well as `DNS` caching mechanisms.
 Under the Internet Protocol, TTL is an 8-bit field. In the IPv4 header, TTL is the 9th octet of 20. In the IPv6 header, it is the 8th octet of 40. The maximum TTL value is 255, the maximum value of a single octet. A recommended initial value is 64
 
 TTLs also occur in the Domain Name System (DNS), where they are set by an authoritative name server for a particular resource record. When a caching (recursive) nameserver queries the authoritative nameserver for a resource record, it will cache that record for the time (in seconds) specified by the TTL. If a stub resolver queries the caching nameserver for the same record before the TTL has expired, the caching server will simply reply with the already cached resource record rather than retrieve it from the authoritative nameserver again. TTL for NXDOMAIN (non-existent domain) responses is set from the minimum of the MINIMUM field of the SOA record and the TTL of the SOA itself, and indicates how long a resolver may cache the negative answer.
-
 
 ### 23. MAIL (SMTP/MTA/MTU/POP/IMAP)
 
@@ -1071,12 +1098,9 @@ from the very beginning to the very end, i.e. start with an MUA, end with an MUA
 
 ### 26. Explain Netfilter, IPtables, and its structure (chains).
 
-
 ### 41. Tunneling
 
 ### 42. VPN (Virtual Private Area Network)
-
-
 
 ### 44. ARP (Address Resolution Protocol)
 
@@ -1084,7 +1108,7 @@ from the very beginning to the very end, i.e. start with an MUA, end with an MUA
 
 * Layer 2 (Data Link Layer) deals with MAC addresses and FRAMES. While creating FRAMES out of the TCP/UDP Segments/Datagrams, the Data Link Layer needs to know the MAC address of the destination to send the frame to.
 
-*  It is communicated within the boundaries of a single network, never routed across internetwork nodes.
+* It is communicated within the boundaries of a single network, never routed across internetwork nodes.
 
 * ARP (Address Resolution Protocol) finds the mapping from an Internet Protocol (IP) address to its corresponding physical network address.
 
@@ -1098,6 +1122,7 @@ from the very beginning to the very end, i.e. start with an MUA, end with an MUA
 2. If this information is missing in the ARP-cache, the first device send a ARP-request broadcast message over the subnet, and the destination network device with the MAC address replies back with the MAC address.
 
 **NOTE:**
+
 1. If the request is for a MAC address outside the subnet, the sending device sends an ARP request for the MAC address of the default gateway (PROXY ARP). After the address is resolved and the default gateway receives the packet, the default gateway broadcasts the destination IP address over the networks connected to it. The Layer 3 device on the destination device network uses ARP to obtain the MAC address of the destination device and delivers the packet.
 2. This is the reason why the local ARP cache would always have the Gateway node's MAC address. Even if you delete it using `arp -d`, it would be added back pretty soon provided there is lot of internet communication going on.
 
@@ -1151,22 +1176,26 @@ IP address       HW type     Flags       HW address            Mask     Device
 ```
 
 * The `C` flag shows the entry as `COMPLETE` which means the information is correct, ie.. the destination responded with the corret MAC address.
+
 * Permanent entries are marked with `M`.
+
 * Published entries have the `P` flag. Any entries pushed manually by the administrator to the ARP table is a PUBLISHED entry.
 
 * PROX ARP
-1. Proxy ARP enables devices separated into physical network segments connected by a router, in the same IP network or subnetwork, to resolve IP-to-MAC addresses.
-2. When devices are not in the same data link layer network but are in the same IP network, they try to transmit data to each other as if they were on the local network. However, the router that separates the devices will not send a broadcast message because routers do not pass hardware-layer broadcasts. Therefore, the addresses cannot be resolved.
-3. Proxy ARP is enabled by default so the "proxy router" that resides between the local networks responds with its MAC address as if it were the router to which the broadcast is addressed.
-4. When the sending device receives the MAC address of the proxy router, it sends the datagram to the proxy router, which in turns sends the datagram to the designated device.
+
+* Proxy ARP enables devices separated into physical network segments connected by a router, in the same IP network or subnetwork, to resolve IP-to-MAC addresses.
+
+* When devices are not in the same data link layer network but are in the same IP network, they try to transmit data to each other as if they were on the local network. However, the router that separates the devices will not send a broadcast message because routers do not pass hardware-layer broadcasts. Therefore, the addresses cannot be resolved.
+
+* Proxy ARP is enabled by default so the "proxy router" that resides between the local networks responds with its MAC address as if it were the router to which the broadcast is addressed.
+
+* When the sending device receives the MAC address of the proxy router, it sends the datagram to the proxy router, which in turns sends the datagram to the designated device.
 
 Reference:
 
 1. [https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/ipaddr_arp/configuration/15-mt/arp-15-mt-book/arp-config-arp.html](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/ipaddr_arp/configuration/15-mt/arp-15-mt-book/arp-config-arp.html)
 2. [https://www.lifewire.com/address-resolution-protocol-817941](https://www.lifewire.com/address-resolution-protocol-817941)
 3. [http://www.slashroot.in/how-does-arp-address-resolution-protocol-work](http://www.slashroot.in/how-does-arp-address-resolution-protocol-work)
-
-
 
 ### 47. Netfilter, and its uses
 
@@ -1191,8 +1220,6 @@ III. Multicast: (One to Many) [Selected many] (RIPv2/EIGRP use Multicast)
 2. Multicast groups are Class-D addresses, ie.. First octect of 224-239.
 3. Hosts out of the Multicast group won't recieve the packets.
 
-
-
 ### 52. What is Network Switching?
 
 ### 52. Bonding
@@ -1202,12 +1229,10 @@ III. Multicast: (One to Many) [Selected many] (RIPv2/EIGRP use Multicast)
 
 #### 52.1. Explain the different modes of Networking Bonding.
 
-
-
-
 ### 55. What are Collision Domains and Broadcast Domains?
 
 ### 56. Network Address Translation (NAT)
+
     * Static NAT
     * Dynamic NAT
     * Post Address Translation (PAT)
@@ -1215,17 +1240,19 @@ III. Multicast: (One to Many) [Selected many] (RIPv2/EIGRP use Multicast)
 ### 57. NTP, and its working
 
 ### 58. Network Management Protocols
+
     * CDP (Cisco Discovery Protocols)
     * LLDP (Link Layer Discovery Protocols)
 
 ### 60. Important network protocols
+
     * VLAN Trunking Protocol (VTP)
     * Spanning Tree Protocol (STP)
     * Open Shortest Path First (OSPF)
     * Enhanced Interior Gateway Routing Protocol (EIGRP)
     * Border Gateway Protocol (BGP)
     * Hot Standby Router Protocol (HSRP)
-
+    
     * http://www.slashroot.in/eigrp-enhanced-interior-gateway-routing-protocol
 
 ### 61. Quality of Service (QoS)
@@ -1239,11 +1266,13 @@ Port knocking is the process in which by default all the ports on the server are
 If the sequenece succeeds, the access is allowed by the server. Thus, the name `port-knocking` implies the process of knocking multiple ports in a pre-configured manner, to get access.
 
 Reference:
+
 1. [http://www.slashroot.in/what-is-port-knocking-and-how-to-configure-it-in-linux](http://www.slashroot.in/what-is-port-knocking-and-how-to-configure-it-in-linux)
 
 ### 64. What is Promiscous mode?
 
 ### 65. Tools in Linux to monitor/tune Network. (Refer RHEL Networking guide)
+
     * netstat
     * ip
     * iperf
@@ -1321,10 +1350,6 @@ Network layer(?), since it creates the packet out of TCP segments and set it des
 
 A new company. There are 3 floors with 200 possible workstations and 200 IP phones on each floor.
 
-
-
-
-
 ### 83. Describe a difference between TAP and TUN device. What are they for ?
 
 ### 84. What are the differences between Hubs, Switches, and Routers?
@@ -1355,7 +1380,6 @@ ie.. Stateful firewalls monitor sessions and allow the sessions to function prop
 
 ### 11. Explain the ports for some known services
 
-
 ## Network Troubleshooting
 
 ### 1. OSI Layer troubleshooting
@@ -1365,22 +1389,27 @@ Networks can be troubleshooted in multiple ways. One important method is to work
 Troubleshooting along the OSI layers (Note that not everything aligns exactly as the OSI layers)
 
 **NOTE:**
+
 * While troubleshooting N/W applications, it's first better to check the Application layer steps and then move to the lower three steps.
 * The network connectivity troubleshooting comes in the lower three layers. If that's all fine, we can come up back to the top four layers, and concentrate specifically on the remaining three layers (Presentation, Session, Transport layers)
 
 #### 1.1. Layer 1 - Application Layer
+
     1. Check if the Application is up and running (ps -aux, pgrep, top)
     2. Check if the application is listening on the port. (netstat)
     3. Check if firewall rules are blocking the port (iptables -L and list the port/service)
 
 #### 1.2. Layer 2 - Presentation layer
+
     1. Since this layer deals with mapping various formats to the underlying layers, check if things like encryption etc.. are causing problems.
 
 #### 1.3. Layer 3 - Session layer
+
     1. Check if localhost is able to establish a session to the running service, as well as other nodes.
     2 A successful session would show an ESTABLISHED flag in netstat, provided the service works over network sockets.
 
 #### 1.4. Layer 4 - Transport layer (TCP packet capture using tcpdump/Wireshark)
+
     * This may require packet captures and analysis using the RFC for that particular service.
     * Starting a packet capture and then trying to establish a session from the client to the server would help.
     * Analyze the packet capture and check if the requests and replies are according to the RFC. There are multiple instances where a service implementation breaks an RFC and the client won't proceed further since it doesn't know what to do next. Lots of NFS/CIFS issues which can come up in this layer.
@@ -1439,17 +1468,16 @@ Cannot get wake-on-lan settings: Operation not permitted
 
 #### 1.7. Layer 7 - Physical layer
 
-
-
 ### 2. How do you distinguish a DNS problem from a network problem?
 
-----
+---
 
 ## Scenarios
 
 1. A webservice is very slow(multi-tier application, which has app, db..etc in different servers)
-    * How will you troubleshoot?
-    ( Lot of sub questions for this)
+
+   * How will you troubleshoot?
+     ( Lot of sub questions for this)
 
 2. A sysadmin is operating a linux system with 6 network cards, being that only eth0 is plugged in and working. Sysadmin does a few commands:
 
@@ -1491,6 +1519,7 @@ Questions:
 ```bash
 # tcpdump -n -nn -i eth0
 ```
+
 on one terminal, while issuing commands on another terminal. With the following output from tcpdump, can you tell what commands were run, and if they  succeeded or failed?
 
 ```bash
@@ -1544,14 +1573,3 @@ rtt min/avg/max/mdev = 0.057/0.067/0.082/0.014 ms
 ```
 
 However the tcpdump does not capture any of the traffic. The sysadmin runs the command again in flood mode, and still nothing is captured. How can one tell if this is a problem or not, and what files or commands could be able to prove the previous statement?
-
-
-
-
-
-
-
-
-
-
-
