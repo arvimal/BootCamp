@@ -129,9 +129,19 @@ If all four of these are not available, the kernel halts the Linux machine with 
 ### 3.1. SIGCLD signal and the `wait()` system call
 1. The kernel notifies the parent process of the child's exit using the `SIGCHLD` signal.
 2. Usually, the parent process does not need to do anything as a response.
-3. The parent process however can obtain more information from the child process termination using the `wait()` system call.
-4.
+3. The parent process, however, can obtain more information from the child process termination using the `wait()` system call.
+5. The `wait()` call is used to monitor a state change of a process.
+4. Every parent process has to acknowledge the termination of its child thorugh the `wait()` system call.
 
+### 3.2. Zombie process
+1. A process that has been terminated, but not yet waited by its parent process using the `wait()` system call, is a Zombie process.
+2. A Zombie process only posses a minimal skeleton of the original process, ie. a few basic data structures to be read by the parent process.
+3. A process in the Zombie state waits for its parent process to read/ack its state.
+4. Only after the parent process reads and acknowledges the child process state, is the process really terminated by the kernel.
+
+
+
+In short, a Zombie process
 ###
 
 
