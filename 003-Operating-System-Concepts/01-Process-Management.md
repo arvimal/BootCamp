@@ -5,12 +5,9 @@ Process Management
 
 Process management is one of the most important aspects of any Operating Systems.
 
-While most operating systems provide a single system call to create a process, Unix and Linux in general has used a two-step approach, ie. the two system calls `fork()` and `exec()`.
-
-Even though two calls exist, `exec()` is called as soon as `fork()` is executed.
+While most operating systems provide a single system call to create a process, Unix and Linux in general has used a two-step approach, ie. the two system calls `fork()` and `exec()`. Even though two calls exist, `exec()` is called as soon as `fork()` is executed.
 
 ## 1. The Process ID
-
 1. Every process is represented by a Process ID (PID).
 2. The PID is guaranteed to be unique at any given point of time.
 3. The kernel does not readily allocate a process ID which has been returned back to the pool of free IDs.
@@ -51,13 +48,31 @@ If all four of these are not available, the kernel halts the Linux machine with 
 6. The kernel is only concerned about the UID/GID and not the user name mappings.
 
 ### 1.5. pid_t
-1.
+1. The process ID is represented by the `pid_t` type, defined in the kernel header source file `sys/types.h`.
+2. In Linux, `pid_t` is a typedef to the C int type.
 
-### Fetching the Process ID and Parent ID
+### 1.6. Fetching the Process ID and Parent ID
+1. The system call `getpid()` returns the Process ID of the process.
+2. The system call `getppid()` returns the parent process ID of a process.
+
+## 2. Creating/Running a new process
+1. Two system calls, fork() and exec(), are used to create processes in Linux.
+2. Creating a new process with fork() is called forking.
+3. The second stage is called `Executing` the program, using the `exec()` system call.
+
+### 2.1. The fork() system call
+1. The fork() system call is used to create an image (almost exact copy) of an existing process.
+2. The new process is called the `Child` of the process it was forked from, the other called `Parent`.
+3. The new process, also known as the `Child` process differs from the `Parent` in a few ways.
+    * PID - The child process gets a new PID.
+    * Stats - The child's resourse statistics are set to 0.
+    * File locks - Any file locks used by the parent process are not inherited by the child process.
+    * Signals - Any signals in use with the parent are not inherited by the child process.
+
+### 2.2. Copy-On-Write (COW) behaviour of `fork()`
 
 
-## Creating/Running a new process
-
+### 2.2. The exec() system call
 
 
 ## The Scheduler, IDLE process, and INIT process
