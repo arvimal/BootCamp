@@ -70,16 +70,45 @@ If all four of these are not available, the kernel halts the Linux machine with 
     * Signals - Any signals in use with the parent are not inherited by the child process.
 
 ### 2.2. Copy-On-Write (COW) behaviour of `fork()`
+1. Copy-on-Write is the process in which modern Unix/Linux systems do forking.
+2. In early Unix, the kernel copied the following from the Parent process to the Child process.
+    * All internal Data Structures of the parent.
+    * All the page-table entries of the parent.
+    * All the address-space of the parent.
+3. The copy process of the initial method was time consuming, from the kernel's pov.
+4. Newer kernels use CoW, which creates a reference pointer to the required data, in the Child process address space.
+5. As long as there are only read requests to the child address space, the data is served from the Parent address space.
+6. This makes it very easy to create/serve multiple child processes very fast.
+7. The child process copy is marked read-only.
+8. When a new write happens to the address space of the child process, a page-fault happens since being read-only, and the kernel copies over the page to the child address space. This specific page is now marked out of the CoW mode and is no longer shared between the parent and child process.
+9. CoW is a lazy algorithm to reduce overhead unless really necessary.
+10. Modern hardware architectures support CoW in their Memory-Management-Unit (MMU), hence this process is really fast.
 
+### 2.3. The exec() system call
+1. The `exec()` system call is a part of a family of system calls.
+2. Only one of the members in the exec family is a system call, the rest are wrappers around it.
+3. The `exec()` system call replaces the original process image (text area) with the image of the program mentioned as argument.
+4. A successful `exec()` system call changes the following in the child process:
+    * The address space.
+    * The process image
+    * Signal handling in the parent is not inherited.
+    * Memory locks in the parent are not inherited.
+    * Mapped files are dropped in the child process.
 
-### 2.2. The exec() system call
+## 3. Terminating a process
+1. A process is terminated by calling the `exit()` system call.
+2. When a process exits, the kernel cleans up all the resources it had used, this includes:
+    * Allocated memory
+    * Open files
+    * System V semaphores
+3. After cleanup, the kernel destroys the process and notified the parent of the child's exit with the **SIGCHLD** signal.
 
+### 3.1. SIGCLD signal and the `wait()` system call
+1. The kernel notifies the parent process of the child's exit using the `SIGCHLD` signal.
+2. Usually, the parent process does not need to do anything as a response.
+3. The parent process however can obtain more information from the child process termination using the `wait()` system call.
+4.
 
-## The Scheduler, IDLE process, and INIT process
+###
 
-* /sbin/init is the first process in
-* Just before /sbin/init
-* The **idle** process has a PID of 0.
-* It is scheduled on a CPU in case there are no processes to be run.
-* The first process in user space
 
