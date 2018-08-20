@@ -17,6 +17,7 @@
     - [2.3. The exec() system call](#23-the-exec-system-call)
   - [3. Terminating a process](#3-terminating-a-process)
     - [3.1. SIGCLD signal and the `wait()` system call](#31-sigcld-signal-and-the-wait-system-call)
+    - [3.2. Zombie process](#32-zombie-process)
     - [](#)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -135,13 +136,21 @@ If all four of these are not available, the kernel halts the Linux machine with 
 
 ### 3.2. Zombie process
 1. A process that has been terminated, but not yet waited by its parent process using the `wait()` system call, is a Zombie process.
-2. A Zombie process only posses a minimal skeleton of the original process, ie. a few basic data structures to be read by the parent process.
+2. A terminated process before being disposed off, posses a minimal skeleton of the original process, ie. a few basic data structures to be read by the parent process. Such a process is said to be in the Zombie state.
 3. A process in the Zombie state waits for its parent process to read/ack its state.
-4. Only after the parent process reads and acknowledges the child process state, is the process really terminated by the kernel.
+4. Only after the parent process reads and acknowledges the child process state through the `wait()` system call, is the process really terminated by the kernel.
+5. Since some of the basic data structures of the process has to be maintained, a zombie process still consumes some system resources.
 
+In short, a Zombie process is the state of a process that has been terminated but not yet acknowledged by the wait() system call by its parent.
 
+Poorly written software that does not clean up its children through the `wait()` system call tends to create more Zombie processes. In short, Zombie processes lingering in the system has irresponsible parents.
 
-In short, a Zombie process
-###
+**IMPORTANT:**
+The most common explanation of a Zombie process, is that it is a process whose parent has died and does not have an active parent.
+
+But this does not seem to be the case. A process whose parent has died will remain in the process queue as normal.
+
+When a process is terminated, the `init` process will do a recursive search for all the child processes it has spawned, and will own it. The `init` process will then cleanly acknowledge the process state and terminate the processes if required, or let the process finish its execution.
+
 
 
