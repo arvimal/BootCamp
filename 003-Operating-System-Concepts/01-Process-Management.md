@@ -1,3 +1,26 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Process Management](#process-management)
+  - [Introduction](#introduction)
+  - [1. The Process ID](#1-the-process-id)
+    - [1.1. The idle process](#11-the-idle-process)
+    - [1.2. The init process](#12-the-init-process)
+    - [1.3. Process ID allocation](#13-process-id-allocation)
+    - [1.4. The process hierarchy](#14-the-process-hierarchy)
+    - [1.5. pid_t](#15-pid_t)
+    - [1.6. Fetching the Process ID and Parent ID](#16-fetching-the-process-id-and-parent-id)
+  - [2. Creating/Running a new process](#2-creatingrunning-a-new-process)
+    - [2.1. The fork() system call](#21-the-fork-system-call)
+    - [2.2. Copy-On-Write (COW) behaviour of `fork()`](#22-copy-on-write-cow-behaviour-of-fork)
+    - [2.3. The exec() system call](#23-the-exec-system-call)
+  - [3. Terminating a process](#3-terminating-a-process)
+    - [3.1. SIGCLD signal and the `wait()` system call](#31-sigcld-signal-and-the-wait-system-call)
+    - [](#)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 Process Management
 ===================
 
