@@ -18,7 +18,12 @@
   - [3. Terminating a process](#3-terminating-a-process)
     - [3.1. SIGCLD signal and the `wait()` system call](#31-sigcld-signal-and-the-wait-system-call)
     - [3.2. Zombie process](#32-zombie-process)
-    - [](#)
+  - [4. Users and Groups](#4-users-and-groups)
+    - [4.1. Real, Effective, and Saved UID/GID](#41-real-effective-and-saved-uidgid)
+      - [4.1.1. Real ID](#411-real-id)
+      - [4.1.2. Effective ID](#412-effective-id)
+      - [4.1.3. Saved ID](#413-saved-id)
+  - [5. Daemons](#5-daemons)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -152,5 +157,16 @@ But this does not seem to be the case. A process whose parent has died will rema
 
 When a process is terminated, the `init` process will do a recursive search for all the child processes it has spawned, and will own it. The `init` process will then cleanly acknowledge the process state and terminate the processes if required, or let the process finish its execution.
 
+## 4. Users and Groups
 
+
+### 4.1. Real, Effective, and Saved UID/GID
+
+#### 4.1.1. Real ID
+
+#### 4.1.2. Effective ID
+
+#### 4.1.3. Saved ID
+
+## 5. Daemons
 
