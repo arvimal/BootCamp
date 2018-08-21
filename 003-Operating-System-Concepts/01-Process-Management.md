@@ -155,7 +155,7 @@ The most common explanation of a Zombie process, is that it is a process whose p
 
 But this does not seem to be the case. A process whose parent has died will remain in the process queue as normal.
 
-When a process is terminated, the `init` process will do a recursive search for all the child processes it has spawned, and will own it. The `init` process will then cleanly acknowledge the process state and terminate the processes if required, or let the process finish its execution.
+When a process is terminated, the `init` process will do a recursive search for all the child processes it has spawned, and will parent it. The `init` process will then cleanly acknowledge the process state and terminate the processes if required, or let the process finish its execution.
 
 ## 4. Users and Groups
 
