@@ -178,12 +178,23 @@ If the reads were done in the order they were requested, the read/write head wou
 Once the I/O requests are sorted, they can be processed sequentially. The seeks are reduced which is usually the bottleneck in disk I/O.
 
 
+### 15.3. Types of I/O Schedulers
+
+#### 15.3.1. The Linus Elevator (2.4 kernel series)
+
+#### 15.3.2. The Deadline Scheduler
+
+#### 15.3.3. The Anticipatory Scheduler
+
+#### 15.3.4. The CFQ I/O Scheduler (Completely-Fair-Queuing)
+
+#### 15.3.5. The Noop I/O Scheduler
+* The most basic of all I/O schedulers.
+* Only does basic Merging.
+* Does not sort the I/O requests.
+* Commonly used for applications reading disks which does not require request sorting, or have their own request sorting implemented internally.
 
 
-### 15.1. The Noop I/O Scheduler
 
-### 15.2. The CFQ I/O Scheduler (Completely-Fair-Queuing)
 
-### 15.3. The Anticipatory Scheduler
 
-### 15.4. The Deadline Scheduler
