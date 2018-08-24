@@ -26,10 +26,20 @@
     - [4.2. Moving](#42-moving)
   - [5. Device nodes](#5-device-nodes)
     - [5.1. Special device nodes](#51-special-device-nodes)
-  - [6. Monitoring file events](#6-monitoring-file-events)
-    - [6.1. inotify](#61-inotify)
-    - [6.2. Watches](#62-watches)
-    - [6.3. inotify events](#63-inotify-events)
+  - [6. Virtual File System (Virtual File Switch)](#6-virtual-file-system-virtual-file-switch)
+    - [6.1. What is it?](#61-what-is-it)
+    - [6.2. Mandatory data structures](#62-mandatory-data-structures)
+      - [6.2.1. inode object](#621-inode-object)
+      - [6.2.2. superblock object](#622-superblock-object)
+      - [6.2.3. dentry object](#623-dentry-object)
+      - [6.2.4. file object](#624-file-object)
+      - [6.2.5. inode_operations object](#625-inode_operations-object)
+      - [6.2.6. superblock_operations object](#626-superblock_operations-object)
+      - [6.2.7. dentry_operations object](#627-dentry_operations-object)
+      - [6.2.8. file_operations object](#628-file_operations-object)
+  - [7. Inodes](#7-inodes)
+    - [7.1. Metadata in inodes](#71-metadata-in-inodes)
+    - [7.2. Access time, Modify time, Change time](#72-access-time-modify-time-change-time)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -88,15 +98,41 @@ File and Directory Management
 
 ### 5.1. Special device nodes
 
-## 6. Monitoring file events
+## 6. Virtual File System (Virtual File Switch)
 
-### 6.1. inotify
+### 6.1. What is it?
 
-### 6.2. Watches
+### 6.2. Mandatory data structures
 
-### 6.3. inotify events
+#### 6.2.1. inode object
 
+#### 6.2.2. superblock object
 
+#### 6.2.3. dentry object
+
+#### 6.2.4. file object
+
+#### 6.2.5. inode_operations object
+
+#### 6.2.6. superblock_operations object
+
+#### 6.2.7. dentry_operations object
+
+#### 6.2.8. file_operations object
+
+## 7. Inodes
+
+### 7.1. Metadata in inodes
+
+### 7.2. Access time, Modify time, Change time
+
+**Access** Time is when the file was last accessed.
+
+**Modify** Time is when the file was last modified.
+
+**Change** Time is when the metadata of the file was last changed.
+
+Upon creation, all three of these are set to the current time.
 
 
 
