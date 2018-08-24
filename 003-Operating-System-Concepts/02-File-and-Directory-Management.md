@@ -106,11 +106,19 @@ File and Directory Management
 
 #### 6.2.1. inode object
 
+The `inode` object represents an individual file or directory.
+
 #### 6.2.2. superblock object
+
+The `superblock` object represents an entire filesystem. It carries information about the filesystem.
 
 #### 6.2.3. dentry object
 
+The `dentry` object represents an individual directory entry. This is used to point to each entries (file / directory) under a folder.
+
 #### 6.2.4. file object
+
+The `file` object represents an open file.
 
 #### 6.2.5. inode_operations object
 
@@ -135,4 +143,23 @@ File and Directory Management
 Upon creation, all three of these are set to the current time.
 
 
+## 8. Hard and Soft links
 
+
+### 8.1. Hard links
+
+
+### 8.2. Soft links
+
+
+## 15. I/O Schedulers
+
+
+
+### 15.1. The Noop I/O Scheduler
+
+### 15.2. The CFQ I/O Scheduler (Completely-Fair-Queuing)
+
+### 15.3. The Anticipatory Scheduler
+
+### 15.4. The Deadline Scheduler
