@@ -170,3 +170,13 @@ When a process is terminated, the `init` process will do a recursive search for 
 
 ## 5. Daemons
 
+Daemons are processes which possess two specific features:
+
+1. The process should not be using a terminal
+2. The process should be running in the background, waiting for signals/events.
+
+## 6. Process Schedulers [CPU Schedulers]
+
+CPU Schedulers or Process schedulers schedule processes to run on the CPUs, based on various factors such as priority, nice value etc..
+
+From 2.6 kernel versions onwards, Linux uses the `Completely Fair Scheduler`, also known as `CFS`.

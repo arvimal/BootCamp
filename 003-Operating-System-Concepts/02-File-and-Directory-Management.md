@@ -154,6 +154,30 @@ Upon creation, all three of these are set to the current time.
 
 ## 15. I/O Schedulers
 
+The main job of a CPU Scheduler boils down to two specific operations.
+
+* Merging
+* Sorting
+
+### 15.1. Merging
+
+Merging is the process of taking two or more I/O adjacent requests and combining them into a single I/O request.
+
+For example, consider three read requests, one from disk sector 20, the second from disk sector 25, and the third from disk sector 30. Even though there are three read requests, the I/O Scheduler can merge these three into one single request for disk sectors 20, 25, 30. This reduces to-and-fro transactions, and since the disk read/write head proceeds sequentially, it is best to merge these requests and get the results in a single go.
+
+The total I/O output might be the same, but the I/O operations are cut down to 1/3 in this case.
+
+### 15.2. Sorting
+
+Sorting is the process of arranging the I/O requests in ascending block order. This is the most important of the two operations.
+
+If read requests come in for blocks 10, 4, 50, 2, 1, and 100, the Sorting algorithm sorts them in ascending order so that a single motion of the read head can read the blocks sequentially.
+
+If the reads were done in the order they were requested, the read/write head would have to move around quite a bit to-and-fro, and multiple I/O operations. This increases the time and wear-and-tear of the head.
+
+Once the I/O requests are sorted, they can be processed sequentially. The seeks are reduced which is usually the bottleneck in disk I/O.
+
+
 
 
 ### 15.1. The Noop I/O Scheduler
