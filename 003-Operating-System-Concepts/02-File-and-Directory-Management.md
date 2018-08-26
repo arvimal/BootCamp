@@ -177,6 +177,17 @@ If the reads were done in the order they were requested, the read/write head wou
 
 Once the I/O requests are sorted, they can be processed sequentially. The seeks are reduced which is usually the bottleneck in disk I/O.
 
+### 15.3. Problems with simple sorting of I/O requests
+
+We saw that the two fundamental operations of an I/O scheduler are Merging and Sorting. This sorts and merge requests based on ascending block order so as to reduce the read/write head travel through the HDD tracks.
+
+If I/O requests were always sorted as per the ascending block order, imagine a situation were there are a couple of requests for blocks above 100 but new requests come in continuously for blocks below 50. This gives more priority for the lower blocks and the higher block reads may delay from being serviced.
+
+NOTE: Read request latency is always critical, since it has to be fetched from the disk if the page-cache does not carry the data. Write requests are not always problematic, since the application can do the writes and it goes the page-cache without hitting the disk, and thus is much faster.
+
+
+
+Thus, schedulers require more complex algorithms to sort read and write I/O rather than simple sorting and merging. Multiple I/O schedulers exist due to this reason, catering to a wide variety of use-cases.
 
 ### 15.3. Types of I/O Schedulers
 
