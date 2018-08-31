@@ -801,9 +801,6 @@ The CA verifies that the user is indeed who they claim to be, and signs the CSR 
 **NOTE:** A Certificate is just the user's Public Key (along with doman details) verified and signed by a CA using the CA's private key. Web browsers or end users can hence verify that the Public key has been verified and trusted by the Certificate Authority. The idea here is the trust on the CA by both the source and destination users.
 
 
-
-
-
 An SSL certificate is required on the server, so as to create an SSL connection from the client to the server. A `Certificate Authority` creates the SSL certificate for a domain name on request, after providing details on the identity of the domain.
 
 Create an SSL Certificate includes the following steps:
