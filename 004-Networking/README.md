@@ -441,21 +441,29 @@ A connection is established following the TCP handshake, packets are send with s
 
 ![TCP Handshake](./Images/TCP-Handshake.png)
 
-* A very short description on what happens, is as following:
+A very short description on what happens, is as following:
 
-  1. [SYN] : Machine1 initiate a connection with Machine2 by sending a segment with SYN field (Synchronize Sequence Number), and the sequence number the TCP segments will start.
-  2. [SYN, ACK] Machine2 acknowledges with an `ACK` signal, and sends a `SYN` back
-  3. [ACK + Data] Machine1 receives the ACK, and send an acknowledgement `ACK` back.
+  * **[SYN]** : Machine1 initiate a connection with Machine2 by sending a segment with SYN field (Synchronize Sequence Number), and the sequence number the TCP segments will start with.
+  * **[SYN, ACK]** : Machine2 acknowledges with an `ACK` signal, and sends a `SYN` back.
+  * **[ACK + Data]** : Machine1 receives the ACK, and send an acknowledgement `ACK` back.
 
-* In more detail:
+In more detail:
 
-  1. The Client sets the `SYN` bit in the TCP header to request a TCP connection. The sequence number field is set to 0. Since the SYN bit is set, this sequence number is used as the initial sequence number.
-  2. `SYN` TCP segment is received by the Server.
-  3. Server sets the SYN and the ACK bits in the TCP header. Server sets the SYN and the ACK bits in the TCP header.
-     Server sends its initial sequence number as 100. Server also sets its `TCP Window Scale` to 65535 bytes. i.e. Server has buffer space for 65535 bytes of data. Also note that the ack sequence numer is set to 1. This signifies that the server expects a next byte sequence number of 1.
-  4. Client receives the SYN_ACK TCP segment.
-  5. Client now acknowledges the first segment with an `ACK` TCP segment, thus completing the three way handshake. The receive window is set to 5000. The `ACK` sequence number is set to 101, this means that the next expected sequence number is 101. At this point, the client assumes the TCP connection to be `ESTABLISHED`.
-  6. Server receives the `ACK` TCP segment, and moves to the `ESTABLISHED` state.
+  * The Client sets the `SYN` bit in the TCP header to request a TCP connection.
+      * The sequence number field is set to 0.
+      * Since the SYN bit is set, this sequence number is used as the initial sequence number.
+  * `SYN` TCP segment is received by the Server.
+  * Server sets the SYN and the ACK bits in the TCP header.
+      * Server sets the SYN and the ACK bits in the TCP header.
+      * Server sends its initial sequence number as 100.
+      * Server also sets its `TCP Window Scale` to 65535 bytes. i.e. Server has buffer space for 65535 bytes of data.
+      * Also note that the ack sequence numer is set to 1. This signifies that the server expects a next byte sequence number of 1.
+  * Client receives the SYN_ACK TCP segment.
+  * Client acknowledges the first segment with an `ACK` TCP segment, thus completing the three way handshake.
+      * The receive window is set to 5000.
+      * The `ACK` sequence number is set to 101, this means that the next expected sequence number is 101.
+      * At this point, the client assumes the TCP connection to be `ESTABLISHED`.
+  * Server receives the `ACK` TCP segment, and moves to the `ESTABLISHED` state.
 
 Reference:
 
@@ -497,17 +505,17 @@ References:
 
 The TCP connection termination involves the following:
 
-1. To close the TCP connection, the Client sends a TCP segment with the `FIN` [Finish] bit set, in the TCP header. Client state changes to `FIN-WAIT-1` state.
-2. Server receives the `FIN`. Server responds back with `ACK` to acknowledge the `FIN`. Server changes state to `CLOSE-WAIT-1`. In this state the server waits for the server application to close the connection.
-3. Client receives the `ACK`. Client changes state to `FIN-WAIT-2`. In this state, the TCP connection from the client to server is closed. Client now waits close of TCP connection from the server end.
-4. Server application closes the TCP connection. `FIN` is sent out to the client to close the connection.
-5. Client receives `FIN`. Client sends an `ACK`.
-6. Server receives the `ACK`, and moves the connection to `CLOSED` state.
+* To close the TCP connection, the Client sends a TCP segment with the `FIN` [Finish] bit set, in the TCP header. Client state changes to `FIN-WAIT-1` state.
+* Server receives the `FIN`. Server responds back with `ACK` to acknowledge the `FIN`. Server changes state to `CLOSE-WAIT-1`. In this state the server waits for the server application to close the connection.
+* Client receives the `ACK`. Client changes state to `FIN-WAIT-2`. In this state, the TCP connection from the client to server is closed. Client now waits close of TCP connection from the server end.
+* Server application closes the TCP connection. `FIN` is sent out to the client to close the connection.
+* Client receives `FIN`. Client sends an `ACK`.
+* Server receives the `ACK`, and moves the connection to `CLOSED` state.
 
 Reference:
 
-    1. [http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf](http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf)
-    2. [http://www.freesoft.org/CIE/Course/Section4/10.htm](http://www.freesoft.org/CIE/Course/Section4/10.htm)
+1. [http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf](http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf)
+2. [http://www.freesoft.org/CIE/Course/Section4/10.htm](http://www.freesoft.org/CIE/Course/Section4/10.htm)
 
 #### 13.3. How does UDP work?
 
