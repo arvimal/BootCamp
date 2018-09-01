@@ -467,7 +467,7 @@ In more detail:
 
 Reference:
 
-    * [http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf](http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf)
+* [http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf](http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf)
 
 ##### 13.2.2. Explain TCP Windowing.
 
