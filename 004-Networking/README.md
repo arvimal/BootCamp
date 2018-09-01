@@ -1147,7 +1147,7 @@ from the very beginning to the very end, i.e. start with an MUA, end with an MUA
 
 * Every node connected to the IP network stores the MAC-IP table of recently connected devices. ARP cache fades out after a set period.
 
-* How does ARP work?
+#### 44.1. How does ARP work?
 
 1. When any device wishes to send data to another target device, it must first determine the MAC address of that target, provided they have the IP address. These IP-to-MAC address mappings are derived from an ARP cache maintained on each device. If IP-MAC mappings are missing, the first device cannot send messages to that target until it obtains a new mapping.
 2. If this information is missing in the ARP-cache, the first device send a ARP-request broadcast message over the subnet, and the destination network device with the MAC address replies back with the MAC address.
@@ -1164,7 +1164,7 @@ Example:
 14:51:48.017600 arp reply 192.168.1.1 is-at 00:1e:35:3e:1c:41
 ```
 
-* Why is it important to find the MAC address?
+#### 44.2. Why is it important to find the MAC address?
 
 There are several reasons to find the MAC address of a device:
 
@@ -1212,7 +1212,7 @@ IP address       HW type     Flags       HW address            Mask     Device
 
 * Published entries have the `P` flag. Any entries pushed manually by the administrator to the ARP table is a PUBLISHED entry.
 
-* PROX ARP
+#### 44.3. PROXY ARP
 
 * Proxy ARP enables devices separated into physical network segments connected by a router, in the same IP network or subnetwork, to resolve IP-to-MAC addresses.
 
@@ -1222,7 +1222,7 @@ IP address       HW type     Flags       HW address            Mask     Device
 
 * When the sending device receives the MAC address of the proxy router, it sends the datagram to the proxy router, which in turns sends the datagram to the designated device.
 
-Reference:
+#### 44.4. References
 
 1. [https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/ipaddr_arp/configuration/15-mt/arp-15-mt-book/arp-config-arp.html](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/ipaddr_arp/configuration/15-mt/arp-15-mt-book/arp-config-arp.html)
 2. [https://www.lifewire.com/address-resolution-protocol-817941](https://www.lifewire.com/address-resolution-protocol-817941)
