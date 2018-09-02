@@ -151,10 +151,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-
-## Networking
-
-### 01. OSI layers
+## 01. OSI layers
 
 `Open Systems Interconnect` (OSI) is a conceptual model that strives to standardize the communication functions of a telecommunication or computer system.
 
@@ -172,9 +169,7 @@ The layers are:
 
 ![OSI-model-Wikipedia](Images/OSI-model-Wikipedia.png)
 
-
-
-#### 01.1. Data units in each layer
+### 01.1. Data units in each layer
 
 * Application layer - Data Units
 * Presentation layer- Data Units
@@ -186,7 +181,7 @@ The layers are:
 
 NOTE: Cisco says that the term `Packet` can be used generically. But, the generic term is `Protocol Data Unit` or PDU.
 
-#### 01.2. Protocols in each OSI layer
+### 01.2. Protocols in each OSI layer
 
 * Application layer (Data Units) (Devices : Computers, Mobile phones, IoT devices)
 
@@ -220,7 +215,7 @@ NOTE: Cisco says that the term `Packet` can be used generically. But, the generi
 
   * Standards for cabling, connections, connectors etc..
 
-#### 01.3. Devices in each OSI layer
+### 01.3. Devices in each OSI layer
 
 * Application layer - Data Units
 * Presentation layer- Data Units
@@ -230,7 +225,7 @@ NOTE: Cisco says that the term `Packet` can be used generically. But, the generi
 * Data Link layer   - Switches (Frames) (SwitchPort to MAC mapping)
 * Physical layer    - N/W interfaces, Hubs, Cables, Fibre Channel, Wireless devices (Bits)
 
-### 02. TCP header [Layer 4 - Transport layer]
+## 02. TCP header [Layer 4 - Transport layer]
 
 ### 03. UDP header [Layer 4 - Transport layer]
 
@@ -246,15 +241,15 @@ UDP headers are very simple compared to TCP headers. They contain:
 4. **Checksum** (Not mandatory) : UDP does not care about packets that are dropped & packets that are delivered out of order. But UDP can use the checksum tp ensure the integrity of the packets that are received. Packet checksum ensures this. Basically the receiving end wont accept a packet that has wrong checksum. There is no mechanism to inform this back to the sender, but it will discard it silently.
 5. **Payload** (Data) : Data sent by the client application.
 
-### 04. ICMP header format [Layer 3 - Network layer]
+## 04. ICMP header format [Layer 3 - Network layer]
 
 The ICMP header format
 
 ![ICMP Header](./Images/PING_ICMP_Wikipedia.png)
 
-### 05. IP header [Layer 3 - Network layer]
+## 05. IP header [Layer 3 - Network layer]
 
-### 06. Ethernet Frame header (64 Bytes) [Layer 2 - Data link Layer]
+## 06. Ethernet Frame header (64 Bytes) [Layer 2 - Data link Layer]
 
 An Ethernet Frame lives in `Layer 2` [Data Link layer (OSI) / Link layer (TCP/IP Stack)]
 
@@ -274,15 +269,15 @@ The structure of an Ethernet frame is (PSDSTDF)
 6. **Data**        : 46-1500 bytes (If data does not fill up 1500 bits, paddings are added to fill it)
 7. **FCS**         : 4 bytes (Frame Check sequence) An error detection check
 
-#### 06.1. Runt frame
+### 06.1. Runt frame
 
 A frame that is smaller than the medium's minimum frame size (64 bytes) and also has a bad CRC check is called a Runt.
 
-#### 06.1. Reference
+### 06.2. Reference
 
 1. [https://en.wikipedia.org/wiki/Ethernet_frame](https://en.wikipedia.org/wiki/Ethernet_frame)
 
-### 07. What is a Network MTU? [All layer]
+## 07. What is a Network MTU? [All layer]
 
 `Maximum Transmission Unit` (MTU) is the size of the largest PDU (protocol data unit) that can be communicated in a single network transaction, in a particular network layer.
 
@@ -290,12 +285,12 @@ A frame that is smaller than the medium's minimum frame size (64 bytes) and also
 
 **_Usually, when an MTU is specified, ie..MTU = 1500 Bytes or 9000 Bytes, it refers to the size of the Ethernet Frame._**
 
-#### 07.1. Reference
+### 07.1. Reference
 
 1. [https://www.lifewire.com/definition-of-mtu-817948](https://www.lifewire.com/definition-of-mtu-817948)
 2. [https://en.wikipedia.org/wiki/Maximum_transmission_unit](https://en.wikipedia.org/wiki/Maximum_transmission_unit)
 
-### 08. What is a Jumbo Frame? [Layer 2 - Data link Layer]
+## 08. What is a Jumbo Frame? [Layer 2 - Data link Layer]
 
 `Jumbo Frames` are `Ethernet Frames` with more than `1500 Bytes` of payload. By default, an Ethernet Frame has an MTU of 1500, which means that the payload it can carry is 1500 Bytes.
 
@@ -308,19 +303,19 @@ Large frame sizes such as in Jumbo Frames, are more prone to suffer undetected e
 * The Ethernet Frame standard is defined by IEEE, in 802.x RFC.
 * Jumbo Frames (9000 Bytes) are not part of this compliance, and hence is not a part of the standard defined by IEEE.
 
-#### 08.1. Can Jumbo frames and 1500 byte frames co-exist?
+### 08.1. Can Jumbo frames and 1500 byte frames co-exist?
 
 While setting Jumbo Frames in your Ethernet device, please make sure that all the network components including the Switches, Routers, Other network interfaces etc.. can support Jumbo Frames.
 
 A method to get bot frame sizes to co-exist is to use them in different network segments, such as different VLANs.
 
-#### 08.2. Reference
+### 08.2. Reference
 
 1. [http://www.slashroot.in/what-is-jumbo-frame-in-ethernet](http://www.slashroot.in/what-is-jumbo-frame-in-ethernet)
 2. [https://en.wikipedia.org/wiki/Jumbo_frame](https://en.wikipedia.org/wiki/Jumbo_frame)
 3. [https://web.archive.org/web/20060127004438/http://sd.wareonearth.com/~phil/jumbo.html](https://web.archive.org/web/20060127004438/http://sd.wareonearth.com/~phil/jumbo.html)
 
-### 09. Difference between Segments, Packets, and Frames?
+## 09. Segments, Packets, and Frames
 
 The data package at different levels of the OSI/TCP layers are given different names. In general, all of them can be called `Protocol Data Unit` or PDU.
 
@@ -340,7 +335,7 @@ Reference:
 
 * http://www.slashroot.in/difference-between-segments-packets-and-frames
 
-### 10. IPv4 and IPv6, differences [Layer 4 - Transport Layer]
+## 10. IPv4 and IPv6, differences [Layer 4 - Transport Layer]
 
 IPv6 was created to overcome the unavailability of routable IPv4 addresses. It was named as IPv6, since there was another experimental protocol called `Internet Stream Protocol` that was being tested side-by-side to IPv4. These packets were marked with a header flag of IPv5. Hence the next new protocol was named as IPv6.
 
@@ -351,7 +346,7 @@ IPv6 was created to overcome the unavailability of routable IPv4 addresses. It w
 5. MTU discovery is performed for every session and agreed upon. So no packet fragmentation.
 6. Can co-exist over IPv4 by encapsulating the IPv6 traffic through a tunnel within IPv4.
 
-#### 10.1. Address structure:
+### 10.1. Address structure
 
 1. IPv6 has 128 bits in length, and is 4 times larger than IPv4 addresses.
 2. IPV6 bits are represented as a Hexa-decimal number.. 32 hexadecimal digits x 4 = 128 Bits, and seperated by a colon.
@@ -361,17 +356,17 @@ IPv6 was created to overcome the unavailability of routable IPv4 addresses. It w
     `2345:0123:4040:0000:000A:000B` becomes `2345:123:4040::A:B`.
     `2000:0000:0000:0000:1234:0000:0000:000B` becomes `2000::1234:0:0:B` (leading zeroes left out in the second series of zeroes)
 
-### 11. IPv4 Address Class range
+## 11. IPv4 Address Class range
 
-#### 11.1. Routeable and Un-routeable addresses
+### 11.1. Routeable and Un-routeable addresses
 
-#### 11.2. Reserved addresses
+### 11.2. Reserved addresses
 
-#### 11.2. What is a loopback address?
+### 11.3. What is a loopback address?
 
-### 12. Routing [Layer 3 - Network Layer]
+## 12. Routing [Layer 3 - Network Layer]
 
-#### 12.1. The `route` command
+### 12.1. The `route` command
 
 ```bash
 # route -n
@@ -389,7 +384,7 @@ Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 192.168.122.0   0.0.0.0         255.255.255.0   U         0 0          0 virbr0
 ```
 
-#### 12.2. Routing decisions
+### 12.2. Routing decisions
 
 1. If the destination host is on the same subnet, send the packet directly.
 2. If the destination host is on a different subnet, and a route to that subnet is available in the routing table, send it to the gateway for that subnet.
@@ -401,7 +396,7 @@ The routing decision also implies that, if there are no rules which apply for th
 If a host wants to send something to 192.168.2.10, which matches both rules in the routing table, 0.0.0.0/0 and 192.168.2.0/24, by default, the kernel know to use the second one. How?
 It chooses the longest destination prefix that matches. This is where CIDR network form comes in particularly handy: 192.168.2.0/24 matches, and its prefix is 24 bits long; 0.0.0.0/0 also matches, but its prefix is 0 bits long (that is, it has no prefix), so the rule for 192.168.2.0/24 takes priority.
 
-#### 12.3. Static and Dynamic routes
+### 12.3. Static and Dynamic routes
 
 Static routes are the ones which we set in the network interface configuration file, and hence, which get set everytime the interface starts up.
 
@@ -413,7 +408,7 @@ Dynamic routes are the ones which are provided by a DHCP server, and it may chan
     * Explain Packet Forwarding
     * Static routes and Dynamic routes (?)
 
-#### 12.1. Explain the flags in the output of `route`
+### 12.4. Explain the flags in the output of `route`
 
     * U : Route is `UP`
     * H : Target is a HOST
@@ -425,7 +420,7 @@ Dynamic routes are the ones which are provided by a DHCP server, and it may chan
     * C : Cache entry
     * ! : Reject this route
 
-#### 12.2. Routing protocols
+### 12.5. Routing protocols
 
     * RIP (Routing Information Protocol)
     * RIP2
@@ -433,9 +428,9 @@ Dynamic routes are the ones which are provided by a DHCP server, and it may chan
     * http://www.slashroot.in/routing-information-protocol-guide
     * http://www.slashroot.in/routing-information-protocol-configuration
 
-### 13. TCP and UDP [Layer 4 - Transport layer]
+## 13. TCP and UDP [Layer 4 - Transport layer]
 
-#### 13.1. Differences
+### 13.1. TCP
 
 TCP establishes a virtual connection between the client and server applications, right from the start of a TCP session establishment until the session is terminated.
 
@@ -443,17 +438,17 @@ The packets in a session are given sequence numbers, so that the client and serv
 
 TCP also **ACK**s each of the packets, and the next packet is send once an ack is received on the previous packet. If an ACK has not been received, a retransmission can be done
 
-#### 13.2. How does TCP work?
+### 13.2. How does TCP work?
 
 A connection is established following the TCP handshake, packets are send with sequence numbers and ACKs are received, sessions are terminated with a proper TCP session termination.
 
-##### 13.2.1. TCP Session Establishment [SYN, ACK+SYN, ACK]
+### 13.3. TCP Session Establishment [SYN, ACK+SYN, ACK]
 
 * TCP connections are established via a three-way TCP handshake, send over TCP Segments.
 
 ![TCP Handshake](./Images/TCP-Handshake.png)
 
-A very short description on what happens, is as following:
+A very short description
 
   * **[SYN]** : Machine1 initiate a connection with Machine2 by sending a segment with SYN field (Synchronize Sequence Number), and the sequence number the TCP segments will start with.
   * **[SYN, ACK]** : Machine2 acknowledges with an `ACK` signal, and sends a `SYN` back.
@@ -481,37 +476,7 @@ Reference:
 
 * [http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf](http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf)
 
-##### 13.2.2. Explain TCP Windowing.
-
-The TCP window scale option is an option to increase the receive window size allowed in Transmission Control Protocol above its former maximum value of 65,535 bytes.
-
-In a connection between a client and a server, the client tells the server the number of bytes it is willing to receive at one time from the server; this is the client's receive window, which becomes the server's send window. Likewise, the server tells the client how many bytes of data it is willing to take from the client at one time; this is the server's receive window and the client's send window.
-
-The simplest way of considering the window size is that it indicates the size of the device's receive buffer for the particular connection. That is, window size represents how much data a device can handle from its peer at one time before it is passed to the application process.
-
-When the server receives data from the client, it places it into this buffer. The server must then do two distinct things with this data:
-
-1. Acknowledgment: The server must send an acknowledgment back to the client to indicate that the data was received.
-2. Transfer: The server must process the data, transferring it to the destination application process.
-
-Because some firewalls do not properly implement TCP Window Scaling, it can cause a user's Internet connection to malfunction intermittently for a few minutes, then appear to start working again for no reason. There is also an issue if a firewall doesn't support the TCP extensions.
-
-##### 13.2.3. Configure TCP Window in Linux
-
-Linux kernels (from 2.6.8, August 2004) have enabled TCP Window Scaling by default.
-
-The configuration parameters are found in the /proc filesystem, see pseudo-file /proc/sys/net/ipv4/tcp_window_scaling and its companions /proc/sys/net/ipv4/tcp_rmem and /proc/sys/net/ipv4/tcp_wmem (more information: man tcp, section sysctl).[6]
-
-Scaling can be turned off by issuing the command sysctl -w "net.ipv4.tcp_window_scaling=0" as root. To maintain the changes after a restart, include the line "net.ipv4.tcp_window_scaling=0" in /etc/sysctl.conf (or /etc/sysctl.d/99-sysctl.conf as of systemd 207).
-
-**NOTE:** More details on how it works, is in my notes.
-
-References:
-
-1. [http://www.slashroot.in/understanding-tcp-three-way-handshake](http://www.slashroot.in/understanding-tcp-three-way-handshake)
-2. [www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf](www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf)
-
-##### 13.2.4. TCP connection termination [FIN, ACK, FIN, ACK]
+#### 13.4. TCP connection termination [FIN, ACK, FIN, ACK]
 
 ![TCP Session Termination](./Images/TCP-Session-Close.png)
 
@@ -529,7 +494,35 @@ Reference:
 1. [http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf](http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf)
 2. [http://www.freesoft.org/CIE/Course/Section4/10.htm](http://www.freesoft.org/CIE/Course/Section4/10.htm)
 
-#### 13.3. How does UDP work?
+#### 13.5. TCP Windowing
+
+The TCP window scale option is an option to increase the receive window size allowed in Transmission Control Protocol above its former maximum value of 65,535 bytes.
+
+In a connection between a client and a server, the client tells the server the number of bytes it is willing to receive at one time from the server; this is the client's receive window, which becomes the server's send window. Likewise, the server tells the client how many bytes of data it is willing to take from the client at one time; this is the server's receive window and the client's send window.
+
+The simplest way of considering the window size is that it indicates the size of the device's receive buffer for the particular connection. That is, window size represents how much data a device can handle from its peer at one time before it is passed to the application process.
+
+When the server receives data from the client, it places it into this buffer. The server must then do two distinct things with this data:
+
+1. Acknowledgment: The server must send an acknowledgment back to the client to indicate that the data was received.
+2. Transfer: The server must process the data, transferring it to the destination application process.
+
+Because some firewalls do not properly implement TCP Window Scaling, it can cause a user's Internet connection to malfunction intermittently for a few minutes, then appear to start working again for no reason. There is also an issue if a firewall doesn't support the TCP extensions.
+
+#### 13.6. Configure TCP Window in Linux
+
+Linux kernels (from 2.6.8, August 2004) have enabled TCP Window Scaling by default.
+
+The configuration parameters are found in the /proc filesystem, see pseudo-file /proc/sys/net/ipv4/tcp_window_scaling and its companions /proc/sys/net/ipv4/tcp_rmem and /proc/sys/net/ipv4/tcp_wmem (more information: man tcp, section sysctl).[6]
+
+Scaling can be turned off by issuing the command sysctl -w "net.ipv4.tcp_window_scaling=0" as root. To maintain the changes after a restart, include the line "net.ipv4.tcp_window_scaling=0" in /etc/sysctl.conf (or /etc/sysctl.d/99-sysctl.conf as of systemd 207).
+
+References:
+
+1. [http://www.slashroot.in/understanding-tcp-three-way-handshake](http://www.slashroot.in/understanding-tcp-three-way-handshake)
+2. [www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf](www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf)
+
+### 13.7. How does UDP work?
 
 UDP does not have any connection setup or reaching an understanding on the terms and conditions of the session.
 
@@ -549,107 +542,7 @@ tcpdump: listening on wlp3s0, link-type EN10MB (Ethernet), capture size 262144 b
     8.8.8.8.domain > 192.168.2.10.35795: [udp sum ok] 16738 q: A? www.google.com. 1/0/1 www.google.com. [4m38s] A 172.217.31.4 ar: . OPT UDPsize=512 (59)
 ```
 
-### 53. What is Ethernet?
-
-Ethernet is a standard, working in the Data Link layer (layer 2) and works with Frames. The IP packets are put into Frames, and sent over to Link layer.
-
-There are several variations out there depending on the Media type, bandwidth capacity, and Bandwidth limitation.
-
-Some of them are:
-    10BASE5     : 10Mbps
-    10BASE2     : 10Mbps
-    10BASE-T    : 10Mbps
-    100BASE-TX  : 100Mbps
-    100BASE-FX  : 100Mbps
-    1000BASE-T  : 1Gbps
-    1000BASE-TX : 1Gbps
-    10GBASE-T   : 10Gbps
-    10GBASE-SR  : 10Gbps
-    100GBASE-SR10 : 100Gbps
-    etc..
-
-Coaxial cable, CAT3, CAT5, CAT6, SMF (Single-mode Fibre channel), MMF (Multi-mode Fibre channel) etc.. are used in Ethernet standards.
-
-### 54. What is a Layer 3 switch?
-
-Layer 3 switch has routing functions built into it. That is, they are capable of providing all the inter-VLAN routing functionality, without leaving the switching device.
-
-**NOTE:**
-A managed Layer 2 switch will see tagged or untagged data, and the switch may be configured to allow traffic on specified VLANs to be forwarded or blocked. If there is untagged traffic, this switch can place a VLAN tag into the existing header or encapsulate the frame if sending it over an ISL link. Finally, trunk ports will pass traffic for all VLANs by default, unless told otherwise.
-
-### 30. VLANs
-
-VLAN is a logical grouping of networking devices. When we create VLAN, we actually break large broadcast domain in smaller broadcast domains. Virtual Local Area Networks (VLANs) divide a single existing physical network into multiple logical networks. Hosts in a VLAN cannot communicate with the hosts in another VLAN, unless they are routed properly by a router.
-
-#### 30.1. Types of VLAN
-
-1. Port-based VLAN (Untagged)
-2. Tagged VLANs (IEEE 802.1Q) (4 Bytes in Ethernet Frame)
-
-In `Port-based VLAN`, the physical ports are assigned to a Virtual Network. The switch only receives/transmits data on the said port, for that virtual network. ie. a port assigned to a VLAN cannot receive/send packets for another VLAN.
-
-In `Tagged VLANs`, the Ethernet frame is appended with a `VLAN Tag` that acts as an identifier for the respective VLANs. Each separate VLAN will have a different tag (number), hence the switch can take decisions based on the tags.
-
-VLAN tags allow the switch to send/receive packets from different VLANs, through the same port. This was not possible in `Port-based VLAN`.
-
-#### 30.1. Advantages of VLAN
-
-VLAN provides the following advantages:-
-
-1. Solve broadcast problem. Broadcasting can be an issue in large networks.
-2. Reduce the size of broadcast domains
-3. Allow us to add additional layer of security, by filtering VLAN tags
-4. Allow us to implement the logical grouping of devices by function instead of location
-
-**VLAN Tags are of 4 Bytes in the Ethernet Frame.**
-
-**NOTE:** VLAN Tagging happens in Layer 2, Ethernet Frames.
-
-#### 30.2. Reference
-
-1. [https://www.thomas-krenn.com/en/wiki/VLAN_Basics](https://www.thomas-krenn.com/en/wiki/VLAN_Basics)
-2. [https://www.computernetworkingnotes.com/ccna-study-guide/vlan-basic-concepts-explained-with-examples.html](https://www.computernetworkingnotes.com/ccna-study-guide/vlan-basic-concepts-explained-with-examples.html)
-
-### 40. Trunking
-
-#### 40.1. Idea of Trunking
-
-In Networking, Trunking means carrying multiple VLANs through a single network link through the use of a trunking protocol.
-
-This is analogous to a tree trunk which has multipe branches culminating from it.
-
-To allow for multiple VLANs on one link, frames from individual VLANs must be identified. This is done by adding a VLAN specific **TAG** in the Ethernet Frame, which acts as an identifier for each VLAN.
-
-Since 802.1Q is an open standard, it is the only option in an environment with multiple-vendor equipment.
-
-A single TRUNK port/connection can carry dozens on VLAN traffic without any problem.
-
-#### 40.2. Ethernet Frame with VLAN tagging
-
-![Structure of an Ethernet Frame](./Images/Ethernet-Frame.png)
-
-The VLAN tags are set in the `802.1Q tag` which is optional and not set by default in a Ethernet Frame.
-
-![How does the Ethernet Frame look with the VLAN tags added](./Images/Ethernet_802.1Q_Insert.svg.png)
-
-#### 40.3. Trunking Modes
-
-1. Access Mode     : Only on a single default VLAN.
-2. Trunk Mode      : Allow Trunking on that port, and allow all VLANs.
-
-#### 40.4. VLAN Pruning
-
-By default, a Trunk port (when set by `trunk` mode) will allow all VLAN tags to be passed through it.
-
-This will allow all sort of traffic for every VLAN to be passed through it, which also include all Unicast, Broadcast, and Multicast packets.
-
-The process of restricting specific VLANs on TRUNK ports is called VLAN Pruning.
-
-#### 40.4. References
-
-1. [https://en.wikipedia.org/wiki/IEEE_802.1Q](https://en.wikipedia.org/wiki/IEEE_802.1Q)
-
-### 15. PING
+## 15. PING
 
 #### 15.1. Introduction
 
@@ -804,7 +697,6 @@ The Public Key can be distributed to others, while the Private Key has to be kep
 
 When user1 has to send a message to user2, user1 can encrypt his message with user2's public key and send it over. User2 can then use his private key to decrypt the data.
 
-
 `Transport Layer Security` (TLS) and its predecessor, `Secure Sockets Layer` (SSL), both frequently referred to as "SSL", are cryptographic protocols that provide communications security over a computer network.
 
 ### 17.3. Public Key Infrastructure (PKI)
@@ -834,7 +726,7 @@ An SSL Certificate comprises of your domain name, the name of your company and o
 
 Whenever a browser initiates a connection with a SSL secured website , it will first retrieve the site's SSL Certificate to check if it's still valid. It's also verified that the CA is one that the browser trusts, and also that the certificate is being used by the website for which it has been issued. If any of these checks fail, a warning will be displayed to the user, indicating that the website is not secured by a valid SSL certificate.
 
-#### 17.2. SSL / TLS Handshake
+#### 17.4. SSL / TLS Handshake
 
 The secure connection between a client and a server is established by an SSL handshake.
 
@@ -885,15 +777,15 @@ ii. The Server's SSL certificate is created by including/verifying the following
 
 This is the normal operation condition of the secure channel. At any time, due to internal or external stimulus (either automation or user intervention), either side may renegotiate the connection, in which case, the process repeats itself.
 
-#### 17.3. Asymmetrical / Public-key cryptography
+#### 17.5. Asymmetrical / Public-key cryptography
 
-#### 17.4. Symmetric Cryptography
+#### 17.6. Symmetric Cryptography
 
 Symmetric-key algorithms are algorithms for cryptography that use the same cryptographic keys for both encryption of plaintext and decryption of ciphertext.
 
 The keys may be identical or there may be a simple transformation to go between the two keys. The keys, in practice, represent a shared secret between two or more parties that can be used to maintain a private information link. This requirement that both parties have access to the secret key is one of the main drawbacks of symmetric key encryption, in comparison to public-key encryption (also known as asymmetric key encryption).
 
-#### 17.5. Is SSL/TLS encryption asymmetric or symmetric?
+#### 17.7. Is SSL/TLS encryption asymmetric or symmetric?
 
 SSL/TLS encryption uses both `Asymmetric` and `Symmetric` encryption.
 
@@ -908,7 +800,7 @@ Once the client creates the `pre-master` key, sends it over to the server by enc
 
 From there onwards, the encryption is done using the `Shared key` which is Symmetric, due to the use of a single key.
 
-#### 17.6. Reference
+#### 17.8. Reference
 
 1. [https://support.microsoft.com/en-us/help/257591/description-of-the-secure-sockets-layer-ssl-handshake](https://support.microsoft.com/en-us/help/257591/description-of-the-secure-sockets-layer-ssl-handshake)
 2. [https://www.ssl.com/article/ssl-tls-handshake-overview/](https://www.ssl.com/article/ssl-tls-handshake-overview/)
@@ -1142,6 +1034,80 @@ from the very beginning to the very end, i.e. start with an MUA, end with an MUA
 
 ### 26. Explain Netfilter, IPtables, and its structure (chains).
 
+
+## 30. VLANs
+
+VLAN is a logical grouping of networking devices. When we create VLAN, we actually break large broadcast domain in smaller broadcast domains. Virtual Local Area Networks (VLANs) divide a single existing physical network into multiple logical networks. Hosts in a VLAN cannot communicate with the hosts in another VLAN, unless they are routed properly by a router.
+
+### 30.1. Types of VLAN
+
+1. Port-based VLAN (Untagged)
+2. Tagged VLANs (IEEE 802.1Q) (4 Bytes in Ethernet Frame)
+
+In `Port-based VLAN`, the physical ports are assigned to a Virtual Network. The switch only receives/transmits data on the said port, for that virtual network. ie. a port assigned to a VLAN cannot receive/send packets for another VLAN.
+
+In `Tagged VLANs`, the Ethernet frame is appended with a `VLAN Tag` that acts as an identifier for the respective VLANs. Each separate VLAN will have a different tag (number), hence the switch can take decisions based on the tags.
+
+VLAN tags allow the switch to send/receive packets from different VLANs, through the same port. This was not possible in `Port-based VLAN`.
+
+### 30.2. Advantages of VLAN
+
+VLAN provides the following advantages:-
+
+1. Solve broadcast problem. Broadcasting can be an issue in large networks.
+2. Reduce the size of broadcast domains
+3. Allow us to add additional layer of security, by filtering VLAN tags
+4. Allow us to implement the logical grouping of devices by function instead of location
+
+**VLAN Tags are of 4 Bytes in the Ethernet Frame.**
+
+**NOTE:** VLAN Tagging happens in Layer 2, Ethernet Frames.
+
+### 30.3. Reference
+
+1. [https://www.thomas-krenn.com/en/wiki/VLAN_Basics](https://www.thomas-krenn.com/en/wiki/VLAN_Basics)
+2. [https://www.computernetworkingnotes.com/ccna-study-guide/vlan-basic-concepts-explained-with-examples.html](https://www.computernetworkingnotes.com/ccna-study-guide/vlan-basic-concepts-explained-with-examples.html)
+
+## 40. Trunking
+
+### 40.1. Idea of Trunking
+
+In Networking, Trunking means carrying multiple VLANs through a single network link through the use of a trunking protocol.
+
+This is analogous to a tree trunk which has multipe branches culminating from it.
+
+To allow for multiple VLANs on one link, frames from individual VLANs must be identified. This is done by adding a VLAN specific **TAG** in the Ethernet Frame, which acts as an identifier for each VLAN.
+
+Since 802.1Q is an open standard, it is the only option in an environment with multiple-vendor equipment.
+
+A single TRUNK port/connection can carry dozens on VLAN traffic without any problem.
+
+### 40.2. Ethernet Frame with VLAN tagging
+
+![Structure of an Ethernet Frame](./Images/Ethernet-Frame.png)
+
+The VLAN tags are set in the `802.1Q tag` which is optional and not set by default in a Ethernet Frame.
+
+![How does the Ethernet Frame look with the VLAN tags added](./Images/Ethernet_802.1Q_Insert.svg.png)
+
+### 40.3. Trunking Modes
+
+1. Access Mode     : Only on a single default VLAN.
+2. Trunk Mode      : Allow Trunking on that port, and allow all VLANs.
+
+### 40.4. VLAN Pruning
+
+By default, a Trunk port (when set by `trunk` mode) will allow all VLAN tags to be passed through it.
+
+This will allow all sort of traffic for every VLAN to be passed through it, which also include all Unicast, Broadcast, and Multicast packets.
+
+The process of restricting specific VLANs on TRUNK ports is called VLAN Pruning.
+
+### 40.4. References
+
+1. [https://en.wikipedia.org/wiki/IEEE_802.1Q](https://en.wikipedia.org/wiki/IEEE_802.1Q)
+
+
 ### 41. Tunneling
 
 ### 42. VPN (Virtual Private Area Network)
@@ -1264,31 +1230,60 @@ III. Multicast: (One to Many) [Selected many] (RIPv2/EIGRP use Multicast)
 2. Multicast groups are Class-D addresses, ie.. First octect of 224-239.
 3. Hosts out of the Multicast group won't recieve the packets.
 
-### 52. What is Network Switching?
 
-### 52. Bonding
+### 51. What is Network Switching?
+
+## 52. Bonding
 
     * How to check the status of a Bonding device in Linux?
     * How to configure a bonded interface (bond0) on RHEL/Fedora, from two existing network interfaces (eth0 and eth1).
 
-#### 52.1. Explain the different modes of Networking Bonding.
+### 52.1. Explain the different modes of Networking Bonding.
 
-### 55. What are Collision Domains and Broadcast Domains?
+## 53. What is Ethernet?
 
-### 56. Network Address Translation (NAT)
+Ethernet is a standard, working in the Data Link layer (layer 2) and works with Frames. The IP packets are put into Frames, and sent over to Link layer.
+
+There are several variations out there depending on the Media type, bandwidth capacity, and Bandwidth limitation.
+
+Some of them are:
+    10BASE5     : 10Mbps
+    10BASE2     : 10Mbps
+    10BASE-T    : 10Mbps
+    100BASE-TX  : 100Mbps
+    100BASE-FX  : 100Mbps
+    1000BASE-T  : 1Gbps
+    1000BASE-TX : 1Gbps
+    10GBASE-T   : 10Gbps
+    10GBASE-SR  : 10Gbps
+    100GBASE-SR10 : 100Gbps
+    etc..
+
+Coaxial cable, CAT3, CAT5, CAT6, SMF (Single-mode Fibre channel), MMF (Multi-mode Fibre channel) etc.. are used in Ethernet standards.
+
+## 54. What is a Layer 3 switch?
+
+Layer 3 switch has routing functions built into it. That is, they are capable of providing all the inter-VLAN routing functionality, without leaving the switching device.
+
+**NOTE:**
+A managed Layer 2 switch will see tagged or untagged data, and the switch may be configured to allow traffic on specified VLANs to be forwarded or blocked. If there is untagged traffic, this switch can place a VLAN tag into the existing header or encapsulate the frame if sending it over an ISL link. Finally, trunk ports will pass traffic for all VLANs by default, unless told otherwise.
+
+## 55. What are Collision Domains and Broadcast Domains?
+
+## 56. Network Address Translation (NAT)
 
     * Static NAT
     * Dynamic NAT
     * Post Address Translation (PAT)
 
-### 57. NTP, and its working
+## 57. NTP, and its working
 
-### 58. Network Management Protocols
+## 58. Network Management Protocols
 
     * CDP (Cisco Discovery Protocols)
     * LLDP (Link Layer Discovery Protocols)
 
-### 60. Important network protocols
+## 60. Important network protocols
 
     * VLAN Trunking Protocol (VTP)
     * Spanning Tree Protocol (STP)
@@ -1299,11 +1294,11 @@ III. Multicast: (One to Many) [Selected many] (RIPv2/EIGRP use Multicast)
 
     * http://www.slashroot.in/eigrp-enhanced-interior-gateway-routing-protocol
 
-### 61. Quality of Service (QoS)
+## 61. Quality of Service (QoS)
 
-### 62. SNMP and its working
+## 62. SNMP and its working
 
-### 63. What is Port Knocking?
+## 63. What is Port Knocking?
 
 Port knocking is the process in which by default all the ports on the server are blocked, and the client who wishes to connect to a service, has to go through a  process of trying to connect to a set of pre-determined ports.
 
@@ -1313,9 +1308,9 @@ Reference:
 
 1. [http://www.slashroot.in/what-is-port-knocking-and-how-to-configure-it-in-linux](http://www.slashroot.in/what-is-port-knocking-and-how-to-configure-it-in-linux)
 
-### 64. What is Promiscous mode?
+## 64. What is Promiscous mode?
 
-### 65. Tools in Linux to monitor/tune Network. (Refer RHEL Networking guide)
+## 65. Tools in Linux to monitor/tune Network. (Refer RHEL Networking guide)
 
     * netstat
     * ip
@@ -1323,7 +1318,7 @@ Reference:
     * iptraf
     * ethtool
 
-### 66. Explain Dynamic DNS (DDNS)
+## 66. Explain Dynamic DNS (DDNS)
 
 Dynamic DNS (DDNS or DynDNS) is a method of automatically updating a name server in the Domain Name System (DNS), often in real time, with the active DDNS configuration of its configured hostnames, addresses or other information.
 
@@ -1331,7 +1326,7 @@ The term is used to describe two different concepts. The first is "dynamic DNS u
 
 The second kind of dynamic DNS permits lightweight and immediate updates often using an update client, which do not use the RFC2136 standard for updating DNS records. These clients provide a persistent addressing method for devices that change their location, configuration or IP address frequently.
 
-### 67. What is the difference between Active and Passive FTP?
+## 67. What is the difference between Active and Passive FTP?
 
 Active and passive are the two modes that FTP can run in.
 
@@ -1366,37 +1361,37 @@ Passive mode:
 
 At this point, the command and data channels are both open.
 
-### 68. Network Bridge
+## 68. Network Bridge
 
-### 69. What is a virtual IP address and when would you use it?
+## 69. What is a virtual IP address and when would you use it?
 
-### 70. What is a Broadcast storm?
+## 70. What is a Broadcast storm?
 
-### 71. What is a SYN flood?
+## 71. What is a SYN flood?
 
-### 72. What do you do if you are a victim of a DoS?
+## 72. What do you do if you are a victim of a DoS?
 
-### 73. What is a “spoofed” packet?
+## 73. What is a “spoofed” packet?
 
-### 74. What is the purpose of VRRP?
+## 74. What is the purpose of VRRP?
 
-### 75. Using the OSI model, which layer has the responsibility of making sure that the packet gets where it is supposed to go?
+## 75. Using the OSI model, which layer has the responsibility of making sure that the packet gets where it is supposed to go?
 
 Network layer(?), since it creates the packet out of TCP segments and set it destined for an external IP address. Routing also happens here.
 
-### 77. Based on what information does your computer know where to send packets?
+## 77. Based on what information does your computer know where to send packets?
 
-### 78. What is a metric?
+## 78. What is a metric?
 
-### 79. What can SSH be used for except shell access?
+## 79. What can SSH be used for except shell access?
 
-### 80. Design a network for the following scenario.
+## 80. Design a network for the following scenario.
 
 A new company. There are 3 floors with 200 possible workstations and 200 IP phones on each floor.
 
-### 83. Describe a difference between TAP and TUN device. What are they for ?
+## 83. Describe a difference between TAP and TUN device. What are they for ?
 
-### 84. What are the differences between Hubs, Switches, and Routers?
+## 84. What are the differences between Hubs, Switches, and Routers?
 
 Hubs:
     Hubs are not intelligent devices, and they send the packets they receive onto all the ports they have.
@@ -1412,7 +1407,7 @@ Switches:
 
 Routers:
 
-### 85. What is a Stateful Firewall?
+## 85. What is a Stateful Firewall?
 
 Outside network <-> "Firewall" <-> Internal network
 
@@ -1422,7 +1417,7 @@ In case to allow only responses to the requests from within the firewall to get 
 
 ie.. Stateful firewalls monitor sessions and allow the sessions to function properly. Packets that come in
 
-### 11. Explain the ports for some known services
+## 11. Explain the ports for some known services
 
 ## Network Troubleshooting
 
