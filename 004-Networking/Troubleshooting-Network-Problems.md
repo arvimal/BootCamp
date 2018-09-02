@@ -12,7 +12,7 @@
     - [1.6. Layer 6 - Data Link layer](#16-layer-6---data-link-layer)
     - [1.7. Layer 7 - Physical layer](#17-layer-7---physical-layer)
   - [2. How do you distinguish a DNS problem from a network problem?](#2-how-do-you-distinguish-a-dns-problem-from-a-network-problem)
-  - [Scenarios](#scenarios)
+- [Scenarios](#scenarios)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -31,35 +31,35 @@ Troubleshooting along the OSI layers (Note that not everything aligns exactly as
 
 ### 1.1. Layer 1 - Application Layer
 
-    1. Check if the Application is up and running (ps -aux, pgrep, top)
-    2. Check if the application is listening on the port. (netstat)
-    3. Check if firewall rules are blocking the port (iptables -L and list the port/service)
+1. Check if the Application is up and running (ps -aux, pgrep, top)
+2. Check if the application is listening on the port. (netstat)
+3. Check if firewall rules are blocking the port (iptables -L and list the port/service)
 
 ### 1.2. Layer 2 - Presentation layer
 
-    1. Since this layer deals with mapping various formats to the underlying layers, check if things like encryption etc.. are causing problems.
+1. Since this layer deals with mapping various formats to the underlying layers, check if things like encryption etc.. are causing problems.
 
 ### 1.3. Layer 3 - Session layer
 
-    1. Check if localhost is able to establish a session to the running service, as well as other nodes.
-    2 A successful session would show an ESTABLISHED flag in netstat, provided the service works over network sockets.
+1. Check if localhost is able to establish a session to the running service, as well as other nodes.
+2. A successful session would show an ESTABLISHED flag in netstat, provided the service works over network sockets.
 
 ### 1.4. Layer 4 - Transport layer (TCP packet capture using tcpdump/Wireshark)
 
-    * This may require packet captures and analysis using the RFC for that particular service.
-    * Starting a packet capture and then trying to establish a session from the client to the server would help.
-    * Analyze the packet capture and check if the requests and replies are according to the RFC. There are multiple instances where a service implementation breaks an RFC and the client won't proceed further since it doesn't know what to do next. Lots of NFS/CIFS issues which can come up in this layer.
+1. This may require packet captures and analysis using the RFC for that particular service.
+2. Starting a packet capture and then trying to establish a session from the client to the server would help.
+3. Analyze the packet capture and check if the requests and replies are according to the RFC. There are multiple instances where a service implementation breaks an RFC and the client won't proceed further since it doesn't know what to do next. Lots of NFS/CIFS issues which can come up in this layer.
 
 ### 1.5. Layer 5 - Network layer (Use ping and traceroute)
 
 **NOTE:**
 Ping the network to understand ICMP packets are going through. If so, IP packets should go through as well.
 
-    * Ping the local loopback to understand the network stack works as intended.
-    * Ping the localhost IP address
-    * Ping other hosts in the N/W subnet.
-    * Ping the Gateway
-    * Ping multiple hosts outside the subnet, including the destination (if the destination is outside the N/W subnet)
+* Ping the local loopback to understand the network stack works as intended.
+* Ping the localhost IP address
+* Ping other hosts in the N/W subnet.
+* Ping the Gateway
+* Ping multiple hosts outside the subnet, including the destination (if the destination is outside the N/W subnet)
 
 If `ping` does not work, use `traceroute` to understand where it fails. The packets may not be routed properly to the destination, and may have been failing somewhere in between.
 
@@ -69,11 +69,9 @@ If these doesn't show any problem, we can go back to the Presentation/Session/Tr
 
 ### 1.6. Layer 6 - Data Link layer
 
-Understand if the Ethernet device is able to send the frames properly.
-
-In many cases, `ethtool` can help to understand what is happening in this layer, as well as the layer below, the Physical layer.
-
-Ethernet not properly detecting the device, or having a duplex mode different can cause problems in this layer.
+* Understand if the Ethernet device is able to send the frames properly.
+* In many cases, `ethtool` can help to understand what is happening in this layer, as well as the layer below, the Physical layer.
+* Ethernet not properly detecting the device, or having a duplex mode different can cause problems in this layer.
 
 ```bash
 # ethtool enp0s25
@@ -108,7 +106,7 @@ Cannot get wake-on-lan settings: Operation not permitted
 
 ---
 
-## Scenarios
+# Scenarios
 
 1. A webservice is very slow(multi-tier application, which has app, db..etc in different servers)
 
