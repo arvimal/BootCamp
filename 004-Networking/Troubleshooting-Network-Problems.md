@@ -1,3 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Network Troubleshooting](#network-troubleshooting)
+  - [1. OSI Layer troubleshooting](#1-osi-layer-troubleshooting)
+    - [1.1. Layer 1 - Application Layer](#11-layer-1---application-layer)
+    - [1.2. Layer 2 - Presentation layer](#12-layer-2---presentation-layer)
+    - [1.3. Layer 3 - Session layer](#13-layer-3---session-layer)
+    - [1.4. Layer 4 - Transport layer (TCP packet capture using tcpdump/Wireshark)](#14-layer-4---transport-layer-tcp-packet-capture-using-tcpdumpwireshark)
+    - [1.5. Layer 5 - Network layer (Use ping and traceroute)](#15-layer-5---network-layer-use-ping-and-traceroute)
+    - [1.6. Layer 6 - Data Link layer](#16-layer-6---data-link-layer)
+    - [1.7. Layer 7 - Physical layer](#17-layer-7---physical-layer)
+  - [2. How do you distinguish a DNS problem from a network problem?](#2-how-do-you-distinguish-a-dns-problem-from-a-network-problem)
+  - [Scenarios](#scenarios)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Network Troubleshooting
 
 ## 1. OSI Layer troubleshooting
