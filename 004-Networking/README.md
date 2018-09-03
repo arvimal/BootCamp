@@ -784,14 +784,14 @@ Symmetric-key algorithms are algorithms for cryptography that use the same crypt
 
 The keys may be identical or there may be a simple transformation to go between the two keys. The keys, in practice, represent a shared secret between two or more parties that can be used to maintain a private information link. This requirement that both parties have access to the secret key is one of the main drawbacks of symmetric key encryption, in comparison to public-key encryption (also known as asymmetric key encryption).
 
-#### 17.7. Is SSL/TLS encryption asymmetric or symmetric?
+#### 17.7. Does HTTPS use Asymmetric or Symmetric encryption methods?
 
-SSL/TLS encryption uses both `Asymmetric` and `Symmetric` encryption.
+HTTPS uses both `Asymmetric` and `Symmetric` encryption.
 
 * SSL/TLS Handshake - Asymmetric encryption.
 * Data transer session - Symmetric encryption.
 
-The SSL/TLS handshake initially uses `Asymmetric` Encryption. This means that two separate keys are used, a `Public` key and a `Private` key. The `public` key is sent over by the webserver to the client, along with the SSL certificate. The
+The SSL/TLS handshake initially uses `Asymmetric` Encryption. This means that two separate keys are used, a `Public` key and a `Private` key. The `public` key is sent over by the webserver to the client, along with the SSL certificate. The server's public key is used to create a pre-master key by the client, and send over to the server. The server decrypts the pre-master key with its own private key.
 
 `Asymmetric` encryption uses multiple keys, which means that the processing overhead is high, while a `Symmetric` encryption uses a single key and the processing overhead is low.
 
@@ -1146,8 +1146,8 @@ Example:
 
 There are several reasons to find the MAC address of a device:
 
-    1. To set up MAC address filtering on a router to restrict local network access to only those devices whose addresses match a list of presets
-    2. To determine the device's manufacturer (first half of the address) and serial number (second half of the address), such as for warranty service
+1. To set up MAC address filtering on a router to restrict local network access to only those devices whose addresses match a list of presets
+2. To determine the device's manufacturer (first half of the address) and serial number (second half of the address), such as for warranty service
 
 * Find/List the MAC address of neighbouring hosts, ie.. in the same subnet.
 
@@ -1234,10 +1234,11 @@ III. Multicast: (One to Many) [Selected many] (RIPv2/EIGRP use Multicast)
 
 ## 52. Bonding
 
-    * How to check the status of a Bonding device in Linux?
-    * How to configure a bonded interface (bond0) on RHEL/Fedora, from two existing network interfaces (eth0 and eth1).
-
 ### 52.1. Explain the different modes of Networking Bonding.
+
+### 52.2. How to check the status of a Bonding device in Linux?
+
+### 52.3. How to configure a bonded interface (bond0) on RHEL/Fedora
 
 ## 53. What is Ethernet?
 
@@ -1271,9 +1272,9 @@ A managed Layer 2 switch will see tagged or untagged data, and the switch may be
 
 ## 56. Network Address Translation (NAT)
 
-    * Static NAT
-    * Dynamic NAT
-    * Post Address Translation (PAT)
+* Static NAT
+* Dynamic NAT
+* Post Address Translation (PAT)
 
 ## 57. NTP, and its working
 
@@ -1341,22 +1342,22 @@ In active mode, the client establishes the command channel (from client port `X`
 
 In passive mode, the client establishes both channels. In that case, the server tells the client which port should be used for the data channel.
 
-Passive mode is generally used in situations where the FTP server is not able to establish the data channel. One of the major reasons for this is network firewalls. While you may have a firewall rule which allows you to open up FTP channels to ftp.microsoft.com, Microsoft's servers may not have the power to open up the data channel back through your firewall.
+Passive mode is generally used in situations where the FTP server is not able to establish the data channel. One of the major reasons for this is network firewalls. While you may have a firewall rule which allows you to open up FTP channels to ftp.microsoft.com, Microsoft's servers may not have the power to open up the data channel back through your firewall, ie. random ports on the client side.
 
 Passive mode solves this by opening up both types of channel from the client side. In order to make this hopefully clearer:
 
 Active mode:
-    Client opens up command channel from client port 2000(a) to server port 21(b).
-    Client sends PORT 2001(a) to server and server acknowledges on command channel.
-    Server opens up data channel from server port 20(b) to client port 2001(a).
-    Client acknowledges on data channel.
+  Client opens up command channel from client port 2000(a) to server port 21(b).
+  Client sends PORT 2001(a) to server and server acknowledges on command channel.
+  Server opens up data channel from server port 20(b) to client port 2001(a).
+  Client acknowledges on data channel.
 
 Passive mode:
-    Client opens up command channel from client port 2000(a) to server port 21(b).
-    Client sends PASV to server on command channel.
-    Server sends back (on command channel) PORT 1234(a) after starting to listen on that port.
-    Client opens up data channel from client 2001(a) to server port 1234(a).
-    Server acknowledges on data channel.
+  Client opens up command channel from client port 2000(a) to server port 21(b).
+  Client sends PASV to server on command channel.
+  Server sends back (on command channel) PORT 1234(a) after starting to listen on that port.
+  Client opens up data channel from client 2001(a) to server port 1234(a).
+  Server acknowledges on data channel.
 
 At this point, the command and data channels are both open.
 
@@ -1418,6 +1419,21 @@ ie.. Stateful firewalls monitor sessions and allow the sessions to function prop
 
 ## 11. Explain the ports for some known services
 
+FTP - 20, 21
+SSH - 22
+Telnet - 23
+DNS - 53
+DHCP - 67 (Server), 68 (Client)
+HTTP - 80
+POP3 - 110
+PORTMAP - 111
+IMAP - 143
+HTTPs - 443
+CUPS - 631
+IMAPs - 993
+POP3s - 995
+NFS - 2049
+
 ## Network Troubleshooting
 
 ### 1. OSI Layer troubleshooting
@@ -1433,35 +1449,38 @@ Troubleshooting along the OSI layers (Note that not everything aligns exactly as
 
 #### 1.1. Layer 1 - Application Layer
 
-    1. Check if the Application is up and running (ps -aux, pgrep, top)
-    2. Check if the application is listening on the port. (netstat)
-    3. Check if firewall rules are blocking the port (iptables -L and list the port/service)
+  1. Check if the Application is up and running (ps -aux, pgrep, top)
+  2. Check if the application is listening on the port. (netstat)
+  3. Check if firewall rules are blocking the port (iptables -L and list the port/service)
 
 #### 1.2. Layer 2 - Presentation layer
 
-    1. Since this layer deals with mapping various formats to the underlying layers, check if things like encryption etc.. are causing problems.
+  1. Since this layer deals with mapping various formats to the underlying layers, check if things like encryption etc.. are causing problems.
 
 #### 1.3. Layer 3 - Session layer
 
-    1. Check if localhost is able to establish a session to the running service, as well as other nodes.
-    2 A successful session would show an ESTABLISHED flag in netstat, provided the service works over network sockets.
+  1. Check if localhost is able to establish a session to the running service, as well as other nodes.
+  2. A successful session would show an ESTABLISHED flag in netstat, provided the service works over network sockets.
 
 #### 1.4. Layer 4 - Transport layer (TCP packet capture using tcpdump/Wireshark)
 
-    * This may require packet captures and analysis using the RFC for that particular service.
-    * Starting a packet capture and then trying to establish a session from the client to the server would help.
-    * Analyze the packet capture and check if the requests and replies are according to the RFC. There are multiple instances where a service implementation breaks an RFC and the client won't proceed further since it doesn't know what to do next. Lots of NFS/CIFS issues which can come up in this layer.
+  1. This may require packet captures and analysis using the RFC for that particular service.
+  2. Starting a packet capture and then trying to establish a session from the client to the server would help.
+  3. Analyze the packet capture and check if the requests and replies are according to the RFC. There are multiple instances where a service implementation breaks an RFC and the client won't proceed further since it doesn't know what to do next. Lots of NFS/CIFS issues which can come up in this layer.
 
 #### 1.5. Layer 5 - Network layer (Use ping and traceroute)
 
-**NOTE:**
+1. PING
+
 Ping the network to understand ICMP packets are going through. If so, IP packets should go through as well.
 
-    * Ping the local loopback to understand the network stack works as intended.
-    * Ping the localhost IP address
-    * Ping other hosts in the N/W subnet.
-    * Ping the Gateway
-    * Ping multiple hosts outside the subnet, including the destination (if the destination is outside the N/W subnet)
+  * Ping the local loopback to understand the network stack works as intended.
+  * Ping the localhost IP address
+  * Ping other hosts in the N/W subnet.
+  * Ping the Gateway
+  * Ping multiple hosts outside the subnet, including the destination (if the destination is outside the N/W subnet)
+
+2. Traceroute
 
 If `ping` does not work, use `traceroute` to understand where it fails. The packets may not be routed properly to the destination, and may have been failing somewhere in between.
 
@@ -1471,11 +1490,10 @@ If these doesn't show any problem, we can go back to the Presentation/Session/Tr
 
 #### 1.6. Layer 6 - Data Link layer
 
-Understand if the Ethernet device is able to send the frames properly.
-
-In many cases, `ethtool` can help to understand what is happening in this layer, as well as the layer below, the Physical layer.
-
-Ethernet not properly detecting the device, or having a duplex mode different can cause problems in this layer.
+  1. Understand if the Ethernet device is able to send the frames properly.
+  2. In many cases, `ethtool` can help to understand what is happening in this layer, as well as the layer below, the Physical layer.
+  3. Ethernet not properly detecting the device, or having a duplex mode different can cause problems in this layer.
+  4. Check if the device is in half-duplex mode or if it's in the same mode and speed settings as the device on the other end.
 
 ```bash
 # ethtool enp0s25
@@ -1505,6 +1523,8 @@ Cannot get wake-on-lan settings: Operation not permitted
 ```
 
 #### 1.7. Layer 7 - Physical layer
+
+  1. Damages to the cables, connectors, pins, voltage fluctuations, magnetic interference on the signals etc..
 
 ### 2. How do you distinguish a DNS problem from a network problem?
 

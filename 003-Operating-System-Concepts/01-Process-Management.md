@@ -132,7 +132,7 @@ If all four of these are not available, the kernel halts the Linux machine with 
     * System V semaphores
 3. After cleanup, the kernel destroys the process and notified the parent of the child's exit with the **SIGCHLD** signal.
 
-### 3.1. SIGCLD signal and the `wait()` system call
+### 3.1. SIGCHLD signal and the `wait()` system call
 1. The kernel notifies the parent process of the child's exit using the `SIGCHLD` signal.
 2. Usually, the parent process does not need to do anything as a response.
 3. The parent process, however, can obtain more information from the child process termination using the `wait()` system call.

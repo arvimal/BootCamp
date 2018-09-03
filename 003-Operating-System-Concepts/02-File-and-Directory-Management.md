@@ -185,13 +185,16 @@ If I/O requests were always sorted as per the ascending block order, imagine a s
 
 NOTE: Read request latency is always critical, since it has to be fetched from the disk if the page-cache does not carry the data. Write requests are not always problematic, since the application can do the writes and it goes the page-cache without hitting the disk, and thus is much faster.
 
-
-
 Thus, schedulers require more complex algorithms to sort read and write I/O rather than simple sorting and merging. Multiple I/O schedulers exist due to this reason, catering to a wide variety of use-cases.
 
 ### 15.3. Types of I/O Schedulers
 
+Since the default behaviour of Merging and Sorting does not cut for proper scheduling, many I/O schedulers have been invented and evolved.
+
 #### 15.3.1. The Linus Elevator (2.4 kernel series)
+
+The Linus Scheduler used the same Merge/Sort algorithms, but came upon an improvement by introducing another list which was sorted based on the request time.
+
 
 #### 15.3.2. The Deadline Scheduler
 
