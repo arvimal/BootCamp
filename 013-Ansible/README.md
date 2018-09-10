@@ -60,7 +60,7 @@ Table of Contents
 2. The `Control node` acts as the server, where Ansible is installed.
 3. The `Managed Hosts` acts as the clients where the operations are executed.
 4. Ansible includes several modules exist, for specific purposes.
-5. Hostname (Resolvable) or IP address of the `Managed Hosts` are kept in a `host inventory` text file on the `Control Node`. 
+5. Hostname (Resolvable) or IP address of the `Managed Hosts` are kept in a `host inventory` text file on the `Control Node`.
 6. The operations needed to be performed are put in a YAML file called a `Playbook`.
 7. An operation is called a `Play`, and the grouping of Plays are done in a `Playbook`.
 7. The `Playbook` is executed from the `Controller Node` which then connects to the `Managed Hosts` via passwordless SSH.
@@ -91,7 +91,7 @@ Table of Contents
 
 ## 7. Usage
 
-Let's see how we can use the `ansible` command to parse the Inventory file in various ways. 
+Let's see how we can use the `ansible` command to parse the Inventory file in various ways.
 
 In this example, we have a created a custom inventory file with the content below, and save it as `inventory_list`. The name can be chosen at will. In this example, we'll use `inventory_list`.
 
@@ -184,7 +184,7 @@ e. Multiple host types/names/regular-expressions can be specified in a single li
     192.168.100.101
 ~~~
 
-f. All the hosts can be listed with 'all' and '*' as well.
+f. All the hosts can be listed with `all` and `*` as well.
 
 ~~~
 # ansible -i inventory_list --list-hosts '*'
@@ -200,7 +200,7 @@ f. All the hosts can be listed with 'all' and '*' as well.
     192.168.100.101
 ~~~
 
-g. The asterisk '*' can be used as a wildcard.
+g. The asterisk `*` can be used as a wildcard.
 
 ~~~
 # ansible -i inventory_list --list-hosts '*.example.*'
@@ -212,7 +212,7 @@ g. The asterisk '*' can be used as a wildcard.
     web.testing.com
 ~~~
 
-h. List hosts that are part of either one or more groups. 
+h. List hosts that are part of either one or more groups.
 
 NOTE: This actually prints the hosts that are part of the groups mentioned.
 
@@ -316,13 +316,13 @@ Using /etc/ansible/ansible.cfg as config file
 
 ## 9. Escalating privileges
 
-While running Ansible commands as a normal user, it is possible to force ansible to ask for SUDO password for additional security. 
+While running Ansible commands as a normal user, it is possible to force ansible to ask for SUDO password for additional security.
 
 This is enabled by the `become_*` tags under the [privilege_escalation] section
 
 ### 9.1. How to enable privilege escalation?
 
-1. Check the ansible config file 
+1. Check the ansible config file
 
 ~~~
 # ansible --version
@@ -357,7 +357,7 @@ SUDO password:      <<-- Prompting for a password.
   hosts (2):
     localhost
     servera
-~~~ 
+~~~
 
 ## 10. Command execution on Managed hosts
 
@@ -397,22 +397,22 @@ Sun Jul 24 15:21:47 IST 2016
 3. Run the `date` command on the host `ansible2` and print in a single line.
 
 ~~~
-# ansible -m command -a date -o  ansible2 
+# ansible -m command -a date -o  ansible2
 ansible2 | SUCCESS | rc=0 | (stdout) Sun Jul 24 15:24:37 IST 2016
 ~~~
 
-* The `command` module cannot/doesn't access the shell on the managed host, and hence cannot access the shell variables, do redirection, pipe output etc.. 
+* The `command` module cannot/doesn't access the shell on the managed host, and hence cannot access the shell variables, do redirection, pipe output etc..
 
 * This can be worked around using the module `shell`.
 
 * Examples:
 
-4. Grep the string `ansible` from the output of `/etc/hosts`. 
+4. Grep the string `ansible` from the output of `/etc/hosts`.
 
 **NOTE**: We're piping the output of `cat /etc/hosts` to `grep`. Even though `grep` can be done directly on the file, we use this example to show that pipes doesn't work in the `command` module.
 
 ~~~
-$ ansible -m command -a 'cat /etc/hosts | grep ansible' ansible2 
+$ ansible -m command -a 'cat /etc/hosts | grep ansible' ansible2
 ansible2 | FAILED | rc=1 >>
 ~~~
 
@@ -446,7 +446,7 @@ If you want the commands to be run as a different user on the Managed hosts, add
 
 1. Append text in a file on a remote host
 
-**NOTE**: This example appends the string to /etc/motd on the `ansible2` node. Since we're running the ansible command as the user `student`, we won't be able to write the content to the file remotely. 
+**NOTE**: This example appends the string to /etc/motd on the `ansible2` node. Since we're running the ansible command as the user `student`, we won't be able to write the content to the file remotely.
 
 * To elevate the permissions on the managed host, we can use '-u root' so that the content is written as the `root` user.
 
@@ -460,18 +460,18 @@ ansible2 | SUCCESS | rc=0 >>
 ~~~
 $ ansible -m copy -a 'content="Managed by Ansible\n" dest=/etc/motd' -u root ansible2
 ansible2 | SUCCESS => {
-    "changed": true, 
-    "checksum": "4458b979ede3c332f8f2128385df4ba305e58c27", 
-    "dest": "/etc/motd", 
-    "gid": 0, 
-    "group": "root", 
-    "md5sum": "65a4290ee5559756ad04e558b0e0c4e3", 
-    "mode": "0644", 
-    "owner": "root", 
-    "secontext": "system_u:object_r:etc_t:s0", 
-    "size": 19, 
-    "src": "/root/.ansible/tmp/ansible-tmp-1469359336.29-144270528682025/source", 
-    "state": "file", 
+    "changed": true,
+    "checksum": "4458b979ede3c332f8f2128385df4ba305e58c27",
+    "dest": "/etc/motd",
+    "gid": 0,
+    "group": "root",
+    "md5sum": "65a4290ee5559756ad04e558b0e0c4e3",
+    "mode": "0644",
+    "owner": "root",
+    "secontext": "system_u:object_r:etc_t:s0",
+    "size": 19,
+    "src": "/root/.ansible/tmp/ansible-tmp-1469359336.29-144270528682025/source",
+    "state": "file",
     "uid": 0
 }
 ~~~
@@ -493,7 +493,7 @@ $ cat inventoryA
 [myself:children]
 mygroup
 
-$ cat inventoryB 
+$ cat inventoryB
 [myself]
 localhost
 
