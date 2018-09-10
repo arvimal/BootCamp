@@ -84,7 +84,7 @@ The address contains a `jump` instruction, which points to the BIOS entry point 
   * `boot.img` is stored in the master boot record (MBR) or optionally in any of the volume boot records (VBRs), and addresses the next stage by an LBA48 address (thus, the 1024-cylinder limitation of GRUB legacy is avoided).
   * The Stage1 is configured (automatically) to load the first sector of core.img (core.img = Stage 1.5)
 
-* Stage 1.5: (`core.img` - Sector #1 to #62) (Contains filesystem drivers to access partitions with Filesystems, for kernel)
+* Stage 1.5: (`core.img` - Sector #1 to #62) (Can contain drivers to access partitions with Filesystems, for Grub)
 
   * `core.img` is by default written to the sectors between the MBR and the first partition, when these sectors are free and available.
   * For legacy reasons, the first partition of a hard drive does not begin at sector #1 (counting begins with 0) but starts at sector #63. This leaves 62 sectors of empty space not part of any partition or file system, and therefore not prone to any problems related with it.
@@ -151,7 +151,7 @@ The address contains a `jump` instruction, which points to the BIOS entry point 
 
 1. The Intel 8086, the predecessor to the 80286, was originally designed with a 20-bit address bus for its memory.
 2. This allowed the processor to access 220 bytes of memory, equivalent to 1 megabyte.
-3. At the time, 1 MB of memory was considered a relatively large amount of memory, so the designers of the IBM Personal Computer reserved the first 640 kilobytes for use by applications and the operating system and the remaining 384 kilobytes for the BIOS and memory for add-on devices.
+3. At the time, 1 MB of memory was considered a relatively large amount of memory, so the designers of the IBM Personal Computer reserved the first 640 kilobytes for use by applications and the operating system, and the remaining 384 kilobytes for the BIOS and memory for add-on devices.
 4. As the cost of memory decreased and memory use increased, the 1 MB limitation became a significant problem. Intel intended to solve this limitation along with others with the release of the 286, through the `Protected Mode`.
 
 **3. How does Real mode address memory?**
@@ -183,6 +183,16 @@ The address contains a `jump` instruction, which points to the BIOS entry point 
 6. The final `two bytes` contain the `Boot signature`, which denotes the disk is bootable and acts as an indicator that the sector is ending here.
 
 Thus, **Total size =`446 + (4 x16) + 2` = 512 Bytes**
+
+**NOTE:** GPT (Guid Partition Table) is a replacement to MBR. Some of the differences between MBR and GPT are:
+
+* MBR uses 32-bit addresses, hence is limited to read upto 2TiB of disk space (2**32 - 1)
+* GPT uses 64-bit addresses and can address larger disks.
+* MBR uses the Cylinder-Head-Sector (CHS) mode for disk access, which is not always correct due to outer cylinders being large than inner ones and thus the number of sectors per cylinder being different.
+* GPT uses Logical-Block-Address (LBA) mode which is more accurate than GPT.
+
+* GPT still maintains the MBR structure in Sector #0 to maintain backward compatibility. ie.. in LBA #0.
+* GPT header is in LBA #1, the Partition table is at LBA #2, and the filesystem starts from LBA #34.
 
 **6. Why does GRUB have multiple stages?**
 
