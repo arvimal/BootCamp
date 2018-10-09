@@ -157,26 +157,65 @@ But this does not seem to be the case. A process whose parent has died will rema
 
 When a process is terminated, the `init` process will do a recursive search for all the child processes it has spawned, and will parent it. The `init` process will then cleanly acknowledge the process state and terminate the processes if required, or let the process finish its execution.
 
-## 4. Users and Groups
+## 4. Threads and Concurrency
+
+### 4.1. Threads
+
+#### 4.1.1. Advantages
+
+#### 4.1.2. Disadvantages
+
+#### 4.1.3. Requirements to support threads
+
+1. Thread data structure
+  * Identify threads
+  * Keep track of resource usage
+  * Mechanisms to create and manage threads
+  * Mechanisms to safely co-ordinate threads so as to not overwrite the same address space.
+2.
+
+### 4.2. Concurrency
+We know that two processes cannot access each others memory location, due to the way Virtual Memory works. Please refer `03-Memory-Management.md` for more details on this.
+
+Threads share the same memory address space within the process. This makes it really easy since a processor does not need to reload the memory address every time a context switch happens for a thread within the same address space.
+
+But this also brings in some problems. Two threads can write to the same address space, and read it later to find something different from what it expected to see there. This can cause unexpected results. This is a common occurrence in multi-threaded environment.
+
+A method has to be deviced to prevent different threads from accessing the same address location, at the same time. A common technique is to use `Mutual Exclusion`, that allows only a single process to allow writes to an address space.
+
+#### 4.2.1. Mutual Exclusion (Mutex)
+
+Mutual Exclusion is an Operating System concept where the exclusice access to a memory address location is given to only one thread at a time.
 
 
-### 4.1. Real, Effective, and Saved UID/GID
+## 6. Users and Groups
 
-#### 4.1.1. Real ID
 
-#### 4.1.2. Effective ID
+### 6.1. Real, Effective, and Saved UID/GID
 
-#### 4.1.3. Saved ID
+#### 6.1.1. Real ID
 
-## 5. Daemons
+#### 6.1.2. Effective ID
+
+#### 6.1.3. Saved ID
+
+## 7. Daemons
 
 Daemons are processes which possess two specific features:
 
 1. The process should not be using a terminal
 2. The process should be running in the background, waiting for signals/events.
 
-## 6. Process Schedulers [CPU Schedulers]
+## 8. Process Schedulers [CPU Schedulers]
 
 CPU Schedulers or Process schedulers schedule processes to run on the CPUs, based on various factors such as priority, nice value etc..
 
 From 2.6 kernel versions onwards, Linux uses the `Completely Fair Scheduler`, also known as `CFS`.
+
+
+## Appendix A. References
+1. Linux System Programming, 2nd Edition - Robert Love
+2. Operating System Concepts, 9th Edition - Galvin, Silberschatz
+3. Introduction to Operating Systems - Udacity
+4. Advance Operating Systems - Udacity
+5. [An Introduction to Programming with Threads - Andrew.D.Birrel](http://www.birrell.org/andrew/papers/ThreadsCSharp.pdf)
