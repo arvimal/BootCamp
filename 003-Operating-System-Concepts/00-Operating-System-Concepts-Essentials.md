@@ -30,6 +30,30 @@ Operating System Concepts
 
 ### 1.1. System Calls
 
+System Calls or `syscalls` are function calls made from user-space, in order to avail a feature from the Kernel the layers within kernel space.
+
+Examples include a text editor reading/writing to a file on a filesystem within a disk. The disk requires a firware driver, a generic top-level driver such as SCSI, a filesystem driver etc.. which are all dealt within the kernel land.
+
+All the system calls are documented under section 2 of the Linux manual pages. In order to read an introduction, please try:
+
+```bash
+# man 2 intro
+```
+
+To list all the system calls available on a Linux/Unix machine, execute:
+
+```bash
+# man syscalls
+# man 2 syscalls
+```
+
+System calls may differ between system architecture, but in Linux a large percentage is common between varying architectures.
+
+#### 1.1.1. Calling System calls
+
+
+
+
 ### 1.2. The C library
 
 ### 1.3. The C compiler

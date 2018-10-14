@@ -16,14 +16,23 @@
     - [2.2. Copy-On-Write (COW) behaviour of `fork()`](#22-copy-on-write-cow-behaviour-of-fork)
     - [2.3. The exec() system call](#23-the-exec-system-call)
   - [3. Terminating a process](#3-terminating-a-process)
-    - [3.1. SIGCLD signal and the `wait()` system call](#31-sigcld-signal-and-the-wait-system-call)
+    - [3.1. SIGCHLD signal and the `wait()` system call](#31-sigchld-signal-and-the-wait-system-call)
     - [3.2. Zombie process](#32-zombie-process)
-  - [4. Users and Groups](#4-users-and-groups)
-    - [4.1. Real, Effective, and Saved UID/GID](#41-real-effective-and-saved-uidgid)
-      - [4.1.1. Real ID](#411-real-id)
-      - [4.1.2. Effective ID](#412-effective-id)
-      - [4.1.3. Saved ID](#413-saved-id)
-  - [5. Daemons](#5-daemons)
+  - [4. Threads and Concurrency](#4-threads-and-concurrency)
+    - [4.1. Threads](#41-threads)
+      - [4.1.1. Advantages](#411-advantages)
+      - [4.1.2. Disadvantages](#412-disadvantages)
+      - [4.1.3. Requirements to support threads](#413-requirements-to-support-threads)
+    - [4.2. Concurrency](#42-concurrency)
+      - [4.2.1. Mutual Exclusion (Mutex)](#421-mutual-exclusion-mutex)
+  - [6. Users and Groups](#6-users-and-groups)
+    - [6.1. Real, Effective, and Saved UID/GID](#61-real-effective-and-saved-uidgid)
+      - [6.1.1. Real ID](#611-real-id)
+      - [6.1.2. Effective ID](#612-effective-id)
+      - [6.1.3. Saved ID](#613-saved-id)
+  - [7. Daemons](#7-daemons)
+  - [8. Process Schedulers [CPU Schedulers]](#8-process-schedulers-cpu-schedulers)
+  - [Appendix A. References](#appendix-a-references)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -166,13 +175,11 @@ When a process is terminated, the `init` process will do a recursive search for 
 #### 4.1.2. Disadvantages
 
 #### 4.1.3. Requirements to support threads
-
 1. Thread data structure
   * Identify threads
   * Keep track of resource usage
   * Mechanisms to create and manage threads
   * Mechanisms to safely co-ordinate threads so as to not overwrite the same address space.
-2.
 
 ### 4.2. Concurrency
 We know that two processes cannot access each others memory location, due to the way Virtual Memory works. Please refer `03-Memory-Management.md` for more details on this.
@@ -184,9 +191,7 @@ But this also brings in some problems. Two threads can write to the same address
 A method has to be deviced to prevent different threads from accessing the same address location, at the same time. A common technique is to use `Mutual Exclusion`, that allows only a single process to allow writes to an address space.
 
 #### 4.2.1. Mutual Exclusion (Mutex)
-
 Mutual Exclusion is an Operating System concept where the exclusice access to a memory address location is given to only one thread at a time.
-
 
 ## 6. Users and Groups
 
@@ -200,14 +205,12 @@ Mutual Exclusion is an Operating System concept where the exclusice access to a 
 #### 6.1.3. Saved ID
 
 ## 7. Daemons
-
 Daemons are processes which possess two specific features:
 
 1. The process should not be using a terminal
 2. The process should be running in the background, waiting for signals/events.
 
 ## 8. Process Schedulers [CPU Schedulers]
-
 CPU Schedulers or Process schedulers schedule processes to run on the CPUs, based on various factors such as priority, nice value etc..
 
 From 2.6 kernel versions onwards, Linux uses the `Completely Fair Scheduler`, also known as `CFS`.
