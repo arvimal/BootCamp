@@ -24,11 +24,9 @@
 Operating System Concepts
 ==========================
 
-## Introduction
+# 1. System Programming
 
-## 1. System Programming
-
-### 1.1. System Calls
+## 1.1. System Calls
 
 System Calls or `syscalls` are function calls made from user-space, in order to avail a feature from the Kernel the layers within kernel space.
 
@@ -49,31 +47,31 @@ To list all the system calls available on a Linux/Unix machine, execute:
 
 System calls may differ between system architecture, but in Linux a large percentage is common between varying architectures.
 
-#### 1.1.1. Calling System calls
+### 1.1.1. Calling System calls
 
 
 
 
-### 1.2. The C library
+## 1.2. The C library
 
-### 1.3. The C compiler
+## 1.3. The C compiler
 
-## 2. APIs and ABIs
+# 2. APIs and ABIs
 
-### 2.1. APIs
+## 2.1. APIs
 
-### 2.2. ABIs
+## 2.2. ABIs
 
-## 3. Concepts of Linux Programming
+# 3. Concepts of Linux Programming
 
-### 3.1. Files and file systems
+## 3.1. Files and file systems
 
-### 3.2. Processes
+## 3.2. Processes
 
-### 3.3. Users and Groups
+## 3.3. Users and Groups
 
-### 3.4. Permissions
+## 3.4. Permissions
 
-### 3.5. Signals
+## 3.5. Signals
 
-### 3.6. Interprocess Communication
+## 3.6. Interprocess Communication
