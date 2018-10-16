@@ -47,9 +47,9 @@ To list all the system calls available on a Linux/Unix machine, execute:
 
 System calls may differ between system architecture, but in Linux a large percentage is common between varying architectures.
 
-### 1.1.1. Calling System calls
+### 1.1.1. Issuing System calls
 
-
+A system call is
 
 
 ## 1.2. The C library
@@ -62,9 +62,31 @@ System calls may differ between system architecture, but in Linux a large percen
 
 ## 2.2. ABIs
 
-# 3. Concepts of Linux Programming
+# 3. Concepts of Linux Programming - Abstraction
+
+Abstraction is a very important concept in Linux and System programming in general.
+
+Any difficult concept can be easily represented with an abstraction layer on top of it.
+
+The most commonly used abstraction models in Unix/Linux are:
+
+* Files
+* Process
+* Users, Groups, and Permissions
 
 ## 3.1. Files and file systems
+
+### 3.1.1. Regular files
+
+### 3.1.2. Directories
+
+### 3.1.3. Hard Links
+
+### 3.1.4. Soft Links / Symbolic Links
+
+### 3.1.5. Special files
+
+### 3.1.6. Namespaces
 
 ## 3.2. Processes
 
