@@ -6,6 +6,10 @@
   - [Introduction](#introduction)
   - [1. Files and Metadata](#1-files-and-metadata)
     - [1.1. stat(), lstat(), and fstat()](#11-stat-lstat-and-fstat)
+      - [1.1.1. stat()](#111-stat)
+      - [1.1.2. fstat()](#112-fstat)
+      - [1.1.3. lstat()](#113-lstat)
+      - [1.1.4. Timestamp in the stat struct](#114-timestamp-in-the-stat-struct)
     - [1.2. Permissions [chmod() and fchmod()]](#12-permissions-chmod-and-fchmod)
     - [1.3. Ownership](#13-ownership)
     - [1.4. Extended Attributes (xattrs)](#14-extended-attributes-xattrs)
@@ -40,6 +44,19 @@
   - [7. Inodes](#7-inodes)
     - [7.1. Metadata in inodes](#71-metadata-in-inodes)
     - [7.2. Access time, Modify time, Change time](#72-access-time-modify-time-change-time)
+  - [8. Hard and Soft links](#8-hard-and-soft-links)
+    - [8.1. Hard links](#81-hard-links)
+    - [8.2. Soft links](#82-soft-links)
+  - [15. I/O Schedulers](#15-io-schedulers)
+    - [15.1. Merging](#151-merging)
+    - [15.2. Sorting](#152-sorting)
+    - [15.3. Problems with simple sorting of I/O requests](#153-problems-with-simple-sorting-of-io-requests)
+    - [15.3. Types of I/O Schedulers](#153-types-of-io-schedulers)
+      - [15.3.1. The Linus Elevator (2.4 kernel series)](#1531-the-linus-elevator-24-kernel-series)
+      - [15.3.2. The Deadline Scheduler](#1532-the-deadline-scheduler)
+      - [15.3.3. The Anticipatory Scheduler](#1533-the-anticipatory-scheduler)
+      - [15.3.4. The CFQ I/O Scheduler (Completely-Fair-Queuing)](#1534-the-cfq-io-scheduler-completely-fair-queuing)
+      - [15.3.5. The Noop I/O Scheduler](#1535-the-noop-io-scheduler)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -54,6 +71,74 @@ File and Directory Management
 
 ### 1.1. stat(), lstat(), and fstat()
 
+The syscalls stat(), lstat(), fstat() all return information about a file or folder.
+
+Each system call differs slightly on what sort of handler they act on, but each one of them return file metadata through a **stat** struct.
+
+glibc provides the `stat()` wrapper around the actual `stat()` kernel API end-point.
+
+#### 1.1.1. stat()
+
+`stat()` returns a **stat** struct which contains the following details.
+
+```bash
+        struct stat {
+            dev_t     st_dev;         /* ID of device containing file */
+            ino_t     st_ino;         /* Inode number */
+            mode_t    st_mode;        /* File type and mode */
+            nlink_t   st_nlink;       /* Number of hard links */
+            uid_t     st_uid;         /* User ID of owner */
+            gid_t     st_gid;         /* Group ID of owner */
+            dev_t     st_rdev;        /* Device ID (if special file) */
+            off_t     st_size;        /* Total size, in bytes */
+            blksize_t st_blksize;     /* Block size for filesystem I/O */
+            blkcnt_t  st_blocks;      /* Number of 512B blocks allocated */
+
+           /* Since Linux 2.6, the kernel supports nanosecond
+              precision for the following timestamp fields.
+              For the details before Linux 2.6, see NOTES. */
+
+            struct timespec st_atim;  /* Time of last access */
+            struct timespec st_mtim;  /* Time of last modification */
+            struct timespec st_ctim;  /* Time of last status change */
+
+           #define st_atime st_atim.tv_sec      /* Backward compatibility */
+           #define st_mtime st_mtim.tv_sec
+           #define st_ctime st_ctim.tv_sec
+           };
+```
+
+`stat()` can be called on both symbolic links and actual files (hard links as well). ie. it resolves and returns the information of the destination file.
+
+To read more on `stat()`, try:
+
+```bash
+# man 2 stat
+```
+
+#### 1.1.2. fstat()
+
+While `stat()` takes in a file-name as its argument, `fstat()` takes in a file-descriptor ID as its argument.
+
+It returns the same `stat` struct as the `stat()` syscall.
+
+#### 1.1.3. lstat()
+
+`lstat()` is similar to `stat()` and returns the `stat` struct.
+
+The major difference is when it's used on a symbolic link. `lstat()` returns the information of the symbolic link rather than the file the link is pointing to.
+
+#### 1.1.4. Timestamp in the stat struct
+
+There are three structs within the `stat` struct that shows different time stamps.
+
+* `st_atime` - Last access time (Data or Metadata)
+* `st_mtime` - Last modification time (Data and metadata change)
+* `st_ctime` - Last change time (Metadata change, not data)
+
+Older linux kernels (prior kernel version 2.5.48) only supported time-stamps with a granularity of upto a **second**.
+
+From kernel version 2.5.48 onwards, all three of the above time stamps support a nano-second precision.
 
 ### 1.2. Permissions [chmod() and fchmod()]
 
