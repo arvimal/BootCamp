@@ -170,11 +170,9 @@ The three permission fields and their corresponding values are:
 |Type|Value|
 ----|----|
 |Read (r) | 4 |
-|------------|----
 |Write (w) | 2 |
-|------------|----|
 |Execute (x0| 1 |
-|------------|----
+
 
 The three level of user access is:
 * User
