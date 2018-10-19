@@ -65,9 +65,9 @@ File and Directory Management
 
 ## Introduction
 
-Linux tries to adhere to the `Everything-is-a-File` philosophy. Files are the second most basic abstraction layers in a Unix/Linux system, after processes.
+Linux tries to adhere to the `Everything-is-a-File` philosophy. A file is the most basic abstraction layer in a Unix/Linux system.
 
-It helps to access streams of data from a destination, either local or remote, and also to access certain devices that does not fall into normal file formats, such as character devices, sockets etc.
+It helps to access streams of data from a destination, either local or remote, and also access to certain devices that does not fall into normal file formats, such as character devices, sockets etc.
 
 A normal file in Linux is just a stream of bytes on the disk. Linux does not impose any sort of restriction or file formats for files.
 
@@ -145,20 +145,110 @@ Older linux kernels (prior kernel version 2.5.48) only supported time-stamps wit
 
 From kernel version 2.5.48 onwards, all three of the above time stamps support a nano-second precision.
 
-### 1.2. Permissions [chmod() and fchmod()]
+### 1.2. Permissions
+
+Unix/Linux systems handle file/directory access through a series of permission fields.
+
+These permission fields contain three components, and is set for three level of users.
+
+The three permission fields and their corresponding values are:
+
+|Type|Value|
+----|----|
+|Read (r) | 4 |
+|------------|----
+|Write (w) | 2 |
+|------------|----|
+|Execute (x0| 1 |
+|------------|----
+
+The three level of user access is:
+* User
+* Group
+* Other (Universal / Other accounts on the system)
+
+A normal file listing looks as following:
+
+```bash
+ls -l /tmp
+total 168
+srwxrwxr-x.  1 user1 user1      0 Oct 17 11:46  atom-2dronS-fzeo6.sock
+drwx------.  2 user1 user1     40 Oct 17 11:46 'Atom Crashes'
+-rw-------.  1 user1 user1    659 Oct 18 23:38  dropbox-antifreeze-hIX0o8
+-rw-------.  1 user1 user1    659 Oct 18 23:38  dropbox-antifreeze-Uv7Ebe
+-rw-------.  1 user1 user1    575 Oct 17 10:58  dropbox-antifreeze-xr4T0W
+-rw-------.  1 user1 user1    579 Oct 18 23:38  dropbox-antifreeze-zDLKfd
+```
+
+**NOTE:**
+
+1. A directory can be listed only if the `read` bit is set for it.
+2. A directory can be changed **cd** into, only if `execute` bit is set for it.
+
+[chmod() and fchmod()]
 
 
 ### 1.3. Ownership
 
 
-### 1.4. Extended Attributes (xattrs)
+### 1.4. umask
+
+### 1.5. Extended Attributes (xattrs)
 
 
-#### 1.4.1. Keys and Values
+#### 1.5.1. Keys and Values
 
-#### 1.4.2. Extended Attribute Namespace
+#### 1.5.2. Extended Attribute Namespace
 
-#### 1.4.3. Extended Attribute Operations
+#### 1.5.3. Extended Attribute Operations
+
+### 1.6. Special files
+
+Apart from the stream of bytes that Linux see as a file, there are a few things that are represented as file objects for the sake of uniformity and adherence to `Everything-is-a-File` philosophy.
+
+These are called special files to identify them from the normal file abstraction, and they are as following:
+
+  1. Block device file
+  2. Character device file
+  3. Pipes
+  4. Sockets
+
+#### 1.6.1. Block device files
+
+A block device file usually points to a device that is accessed as an array of bytes, or in other words, a chunk of data.
+
+Storage devices such as SCSI, SATA, ATA, SAS, or devices such as CD/DVD, Floppy disks etc.. are all accessed in chunks and are addressed as block devices.
+
+#### 1.6.2. Character device files
+
+#### 1.6.3. Pipes
+
+Pipes are of two types:
+
+  * Named Pipes
+  * Regular Pipes
+
+Named pipes a
+
+#### 1.6.4. Sockets
+
+The device driver for the block device reads and maps the content of the disk blocks (multiple sectors in a single go), and the application is free to read any block in that range, in any order.
+
+### 1.7. Types of file access
+
+#### 1.7.1. Open
+
+#### 1.7.2. Close
+
+#### 1.7.3. Read
+
+#### 1.7.4. Write / Append
+
+#### 1.7.5. Seek
+
+#### 1.7.6. Delete
+
+
 
 ## 2. Directories
 
