@@ -79,9 +79,9 @@ File and Directory Management
 
 ## Introduction
 
-Linux tries to adhere to the `Everything-is-a-File` philosophy. A file is the most basic abstraction layer in a Unix/Linux system.
+A file is the most basic abstraction layer in a Unix/Linux system.
 
-It helps to access streams of data from a destination, either local or remote, and also access to certain devices that does not fall into normal file formats, such as character devices, sockets etc.
+Linux tries to adhere to the `Everything-is-a-File` philosophy. It helps to access streams of data from a destination, either local or remote, and also access to certain devices that does not fall into normal file formats, such as character devices, sockets etc.
 
 A normal file in Linux is just a stream of bytes on the disk. Linux does not impose any sort of restriction or file formats for files.
 
@@ -171,7 +171,7 @@ The three permission fields and their corresponding values are:
 ----|----|
 |Read (r) | 4 |
 |Write (w) | 2 |
-|Execute (x0| 1 |
+|Execute (x) | 1 |
 
 
 The three level of user access is:
@@ -298,6 +298,13 @@ The process of mounting a filesystem can be described as:
 # cat /proc/filesystems
 ```
 
+## 2.6. Directory implementations
+
+### 2.6.1. Linked list
+
+### 2.6.2. Hash table
+
+## 2.7. Directory Entry cache (dentry cache)
 ## 3. Links
 
 ### 3.1. Hard links
@@ -322,13 +329,28 @@ The process of mounting a filesystem can be described as:
 
 ### 6.2. Mandatory data structures
 
+VFS requires the filesystems to provide a few mandatory data structures in order to work with them.
+
+Any filesystems that wants to work on Linux has to export these data structures to the VFS layer. Four important objects and a set of operations for each objects are mandatory to work with VFS.
+
+They are:
+
+* Inode object
+* Dentry object
+* Superblock object
+* File object
+
+The filesystems are not required to implement the same structure within the filesystems, but only export these functions to VFS. These functions should map the internal filesystem layout to the operations VFS expects from the filesystems.
+
 #### 6.2.1. inode object
 
-The `inode` object represents an individual file or directory.
+The `inode` object represents an individual file or directory. Accessing an inode object access the file.
 
 #### 6.2.2. superblock object
 
 The `superblock` object represents an entire filesystem. It carries information about the filesystem.
+
+Ho
 
 #### 6.2.3. dentry object
 
