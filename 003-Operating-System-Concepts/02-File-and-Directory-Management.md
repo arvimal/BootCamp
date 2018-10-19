@@ -65,6 +65,11 @@ File and Directory Management
 
 ## Introduction
 
+Linux tries to adhere to the `Everything-is-a-File` philosophy. Files are the second most basic abstraction layers in a Unix/Linux system, after processes.
+
+It helps to access streams of data from a destination, either local or remote, and also to access certain devices that does not fall into normal file formats, such as character devices, sockets etc.
+
+A normal file in Linux is just a stream of bytes on the disk. Linux does not impose any sort of restriction or file formats for files.
 
 ## 1. Files and Metadata
 
@@ -164,6 +169,32 @@ From kernel version 2.5.48 onwards, all three of the above time stamps support a
 ### 2.3. Removing directories
 
 ### 2.4. Reading a directory's content
+
+### 2.5. Mounting a filesystem
+
+A filesystem has to be mounted to the root directory structure in memory, prior accessing a file/folder on that particular filesystem.
+
+The process of mounting is synonymous to creating a link in kernel-space from a directory in the root filesystem to the destination filesystem, by placing a pointer to the root inode of the destination filesystem in the dentry structure of the source filesystem. (Oh GAWD!)
+
+The process of mounting a filesystem can be described as:
+
+  * The Operating system is passed the name of the device and the mount-point.
+  * The filesystem structure/signature is read by the kernel to identify the filesystem.
+  * The appropriate filesystem driver module is loaded in memory by the kernel.
+  * An entry is made in the kernel mount table that links the mount point, the device file, and the filesystem driver.
+
+* To see the list of mounted filesystems, use:
+
+```bash
+# cat /proc/mounts
+# cat /etc/mtab
+```
+
+* To see the filesystems supported by the kernel (as per the modules loaded), use:
+
+```bash
+# cat /proc/filesystems
+```
 
 ## 3. Links
 
