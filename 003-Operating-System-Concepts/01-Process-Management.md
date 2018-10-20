@@ -149,11 +149,11 @@ If all four of these are not available, the kernel halts the Linux machine with 
 4. Every parent process has to acknowledge the termination of its child thorugh the `wait()` system call.
 
 ### 3.2. Zombie process
-1. A process that has been terminated, but not yet waited by its parent process using the `wait()` system call, is a Zombie process.
-2. A terminated process before being disposed off, posses a minimal skeleton of the original process, ie. a few basic data structures to be read by the parent process. Such a process is said to be in the Zombie state.
-3. A process in the Zombie state waits for its parent process to read/ack its state.
-4. Only after the parent process reads and acknowledges the child process state through the `wait()` system call, is the process really terminated by the kernel.
-5. Since some of the basic data structures of the process has to be maintained, a zombie process still consumes some system resources.
+A process that has been terminated, but not yet waited by its parent process with the `wait()` system call, is a Zombie process.
+
+The kernel maintains a minimal skeleton of the child process even after it's terminated (either properly terminated after execution, or terminated unexpectedly). This include a few basic data structures including the exit state of the child process.
+
+Only after the parent process reads and acknowledges the child process state through the `wait()` system call, is the process really terminated by the kernel. Since some of the basic data structures of the process has to be maintained, a zombie process still consumes some system resources.
 
 In short, a Zombie process is the state of a process that has been terminated but not yet acknowledged by the wait() system call by its parent.
 
