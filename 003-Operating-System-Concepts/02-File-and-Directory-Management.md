@@ -435,12 +435,31 @@ Since the default behaviour of Merging and Sorting does not cut for proper sched
 
 The Linus Scheduler used the same Merge/Sort algorithms, but came upon an improvement by introducing another list which was sorted based on the request time.
 
+It served the requests from the main queue, but takes a look at the request queue to see if there are any pending requests waiting for more than a threshold time period. If so, it stops serving the main queue and serves the pending I/O requests.
+
+This was better than basic sorting/merging where the requests for higher address locations were not serviced in the same priority as lower address locations. But this was still not perfect since the requests for higher sector addresses still had to wait the threshold time the scheduler checks the pending queue.
 
 #### 15.3.2. The Deadline Scheduler
+
+The Deadline scheduler works with a main queue which is sorted as FIFO (First In First Out). But it parallely maintains two separate queues, one for read I/O requests and another for write I/O requests.
+
+The read FIFO queue has a deadline threshold expiration value of **500 milliseconds**, whereas the write FIFO queue has a deadline of **5 seconds**.
+
+The Deadline scheduler starts off by scheduling the requests from the main queue. Once any I/O requests in either of the read and write queue hits their threshold value of 500 ms or 5 s, the scheduler serves that specific request.
 
 #### 15.3.3. The Anticipatory Scheduler
 
 #### 15.3.4. The CFQ I/O Scheduler (Completely-Fair-Queuing)
+
+The CFQ I/O scheduler is the default scheduler on Linux machines.
+
+It has a queue for each of the processes on the machine, and each queue contain both read and write requests. ie. CFQ does not maintain a separate queue for read and write requests.
+
+Each queue is assigned a time slice, and the scheduler goes to each queue in a round-robin fashion serving the read and write requests in the respective queues. It moves to the next process queue once the threshold value hits.
+
+If there are no requests for a process, it waits for 10ms to see if anything comes up, and then moves on to the next queue.
+
+Due to this approach, the CFQ I/O scheduler is fair to all processes, by giving the same time slice for execution.
 
 #### 15.3.5. The Noop I/O Scheduler
 * The most basic of all I/O schedulers.
