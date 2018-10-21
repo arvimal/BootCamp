@@ -161,4 +161,21 @@ The most commonly used abstraction models in Unix/Linux are:
 
 ## 3.5. Signals
 
+Signals are process-level interrupt requests.
+
+Signals can be sent among:
+
+* Between processes
+* Sent through the terminal driver to kill, interrupt, suspend etc.. [Ctrl+C, Ctrl+D, Ctrl+Z etc.]
+* Sent by an administrator using the `kill` command.
+* Sent by the kernel to processes if they do something unexpected.
+* Sent by the kernel to notify processes on something specific.
+  * Example: The kernel sending `SIGCHLD` to the parent process if a child process dies.
+
+**NOTE:**
+>Signals that cannot be STOPPED, BLOCKED, OR IGNORED.
+>  * SIGKILL - 9
+>  * SIGSTOP - 17
+
+
 ## 3.6. Interprocess Communication

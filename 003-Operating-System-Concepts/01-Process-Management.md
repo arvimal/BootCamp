@@ -51,7 +51,7 @@ While most operating systems provide a single system call to create a process, U
 3. The kernel does not readily allocate a process ID which has been returned back to the pool of free IDs.
 4. The `Process scheduler` is a subsystem of the kernel that allocates processes on the CPU.
 
-### 1.1. The idle process
+###1.1. The idle process
 1. The `Process Scheduler` run a special code routine called `idle` as a process on the CPU, if there are no processes to be run. This situation is rare, though.
 2. The `idle` process has a PID of 0.
 
@@ -106,6 +106,10 @@ If all four of these are not available, the kernel halts the Linux machine with 
     * Stats - The child's resourse statistics are set to 0.
     * File locks - Any file locks used by the parent process are not inherited by the child process.
     * Signals - Any signals in use with the parent are not inherited by the child process.
+
+**NOTE**:
+>Linux systems use clone(), a superset of fork that handles threads and includes additional features.
+>fork() remains in the kernel for backward compatibility but calls clone() behind the scenes.
 
 ### 2.2. Copy-On-Write (COW) behaviour of `fork()`
 1. Copy-on-Write is the process in which modern Unix/Linux systems do forking.
@@ -205,16 +209,25 @@ Mutual Exclusion is an Operating System concept where the exclusice access to a 
 #### 6.1.3. Saved ID
 
 ## 7. Daemons
-Daemons are processes which possess two specific features:
+Daemons are processes that possess two specific features:
 
-1. The process should not be using a terminal
-2. The process should be running in the background, waiting for signals/events.
+1. The process is a child of init process.
+2. The process is not connected to any terminal, thus running in the background waiting for signals/events.
 
 ## 8. Process Schedulers [CPU Schedulers]
 CPU Schedulers or Process schedulers schedule processes to run on the CPUs, based on various factors such as priority, nice value etc..
 
 From 2.6 kernel versions onwards, Linux uses the `Completely Fair Scheduler`, also known as `CFS`.
 
+### 8.1. Pre-emptive Scheduling and Co-operative Scheduling
+
+#### 8.1.1. Pre-emptive scheduling
+
+#### 8.1.2. Co-operative scheduling
+
+### 8.2. O(1) process/CPU scheduler
+
+### 8.3. Process timeslice
 
 ## Appendix A. References
 1. Linux System Programming, 2nd Edition - Robert Love
