@@ -51,7 +51,7 @@ While most operating systems provide a single system call to create a process, U
 3. The kernel does not readily allocate a process ID which has been returned back to the pool of free IDs.
 4. The `Process scheduler` is a subsystem of the kernel that allocates processes on the CPU.
 
-###1.1. The idle process
+### 1.1. The idle process
 1. The `Process Scheduler` run a special code routine called `idle` as a process on the CPU, if there are no processes to be run. This situation is rare, though.
 2. The `idle` process has a PID of 0.
 
@@ -138,8 +138,8 @@ If all four of these are not available, the kernel halts the Linux machine with 
     * Mapped files are dropped in the child process.
 
 ## 3. Terminating a process
-1. A process is terminated by calling the `exit()` system call.
-2. When a process exits, the kernel cleans up all the resources it had used, this includes:
+1. A process calls the `exit()` system call when it is ready to terminate.
+2. When the process exits, the kernel receives the `exit()` routine, and the kernel cleans up all the resources it had used, this includes:
     * Allocated memory
     * Open files
     * System V semaphores
@@ -196,6 +196,27 @@ A method has to be deviced to prevent different threads from accessing the same 
 
 #### 4.2.1. Mutual Exclusion (Mutex)
 Mutual Exclusion is an Operating System concept where the exclusice access to a memory address location is given to only one thread at a time.
+
+## 5. Process priority
+
+### 5.1. Nice and renicing processes
+
+The “niceness” of a process is a numeric hint to the kernel about how the process should be treated in relation to other processes contending for the CPU.
+
+The strange name is derived from the fact that it determines how nice you are going to be to other users of the system.
+
+A high niceness means a low priority for your process: you are going to be nice. A low or negative value means high priority: you are not very nice.
+
+>**NOTE:**
+> In Linux, the nice values range from -20 to +19.
+> Higher the value, the more nicer you are.
+> Lower the value, the less nicer you are.
+
+Example of resetting the nice value:
+
+```bash
+# nice -n 19 top
+```
 
 ## 6. Users and Groups
 

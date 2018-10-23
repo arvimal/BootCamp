@@ -70,10 +70,10 @@ This is a method in which several statistics are captured for all three of these
 
 Tools can be divided into four categories.
 
-i. Observe
-ii. Benchmark
-iii. Tune
-iv. Configuration check
+* Observe
+* Benchmark
+* Tune
+* Configuration check
 
 ## 2.1. OBSERVE (Watch system activity)
 
@@ -86,17 +86,23 @@ iv. Configuration check
  21:46:46 up  2:20,  3 users,  load average: 0.00, 0.01, 0.05
 ```
 
-`uptime`  gives a one line display of the following information. The current time, how long the system has been running, how many users are currently logged on, and the system load averages for the past 1, 5, and 15 minutes.
+* `uptime`  gives a one line display of the following information.
+  * The current time
+  * How long the system has been running
+  * How many users are currently logged in
+  * The system load averages for the past 1, 5, and 15 minutes.
 
-* **A note on LOAD AVERAGE**
+>**A note on LOAD AVERAGE**
+>The `Load Average` is the **average number of processes** that are either in a `Runnable` or `Un-interruptible` state.
+>This is also called the CPU load average, since it purely depends on the processes executing on the CPU, or being in-queue for the CPU.
 
-The `Load Average` is the **average number of processes** that are either in a `Runnable` or `Un-interruptible` state. This is also called the CPU load average, since it purely depends on the processes executing on the CPU, or being in-queue for the CPU.
+Any tool listing the load average reads from `/proc/loadavg`.
 
-Any tool listing the load average reads from `/proc/loadavg`. The section `/proc/loadavg` in `man proc` states the following:
+The section `/proc/loadavg` in `man proc` states the following:
 
-```text
-The  first three fields in this file are load average figures giving the number of jobs in the run queue (state R) or waiting for disk I/O (state D) averaged over 1, 5, and 15 minutes. They are the same as the load average numbers given by uptime(1) and other programs.
-```
+>The first three fields in this file are load average figures giving the number of jobs in the run queue (state R)
+>or waiting for disk I/O (state D) averaged over 1, 5, and 15 minutes.
+>They are the same as the load average numbers given by uptime(1) and other programs.
 
 A process is runnable if its either currently being executed on a CPU or is in the queue waiting for a CPU. Un-interruptible processes are the ones which are waiting for a resource to finish its work, such as a disk I/O.
 
