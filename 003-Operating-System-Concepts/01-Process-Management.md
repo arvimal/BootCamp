@@ -104,6 +104,7 @@ If all four of these are not available, the kernel halts the Linux machine with 
 
 ### 2.1. The fork() system call
 1. The fork() system call is used to create an image (almost exact copy) of an existing process.
+  **NOTE**: From linux version 2.3.3 onwards, `fork()` calls `clone()`.
 2. The new process is called the `Child` of the process it was forked from, the other called `Parent`.
 3. The new process, also known as the `Child` process differs from the `Parent` in a few ways.
     * PID - The child process gets a new PID.
@@ -147,7 +148,12 @@ If all four of these are not available, the kernel halts the Linux machine with 
     * Allocated memory
     * Open files
     * System V semaphores
-3. After cleanup, the kernel destroys the process and notified the parent of the child's exit with the **SIGCHLD** signal.
+3. After cleanup, the kernel destroys the process, but maintains a very basic state information of the child process.
+4. The kernel intimates the parent process of the child's termination, with the `SIGCHLD` signal.
+5. The parent can ignore the `SIGCHLD` signal, and in such cases, the `init` process becomes the parent of the child, acknowledges its state change, and cleans up the remaining info.
+6. If the parent process wants to reap the child status, it does so with the `wait()` syscall.
+7. If the parent process tries to reap the child status, but does not do it successfully, the child process remains in a `Zombie` state.
+8. In such cases, the `init` process reaps the child after a threshold time.
 
 ### 3.1. SIGCHLD signal and the `wait()` system call
 1. The kernel notifies the parent process of the child's exit using the `SIGCHLD` signal.
@@ -227,11 +233,30 @@ Example of resetting the nice value:
 
 ### 6.1. Real, Effective, and Saved UID/GID
 
-#### 6.1.1. Real ID
+#### 6.1.1. Real UID
 
-#### 6.1.2. Effective ID
+#### 6.1.2. Effective UID
 
-#### 6.1.3. Saved ID
+Effective UID is the user-id that is called by executing the `setuid()` syscall.
+
+Examples of binaries with `setuid` are:
+  * /usr/bin/sudo
+  * /usr/bin/passwd
+  * /usr/bin/su
+
+```bash
+-rwsr-xr-x. 1 root root 27832 Jun 10  2014 /usr/bin/passwd
+ ⚡ root@centos7  ~  ls -l `which sudo`
+---s--x--x. 1 root root 143248 Jun 27 14:03 /usr/bin/sudo
+ ⚡ root@centos7  ~  ls -l `which su`
+-rwsr-xr-x. 1 root root 32184 Aug 16 14:47 /usr/bin/su
+```
+
+#### 6.1.3. Saved UID
+
+The effective ID of a process can be saved in memory, and re-used later. This is called the Saved ID.
+
+The Saved UID is almost always the Effective UID set by calling `setuid()`.
 
 ## 7. Daemons
 Daemons are processes that possess two specific features:
@@ -244,9 +269,29 @@ CPU Schedulers or Process schedulers schedule processes to run on the CPUs, base
 
 From 2.6 kernel versions onwards, Linux uses the `Completely Fair Scheduler`, also known as `CFS`.
 
+>**From Wikipedia**:
+>In contrast to the previous O(1) scheduler used in older Linux 2.6 kernels, the CFS scheduler
+>implementation is not based on run queues. Instead, a red–black tree implements a "timeline" of
+>future task execution. Additionally, the scheduler uses nanosecond granularity accounting, the
+>atomic units by which an individual process' share of the CPU was allocated (thus making redundant
+>the previous notion of timeslices). This precise knowledge also means that no specific heuristics
+>are required to determine the interactivity of a process.
+
+>Like the old O(1) scheduler, CFS uses a concept called "sleeper fairness", which considers
+>sleeping or waiting tasks equivalent to those on the runqueue. This means that interactive tasks
+>which spend most of their time waiting for user input or other events get a comparable share of
+>CPU time when they need it.
+
 ### 8.1. Pre-emptive Scheduling and Co-operative Scheduling
 
 #### 8.1.1. Pre-emptive scheduling
+
+In Pre-emptive scheduling, the process running on the CPU runs indefinitely or as long as it chooses.
+
+Ideally, the process should stop (out of courtesy to other processes) after some time, and pass the execution to other processes in the queue. But, badly written software can override this and take CPU execution cycles for an indefinite time, thus starving other processes of CPU cycles.
+
+This is not an optimal scheduling process, and almost all operating systems have moved away from this.
+
 
 #### 8.1.2. Co-operative scheduling
 

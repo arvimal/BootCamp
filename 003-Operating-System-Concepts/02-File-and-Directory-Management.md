@@ -98,7 +98,7 @@ glibc provides the `stat()` wrapper around the actual `stat()` kernel API end-po
 
 #### 1.1.1. stat()
 
-`stat()` returns a **stat** struct which contains the following details.
+The `stat()` system call returns a **stat** struct, with metadata information.
 
 ```bash
         struct stat {
@@ -151,9 +151,9 @@ The major difference is when it's used on a symbolic link. `lstat()` returns the
 
 There are three structs within the `stat` struct that shows different time stamps.
 
-* `st_atime` - Last access time (Data or Metadata)
-* `st_mtime` - Last modification time (Data and metadata change)
-* `st_ctime` - Last change time (Metadata change, not data)
+* `st_atime` - Last access time (Data reads)
+* `st_mtime` - Last modification time (Data writes)
+* `st_ctime` - Last change time (Metadata change, not data  - Simple reads)
 
 Older linux kernels (prior kernel version 2.5.48) only supported time-stamps with a granularity of upto a **second**.
 
@@ -197,13 +197,19 @@ drwx------.  2 user1 user1     40 Oct 17 11:46 'Atom Crashes'
 1. A directory can be listed only if the `read` bit is set for it.
 2. A directory can be changed **cd** into, only if `execute` bit is set for it.
 
-[chmod() and fchmod()]
+#### 1.2.1. chmod()
+
+#### 1.2.2. fchmod()
 
 
 ### 1.3. Ownership
 
 
 ### 1.4. umask
+
+022 for UIDs less than 199
+
+002 for UIDs greater than 199
 
 ### 1.5. Extended Attributes (xattrs)
 
@@ -218,7 +224,7 @@ drwx------.  2 user1 user1     40 Oct 17 11:46 'Atom Crashes'
 
 Apart from the stream of bytes that Linux see as a file, there are a few things that are represented as file objects for the sake of uniformity and adherence to `Everything-is-a-File` philosophy.
 
-These are called special files to identify them from the normal file abstraction, and they are as following:
+These are called special files to identify them from the normal file abstraction, and they are:
 
   1. Block device file
   2. Character device file
@@ -240,7 +246,7 @@ Pipes are of two types:
   * Named Pipes
   * Regular Pipes
 
-Named pipes a
+Named pipes are used for InterProcess Communication.
 
 #### 1.6.4. Sockets
 
@@ -268,9 +274,19 @@ The device driver for the block device reads and maps the content of the disk bl
 
 ### 2.2. Creating directories
 
+```bash
+# man 2 mkdir
+```
+
 ### 2.3. Removing directories
 
 ### 2.4. Reading a directory's content
+
+```bash
+# man 2 stat
+```
+
+The `stat()` system call, along with `fstat()`, and `lstat()`
 
 ### 2.5. Mounting a filesystem
 
@@ -280,7 +296,7 @@ The process of mounting is synonymous to creating a link in kernel-space from a 
 
 The process of mounting a filesystem can be described as:
 
-  * The Operating system is passed the name of the device and the mount-point.
+  * The kernel is passed the name of the device and the mount-point, through the `mount()` syscall.
   * The filesystem structure/signature is read by the kernel to identify the filesystem.
   * The appropriate filesystem driver module is loaded in memory by the kernel.
   * An entry is made in the kernel mount table that links the mount point, the device file, and the filesystem driver.
@@ -305,6 +321,13 @@ The process of mounting a filesystem can be described as:
 ### 2.6.2. Hash table
 
 ## 2.7. Directory Entry cache (dentry cache)
+
+Listing the contents of folders involves reading the directory entry structure of the folder.
+
+This is usually an expensive operation, and thus the details returned are cached in memory. This cache is called the `dentry` cache.
+
+Dentry cache is a part of the overall cache maintained by the kernel.
+
 ## 3. Links
 
 ### 3.1. Hard links
