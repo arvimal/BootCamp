@@ -422,6 +422,25 @@ The main job of a CPU Scheduler boils down to two specific operations.
 * Merging
 * Sorting
 
+I/O schedulers can be changed/set for each block devices on the machine.
+
+* To check the current scheduler for a disk, use:
+
+```bash
+# cat /sys/block/<disk>/queue/scheduler
+```
+
+* To change the scheduler, echo the scheduler name to the file.
+
+```bash
+# cat /sys/block/vda/queue/scheduler
+[mq-deadline] kyber none
+# echo "kyber" > /sys/block/vda/queue/scheduler
+
+# cat /sys/block/vda/queue/scheduler
+mq-deadline [kyber] none
+```
+
 ### 15.1. Merging
 
 Merging is the process of taking two or more I/O adjacent requests and combining them into a single I/O request.
