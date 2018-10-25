@@ -256,13 +256,12 @@ Thus, **Total size =`446 + (4 x16) + 2` = 512 Bytes**
 4. Update/Edit grub.cfg
    * Any changes to grub.cfg won't be permanent. Hence, don't directly edit it.
    * Add changes in /etc/default/grub
-   * Run `update-grub` to read the changes and automatically create grub.cfg file.
+   * Run `grub2-mkconfig > /etc/grub2.cfg` to update the changes to grub2.cfg.
 
-GRUB 2 works as the following:
-
-* /etc/default/grub contains customizations
-* /etc/grub.d/ scripts contain GRUB menu information and operating system boot scripts.
-* When the `update-grub` command is run, it reads the contents of the grub file and the grub.d scripts and creates the grub.cfg file.
+5. GRUB 2 works as:
+  * /etc/default/grub contains customizations
+  * /etc/grub.d/ scripts contain GRUB menu information and operating system boot scripts.
+  * When the command `grub2-mkconfig > /etc/grub2.cfg` is run, it reads the contents of the grub file and the grub.d scripts and creates the grub.cfg file.
 
 ---
 
