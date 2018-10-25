@@ -121,13 +121,25 @@ The address contains a `jump` instruction, which points to the BIOS entry point 
 
 ---
 
-* The kernel loads the `initrd` file listed in `grub.conf`.
+* Grub (not the kernel) loads both the `Kernel` and the `initrd` file, as listed in `grub.conf`.
 * Initrd contains the necessary drivers for the kernel, to access the connected devices as well as form a virtual filesystem in memory.
 * With a virtual filesystem running in memory, the kernel initializes `/sbin/init` (which was part of the initrd file).
 
 **12. `init` or `systemd` starts**
 
-* `/sbin/init` starts, which is a symlink to `/usr/lib/systemd/systemd` in systems using `Systemd`.
+* The kernel looks for an `init` binary in the following locations:
+  * /sbin/init
+  * /etc/init
+  * /bin/init
+  * /bin/sh
+
+>**NOTE:**
+>If the directive `init=<path>` is passed to grub via grub.conf (or
+>editing at boot time),Grub loads that specific binary as the first process.
+>Else, it looks for an `init` binary at the locations above.
+
+* `/sbin/init` starts
+  * On systemd machines, `/sbin/init` is usually a symlink to `/usr/lib/systemd/systemd`.
 * `init` reads `/etc/inittab` for run levels, and go to the specific runlevel locations at `/etc/init.d/` to start the scripts marked to startup in that level.
 * `Systemd` looks for the targets it has to reach, and starts the units for it.
 * By default, Systemd is configured to reach the `multi-user` target, and starts the services for it, and presents the login prompt.
