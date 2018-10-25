@@ -226,7 +226,7 @@ NOTE: Cisco says that the term `Packet` can be used generically. But, the generi
 
 ## 02. TCP header [Layer 4 - Transport layer]
 
-### 03. UDP header [Layer 4 - Transport layer]
+## 03. UDP header [Layer 4 - Transport layer]
 
 UDP header length is 8 bytes.
 
@@ -475,7 +475,7 @@ Reference:
 
 * [http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf](http://www.ece.utah.edu/~ece6962-003/additional/Tcp.pdf)
 
-#### 13.4. TCP connection termination [FIN, ACK, FIN, ACK]
+### 13.4. TCP connection termination [FIN, ACK, FIN, ACK]
 
 ![TCP Session Termination](./Images/TCP-Session-Close.png)
 
@@ -512,9 +512,23 @@ Because some firewalls do not properly implement TCP Window Scaling, it can caus
 
 Linux kernels (from 2.6.8, August 2004) have enabled TCP Window Scaling by default.
 
-The configuration parameters are found in the /proc filesystem, see pseudo-file /proc/sys/net/ipv4/tcp_window_scaling and its companions /proc/sys/net/ipv4/tcp_rmem and /proc/sys/net/ipv4/tcp_wmem (more information: man tcp, section sysctl).[6]
+The configuration parameters are found in the /proc filesystem.
 
-Scaling can be turned off by issuing the command sysctl -w "net.ipv4.tcp_window_scaling=0" as root. To maintain the changes after a restart, include the line "net.ipv4.tcp_window_scaling=0" in /etc/sysctl.conf (or /etc/sysctl.d/99-sysctl.conf as of systemd 207).
+Check
+
+  * /proc/sys/net/ipv4/tcp_window_scaling
+  * /proc/sys/net/ipv4/tcp_rmem
+  * /proc/sys/net/ipv4/tcp_wmem
+
+**NOTE:** More information at `**man tcp**`, section sysctl).[6]
+
+Scaling can be turned off by issuing the command:
+
+```bash
+# sysctl -w "net.ipv4.tcp_window_scaling=0"
+```
+
+To maintain the changes after a restart, include the line "net.ipv4.tcp_window_scaling=0" in /etc/sysctl.conf (or /etc/sysctl.d/99-sysctl.conf as of systemd).
 
 References:
 
