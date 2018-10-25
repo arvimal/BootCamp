@@ -45,6 +45,10 @@ Process management is one of the most important aspects of any Operating Systems
 
 While most operating systems provide a single system call to create a process, Unix and Linux in general has used a two-step approach, ie. the two system calls `fork()` and `exec()`. Even though two calls exist, `exec()` is called as soon as `fork()` is executed.
 
+>**NOTE:**
+>Since kernel version 2.3.3, rather than invoking the kernel's fork() system call, the glibc fork() >wrapper calls clone(2) with flags that provide the same effect as the traditional system call.
+>A call to fork() is equivalent to a call to clone(2).
+
 ## 1. The Process ID
 1. Every process is represented by a Process ID (PID).
 2. The PID is guaranteed to be unique at any given point of time.
