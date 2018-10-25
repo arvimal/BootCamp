@@ -140,9 +140,23 @@ The address contains a `jump` instruction, which points to the BIOS entry point 
 
 * `/sbin/init` starts
   * On systemd machines, `/sbin/init` is usually a symlink to `/usr/lib/systemd/systemd`.
-* `init` reads `/etc/inittab` for run levels, and go to the specific runlevel locations at `/etc/init.d/` to start the scripts marked to startup in that level.
-* `Systemd` looks for the targets it has to reach, and starts the units for it.
-* By default, Systemd is configured to reach the `multi-user` target, and starts the services for it, and presents the login prompt.
+  * `init` reads `/etc/inittab` for run levels, and go to the specific runlevel locations at `/etc/init.d/` to start the scripts marked to startup in that level.
+  * On Systemd machines, `Systemd` looks for the targets it has to reach (/usr/lib/systemd/system/default.target), and starts the units for it. By default, Systemd is configured to reach the `multi-user` target, and starts the services for it, and presents the login prompt.
+
+**13. `mgetty`, `systemd-getty-generator`, `login`, and `PAM`**
+
+* On SystemV machines with older `init`, `init` loads `mgetty` or `agetty`.
+  * `agetty` takes control of the `login` binary
+  * It presents a login prompt to the user, in the virtual console.
+  * The user login credentials are passed to PAM settings in /etc/pam.d/
+  * PAM checks /etc/passwd, and /etc/shadow for user info.
+  * If the user info is correct, the shell set in /etc/passwd is spawned.
+  * If not, `login` terminates and control is passed back to `agetty`.
+  * `agetty` takes control over `login` and presents the user with a prompt.
+
+* On Systemd machines, `systemd` loads `systemd-getty-generator`.
+  * `systemd-getty-generator` takes control over the `login` binary.
+  * The rest are similar to the sequence above.
 
 ---
 
