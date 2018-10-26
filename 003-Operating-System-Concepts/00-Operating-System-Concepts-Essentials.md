@@ -196,7 +196,7 @@ Signals can be sent among:
   * It’s expected that the receiving process will clean up its state and exit.
 * **QUIT** is similar to TERM, except that it defaults to producing a core dump if not caught.
   * A few programs cannibalize this signal and interpret it to mean something else.
-
+* **SIGCHLD** -
 ### 3.5.2. Handler Routines
 
 Using a handler routine, a process can act as required upon receiving a signal.

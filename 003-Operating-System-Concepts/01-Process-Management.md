@@ -267,7 +267,7 @@ Daemons are processes that possess two specific features:
 ## 8. Process Schedulers [CPU Schedulers]
 CPU Schedulers or Process schedulers schedule processes to run on the CPUs, based on various factors such as priority, nice value etc..
 
-From 2.6 kernel versions onwards, Linux uses the `Completely Fair Scheduler`, also known as `CFS`.
+From 2.6 kernel versions onwards, Linux uses the `Completely Fair Queue` scheduler, also known as `CFQ`.
 
 >**From Wikipedia**:
 >In contrast to the previous O(1) scheduler used in older Linux 2.6 kernels, the CFS scheduler
@@ -284,20 +284,31 @@ From 2.6 kernel versions onwards, Linux uses the `Completely Fair Scheduler`, al
 
 ### 8.1. Pre-emptive Scheduling and Co-operative Scheduling
 
-#### 8.1.1. Pre-emptive scheduling
+#### 8.1.1. Co-operative scheduling
 
-In Pre-emptive scheduling, the process running on the CPU runs indefinitely or as long as it chooses.
+In Co-operative scheduling, the process running on the CPU runs indefinitely or as long as it chooses.
 
 Ideally, the process should stop (out of courtesy to other processes) after some time, and pass the execution to other processes in the queue. But, badly written software can override this and take CPU execution cycles for an indefinite time, thus starving other processes of CPU cycles.
 
 This is not an optimal scheduling process, and almost all operating systems have moved away from this.
 
+#### 8.1.2. Pre-emptive scheduling
 
-#### 8.1.2. Co-operative scheduling
+Pre-emptive scheduling is the de-facto scheduling behavior on modern operating systems.
+
+In this mode of scheduling, a scheduler determines and allots a time slice for a process depending on its priority.
+
+Once the time slice is over, the scheduler moves the process to the starting of the run-queue and schedules the next process waiting for execution.
+
+The `Completely Fair Queue` scheduler and the `O(1)` scheduler prior, are all Pre-emptive in nature.
 
 ### 8.2. O(1) process/CPU scheduler
 
 ### 8.3. Process timeslice
+
+A process time-slice is the time period a process is allowed to execute on a CPU.
+
+Once the time slice is over, the process is moved to the end of the run queue and the next priority process is given the time slice.
 
 ## Appendix A. References
 1. Linux System Programming, 2nd Edition - Robert Love
