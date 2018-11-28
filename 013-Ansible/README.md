@@ -1,27 +1,27 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Ansible](#ansible)
+  - [1. Components:](#1-components)
+  - [2. What Ansible can and cannot](#2-what-ansible-can-and-cannot)
+  - [3. How does Ansible work?](#3-how-does-ansible-work)
+  - [4. Installation](#4-installation)
+  - [6. Inventory](#6-inventory)
+  - [7. Usage](#7-usage)
+  - [8. Configuration](#8-configuration)
+  - [9. Escalating privileges](#9-escalating-privileges)
+    - [9.1. How to enable privilege escalation?](#91-how-to-enable-privilege-escalation)
+  - [10. Command execution on Managed hosts](#10-command-execution-on-managed-hosts)
+  - [11. Connection settings for command execution on Managed hosts](#11-connection-settings-for-command-execution-on-managed-hosts)
+  - [12. Edit remote files](#12-edit-remote-files)
+  - [13. Handling multiple inventory files](#13-handling-multiple-inventory-files)
+- [References](#references)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 Ansible
 =======
-
-References
-==========
-1. [SafariBooks - Ansible Fundamental LiveLessons, Sander Van Vught](https://www.safaribooksonline.com/library/view/ansible-fundamentals-livelessons/)
-2. [SafariBooks - LEARNING PATH: Ansible: Guide to Master Ansible 2](https://www.safaribooksonline.com/learning-paths/learning-path-ansible/9781789345216/)
-
-
-Table of Contents
-=================
-
-  * [Ansible - Notes](#ansible---notes)
-    * [1. Components:](#1-components)
-    * [2. What Ansible can and cannot](#2-what-ansible-can-and-cannot)
-    * [3. How does Ansible work?](#3-how-does-ansible-work)
-    * [4. Use Cases](#4-use-cases)
-    * [5. Installation](#5-installation)
-    * [6. Inventory](#6-inventory)
-    * [7. Usage](#7-usage)
-    * [8. Configuration](#8-configuration)
-    * [9. Escalating privileges](#9-escalating-privileges)
-      * [How to enable privilege escalation?](#how-to-enable-privilege-escalation)
-    * [10. Ad-hoc commands](#10-ad-hoc-commands)
 
 ## 1. Components:
 
@@ -528,4 +528,14 @@ inventoryA:2: Section [myself:children] includes undefined group: mygroup
 
 
 
+
+
+
+
+
+
+References
+==========
+1. [SafariBooks - Ansible Fundamental LiveLessons, Sander Van Vught](https://www.safaribooksonline.com/library/view/ansible-fundamentals-livelessons/)
+2. [SafariBooks - LEARNING PATH: Ansible: Guide to Master Ansible 2](https://www.safaribooksonline.com/learning-paths/learning-path-ansible/9781789345216/)
 
