@@ -521,10 +521,10 @@ $ ansible -i inventoryA --list-hosts mygroup
 inventoryA:2: Section [myself:children] includes undefined group: mygroup
 ~~~
 
-## 2. Ansible Playbooks
+# 2. Working with Ansible Playbooks
 
 
-### Listing Ansible modules and documentation
+## 2.1. Ansible modules and documentation
 
 * List the modules and a brief description
 
@@ -538,12 +538,67 @@ inventoryA:2: Section [myself:children] includes undefined group: mygroup
 # ansible-doc shell
 ```
 
+# 3. Ansible variables
 
+## 3.1. Group variables
 
+## 3.2. Host variables
 
+## 3.3.
 
+# 4. Ansible Arrays
 
+# 5. Ansible Facts
 
+* A `Fact` contains the discovered information of a host.
+* This set of information is used by the Ansible host to track state changes on managed hosts.
+* Hence, state changes of managed hosts are tracked by comparing two different set of facts.
+
+## 5.1. Gathering facts with `setup` module
+
+* The `setup` module is automatically called by Playbooks to gather host information.
+* This module can be also called directly from command line to list host information.
+
+```bash
+# ansible -i <inventory_file> -m setup <hostname>
+```
+
+## 5.2. Filtering the Fact output
+
+* A `fact` can dump a lot of information onto stdout.
+* A `filter` can help to grep out specifics from the fact output.
+
+```bash
+[root@managed lab_3]# ansible -i inventory_list -m setup node1.montypython -a 'filter=ansible_system_vendor'
+node1.montypython | SUCCESS => {
+    "ansible_facts": {
+        "ansible_system_vendor": "QEMU"
+    },
+    "changed": false
+}
+[root@managed lab_3]# ansible -i inventory_list -m setup node1.montypython -a 'filter=ansible_os_family'
+node1.montypython | SUCCESS => {
+    "ansible_facts": {
+        "ansible_os_family": "RedHat"
+    },
+    "changed": false
+}
+```
+
+## 5.3. Custom Ansible Fact
+
+* By default, all the facts (called `ansible_facts`) are displayed on stdout.
+* Custom facts can be created to display specific information about the host.
+* The format of custom facts are defined in a file using JSON or INI format.
+* The custom fact file should have the `.fact` extension.
+* The custom fact file should be stored under the `/etc/ansible/facts.d/`directory.
+
+# 6. Ansible Inclusions
+
+* `Inclusions` help to reduce the complexity of large playbooks.
+* Tasks can be moved to a separate YML file, and then called in the main playbook using `Inclusion`.
+* The `include_vars` directive is used to include a yml file, in the playbook.
+* Example: Inclusion is synonymous to importing a python module using `import`.
 
 
 
