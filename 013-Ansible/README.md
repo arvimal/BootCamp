@@ -3,19 +3,22 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Ansible](#ansible)
-  - [1. Components:](#1-components)
-  - [2. What Ansible can and cannot](#2-what-ansible-can-and-cannot)
-  - [3. How does Ansible work?](#3-how-does-ansible-work)
-  - [4. Installation](#4-installation)
-  - [6. Inventory](#6-inventory)
-  - [7. Usage](#7-usage)
-  - [8. Configuration](#8-configuration)
-  - [9. Escalating privileges](#9-escalating-privileges)
-    - [9.1. How to enable privilege escalation?](#91-how-to-enable-privilege-escalation)
-  - [10. Command execution on Managed hosts](#10-command-execution-on-managed-hosts)
-  - [11. Connection settings for command execution on Managed hosts](#11-connection-settings-for-command-execution-on-managed-hosts)
-  - [12. Edit remote files](#12-edit-remote-files)
-  - [13. Handling multiple inventory files](#13-handling-multiple-inventory-files)
+- [1. Basics](#1-basics)
+  - [1.1. Components:](#11-components)
+  - [1.2. What Ansible can and cannot](#12-what-ansible-can-and-cannot)
+  - [1.3. How does Ansible work?](#13-how-does-ansible-work)
+  - [1.4. Installation](#14-installation)
+  - [1.5. Inventory](#15-inventory)
+  - [1.6. Usage](#16-usage)
+  - [1.7. Configuration](#17-configuration)
+  - [1.8. Escalating privileges](#18-escalating-privileges)
+    - [1.8.1. How to enable privilege escalation?](#181-how-to-enable-privilege-escalation)
+  - [1.9. Command execution on Managed hosts](#19-command-execution-on-managed-hosts)
+  - [1.10. Connection settings for command execution on Managed hosts](#110-connection-settings-for-command-execution-on-managed-hosts)
+  - [1.11. Edit remote files](#111-edit-remote-files)
+  - [1.12. Handling multiple inventory files](#112-handling-multiple-inventory-files)
+  - [2. Ansible Playbooks](#2-ansible-playbooks)
+    - [Listing Ansible modules and documentation](#listing-ansible-modules-and-documentation)
 - [References](#references)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -23,7 +26,9 @@
 Ansible
 =======
 
-## 1. Components:
+# 1. Basics
+
+## 1.1. Components:
 
 * **Ansible Core**
 	The automation platform
@@ -35,7 +40,7 @@ Ansible
 	A website with a large catalogue of community created roles.
 
 
-## 2. What Ansible can and cannot
+## 1.2. What Ansible can and cannot
 
 * Ansible works by changing the state of a host machine to a pre-defined state.
 * Ansible can push configuration changes to the hosts
@@ -54,7 +59,7 @@ Ansible
 	etc..
 
 
-## 3. How does Ansible work?
+## 1.3. How does Ansible work?
 
 1. Ansible doesn't have a Client/Server architecture, hence is agentless.
 2. The `Control node` acts as the server, where Ansible is installed.
@@ -66,7 +71,7 @@ Ansible
 7. The `Playbook` is executed from the `Controller Node` which then connects to the `Managed Hosts` via passwordless SSH.
 
 
-## 4. Installation
+## 1.4. Installation
 
 1. Ansible for RHEL is not currently packaged, and hence needs to be installed from EPEL.
 2. Enable EPEL on the Ansible Control node, as well as the `Optional` child channel.
@@ -79,7 +84,7 @@ Ansible
 # yum install ansible
 ~~~
 
-## 6. Inventory
+## 1.5. Inventory
 
 1. Inventory is a list of hosts (either hostnames or IP addresses) used by Ansible to act upon.
 2. The default inventory file is at /etc/ansible/inventory.
@@ -89,7 +94,7 @@ Ansible
 # ansible -i <custom-inventory-file>
 ~~~
 
-## 7. Usage
+## 1.6. Usage
 
 Let's see how we can use the `ansible` command to parse the Inventory file in various ways.
 
@@ -287,7 +292,7 @@ NOTE: This is exclusion, and can be done between either groups, or groups and ho
 
 **NOTE**: Further complex use-cases are available with regular expressions, and can be seen at http://docs.ansible.com/ansible/intro_patterns.html
 
-## 8. Configuration
+## 1.7. Configuration
 
 Ansible looks for a configuration file in the following order. It stops at the first hit.
 
@@ -314,13 +319,13 @@ Using /etc/ansible/ansible.cfg as config file
     testnode1.testing.com
 ~~~
 
-## 9. Escalating privileges
+## 1.8. Escalating privileges
 
 While running Ansible commands as a normal user, it is possible to force ansible to ask for SUDO password for additional security.
 
 This is enabled by the `become_*` tags under the [privilege_escalation] section
 
-### 9.1. How to enable privilege escalation?
+### 1.8.1. How to enable privilege escalation?
 
 1. Check the ansible config file
 
@@ -359,7 +364,7 @@ SUDO password:      <<-- Prompting for a password.
     servera
 ~~~
 
-## 10. Command execution on Managed hosts
+## 1.9. Command execution on Managed hosts
 
 One of the most used features of Ansible is running commands on external or Managed hosts.
 
@@ -425,7 +430,7 @@ ansible2 | SUCCESS | rc=0 >>
 192.168.124.23  ansible2 # Manage host 1
 ~~~
 
-## 11. Connection settings for command execution on Managed hosts
+## 1.10. Connection settings for command execution on Managed hosts
 
 When the connection-related parameters have been read, Ansible proceeds with making connections to the managed host.
 
@@ -442,7 +447,7 @@ If you want the commands to be run as a different user on the Managed hosts, add
 
 **NOTE**: If Privilege escalation is used (mentioned in section 9.1), the command is run as the root user on the managed hosts.
 
-## 12. Edit remote files
+## 1.11. Edit remote files
 
 1. Append text in a file on a remote host
 
@@ -476,7 +481,7 @@ ansible2 | SUCCESS => {
 }
 ~~~
 
-## 13. Handling multiple inventory files
+## 1.12. Handling multiple inventory files
 
 Ansible can support reading from multiple inventory files in a single execution. Certain conditions exist though:
 
@@ -516,10 +521,22 @@ $ ansible -i inventoryA --list-hosts mygroup
 inventoryA:2: Section [myself:children] includes undefined group: mygroup
 ~~~
 
+## 2. Ansible Playbooks
 
 
+### Listing Ansible modules and documentation
 
+* List the modules and a brief description
 
+```bash
+# ansible-doc -l
+```
+
+* List the documentation of a specific module
+
+```bash
+# ansible-doc shell
+```
 
 
 
