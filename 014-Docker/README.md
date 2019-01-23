@@ -215,60 +215,60 @@ How I got it from my exam:
 
 1. To know the various supported docker commands:
 
-
+```bash
 # docker
-
+```
 
 2. To know the docker version, including client and server
 
-
+```bash
 # docker version
+```
 
 
 3. To search for a particular image (not container)
 
-
+```bash
 # docker search <pattern>
 Ex:
 # docker search fedora
-
+```
 
 4. To download/pull a fedora image from the mirror:
 
-
+```bash
 # docker pull <listed-pattern-in-search>
+```
 
 NOTE: The <listed-pattern-in-search> would usually be in a <parent>/<child> format. So if I have a fedora image in my name, it would be <vimal>/<fedora>. It downloads in multiple layers, as shown below:
 
+```bash
 # docker pull learn/tutorial
-
 Pulling repository learn/tutorial from <https://index.docker.io/v1>
 Pulling image 8dbd9e392a964056420e5d58ca5cc376ef18e2de93b5cc90e868a1bbc8318c1c (precise) from ubuntu
 Pulling image b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc (12.10) from ubuntu
 Pulling image 27cf784147099545 () from tutorial
-
+```
 
 5. You can think of containers as a process in a box. The box contains everything the process might need, so it has the filesystem, system libraries, shell and such, but by default none of these are running. You 'start' a container by running a process in it.
 
-
-
 6. List the pulled images using:
 
-
+```bash
 # docker images
-
+```
 
 7. To start/run a docker image:
 
-
+```bash
 # docker run <docker-image> <commands>
-
+```
 
 * Make a container echo 'Hello world':
 
-
+```bash
 # docker run learn/tutorial [or image-id] echo "Hello World"
-
+```
 
 * To start a container in the background, use `-d`.
 
