@@ -121,16 +121,42 @@ The address contains a `jump` instruction, which points to the BIOS entry point 
 
 ---
 
-* The kernel loads the `initrd` file listed in `grub.conf`.
+* Grub (not the kernel) loads both the `Kernel` and the `initrd` file, as listed in `grub.conf`.
 * Initrd contains the necessary drivers for the kernel, to access the connected devices as well as form a virtual filesystem in memory.
 * With a virtual filesystem running in memory, the kernel initializes `/sbin/init` (which was part of the initrd file).
 
 **12. `init` or `systemd` starts**
 
-* `/sbin/init` starts, which is a symlink to `/usr/lib/systemd/systemd` in systems using `Systemd`.
-* `init` reads `/etc/inittab` for run levels, and go to the specific runlevel locations at `/etc/init.d/` to start the scripts marked to startup in that level.
-* `Systemd` looks for the targets it has to reach, and starts the units for it.
-* By default, Systemd is configured to reach the `multi-user` target, and starts the services for it, and presents the login prompt.
+* The kernel looks for an `init` binary in the following locations:
+  * /sbin/init
+  * /etc/init
+  * /bin/init
+  * /bin/sh
+
+>**NOTE:**
+>If the directive `init=<path>` is passed to grub via grub.conf (or
+>editing at boot time),Grub loads that specific binary as the first process.
+>Else, it looks for an `init` binary at the locations above.
+
+* `/sbin/init` starts
+  * On systemd machines, `/sbin/init` is usually a symlink to `/usr/lib/systemd/systemd`.
+  * `init` reads `/etc/inittab` for run levels, and go to the specific runlevel locations at `/etc/init.d/` to start the scripts marked to startup in that level.
+  * On Systemd machines, `Systemd` looks for the targets it has to reach (/usr/lib/systemd/system/default.target), and starts the units for it. By default, Systemd is configured to reach the `multi-user` target, and starts the services for it, and presents the login prompt.
+
+**13. `mgetty`, `systemd-getty-generator`, `login`, and `PAM`**
+
+* On SystemV machines with older `init`, `init` loads `mgetty` or `agetty`.
+  * `agetty` takes control of the `login` binary
+  * It presents a login prompt to the user, in the virtual console.
+  * The user login credentials are passed to PAM settings in /etc/pam.d/
+  * PAM checks /etc/passwd, and /etc/shadow for user info.
+  * If the user info is correct, the shell set in /etc/passwd is spawned.
+  * If not, `login` terminates and control is passed back to `agetty`.
+  * `agetty` takes control over `login` and presents the user with a prompt.
+
+* On Systemd machines, `systemd` loads `systemd-getty-generator`.
+  * `systemd-getty-generator` takes control over the `login` binary.
+  * The rest are similar to the sequence above.
 
 ---
 
@@ -230,13 +256,12 @@ Thus, **Total size =`446 + (4 x16) + 2` = 512 Bytes**
 4. Update/Edit grub.cfg
    * Any changes to grub.cfg won't be permanent. Hence, don't directly edit it.
    * Add changes in /etc/default/grub
-   * Run `update-grub` to read the changes and automatically create grub.cfg file.
+   * Run `grub2-mkconfig > /etc/grub2.cfg` to update the changes to grub2.cfg.
 
-GRUB 2 works as the following:
-
-* /etc/default/grub contains customizations
-* /etc/grub.d/ scripts contain GRUB menu information and operating system boot scripts.
-* When the `update-grub` command is run, it reads the contents of the grub file and the grub.d scripts and creates the grub.cfg file.
+5. GRUB 2 works as:
+  * /etc/default/grub contains customizations
+  * /etc/grub.d/ scripts contain GRUB menu information and operating system boot scripts.
+  * When the command `grub2-mkconfig > /etc/grub2.cfg` is run, it reads the contents of the grub file and the grub.d scripts and creates the grub.cfg file.
 
 ---
 

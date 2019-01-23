@@ -45,6 +45,10 @@ Process management is one of the most important aspects of any Operating Systems
 
 While most operating systems provide a single system call to create a process, Unix and Linux in general has used a two-step approach, ie. the two system calls `fork()` and `exec()`. Even though two calls exist, `exec()` is called as soon as `fork()` is executed.
 
+>**NOTE:**
+>Since kernel version 2.3.3, rather than invoking the kernel's fork() system call, the glibc fork() >wrapper calls clone(2) with flags that provide the same effect as the traditional system call.
+>A call to fork() is equivalent to a call to clone(2).
+
 ## 1. The Process ID
 1. Every process is represented by a Process ID (PID).
 2. The PID is guaranteed to be unique at any given point of time.
@@ -100,12 +104,17 @@ If all four of these are not available, the kernel halts the Linux machine with 
 
 ### 2.1. The fork() system call
 1. The fork() system call is used to create an image (almost exact copy) of an existing process.
+  **NOTE**: From linux version 2.3.3 onwards, `fork()` calls `clone()`.
 2. The new process is called the `Child` of the process it was forked from, the other called `Parent`.
 3. The new process, also known as the `Child` process differs from the `Parent` in a few ways.
     * PID - The child process gets a new PID.
     * Stats - The child's resourse statistics are set to 0.
     * File locks - Any file locks used by the parent process are not inherited by the child process.
     * Signals - Any signals in use with the parent are not inherited by the child process.
+
+**NOTE**:
+>Linux systems use clone(), a superset of fork that handles threads and includes additional features.
+>fork() remains in the kernel for backward compatibility but calls clone() behind the scenes.
 
 ### 2.2. Copy-On-Write (COW) behaviour of `fork()`
 1. Copy-on-Write is the process in which modern Unix/Linux systems do forking.
@@ -134,12 +143,17 @@ If all four of these are not available, the kernel halts the Linux machine with 
     * Mapped files are dropped in the child process.
 
 ## 3. Terminating a process
-1. A process is terminated by calling the `exit()` system call.
-2. When a process exits, the kernel cleans up all the resources it had used, this includes:
+1. A process calls the `exit()` system call when it is ready to terminate.
+2. When the process exits, the kernel receives the `exit()` routine, and the kernel cleans up all the resources it had used, this includes:
     * Allocated memory
     * Open files
     * System V semaphores
-3. After cleanup, the kernel destroys the process and notified the parent of the child's exit with the **SIGCHLD** signal.
+3. After cleanup, the kernel destroys the process, but maintains a very basic state information of the child process.
+4. The kernel intimates the parent process of the child's termination, with the `SIGCHLD` signal.
+5. The parent can ignore the `SIGCHLD` signal, and in such cases, the `init` process becomes the parent of the child, acknowledges its state change, and cleans up the remaining info.
+6. If the parent process wants to reap the child status, it does so with the `wait()` syscall.
+7. If the parent process tries to reap the child status, but does not do it successfully, the child process remains in a `Zombie` state.
+8. In such cases, the `init` process reaps the child after a threshold time.
 
 ### 3.1. SIGCHLD signal and the `wait()` system call
 1. The kernel notifies the parent process of the child's exit using the `SIGCHLD` signal.
@@ -149,11 +163,11 @@ If all four of these are not available, the kernel halts the Linux machine with 
 4. Every parent process has to acknowledge the termination of its child thorugh the `wait()` system call.
 
 ### 3.2. Zombie process
-1. A process that has been terminated, but not yet waited by its parent process using the `wait()` system call, is a Zombie process.
-2. A terminated process before being disposed off, posses a minimal skeleton of the original process, ie. a few basic data structures to be read by the parent process. Such a process is said to be in the Zombie state.
-3. A process in the Zombie state waits for its parent process to read/ack its state.
-4. Only after the parent process reads and acknowledges the child process state through the `wait()` system call, is the process really terminated by the kernel.
-5. Since some of the basic data structures of the process has to be maintained, a zombie process still consumes some system resources.
+A process that has been terminated, but not yet waited by its parent process with the `wait()` system call, is a Zombie process.
+
+The kernel maintains a minimal skeleton of the child process even after it's terminated (either properly terminated after execution, or terminated unexpectedly). This include a few basic data structures including the exit state of the child process.
+
+Only after the parent process reads and acknowledges the child process state through the `wait()` system call, is the process really terminated by the kernel. Since some of the basic data structures of the process has to be maintained, a zombie process still consumes some system resources.
 
 In short, a Zombie process is the state of a process that has been terminated but not yet acknowledged by the wait() system call by its parent.
 
@@ -193,28 +207,108 @@ A method has to be deviced to prevent different threads from accessing the same 
 #### 4.2.1. Mutual Exclusion (Mutex)
 Mutual Exclusion is an Operating System concept where the exclusice access to a memory address location is given to only one thread at a time.
 
+## 5. Process priority
+
+### 5.1. Nice and renicing processes
+
+The “niceness” of a process is a numeric hint to the kernel about how the process should be treated in relation to other processes contending for the CPU.
+
+The strange name is derived from the fact that it determines how nice you are going to be to other users of the system.
+
+A high niceness means a low priority for your process: you are going to be nice. A low or negative value means high priority: you are not very nice.
+
+>**NOTE:**
+> In Linux, the nice values range from -20 to +19.
+> Higher the value, the more nicer you are.
+> Lower the value, the less nicer you are.
+
+Example of resetting the nice value:
+
+```bash
+# nice -n 19 top
+```
+
 ## 6. Users and Groups
 
 
 ### 6.1. Real, Effective, and Saved UID/GID
 
-#### 6.1.1. Real ID
+#### 6.1.1. Real UID
 
-#### 6.1.2. Effective ID
+#### 6.1.2. Effective UID
 
-#### 6.1.3. Saved ID
+Effective UID is the user-id that is called by executing the `setuid()` syscall.
+
+Examples of binaries with `setuid` are:
+  * /usr/bin/sudo
+  * /usr/bin/passwd
+  * /usr/bin/su
+
+```bash
+-rwsr-xr-x. 1 root root 27832 Jun 10  2014 /usr/bin/passwd
+ ⚡ root@centos7  ~  ls -l `which sudo`
+---s--x--x. 1 root root 143248 Jun 27 14:03 /usr/bin/sudo
+ ⚡ root@centos7  ~  ls -l `which su`
+-rwsr-xr-x. 1 root root 32184 Aug 16 14:47 /usr/bin/su
+```
+
+#### 6.1.3. Saved UID
+
+The effective ID of a process can be saved in memory, and re-used later. This is called the Saved ID.
+
+The Saved UID is almost always the Effective UID set by calling `setuid()`.
 
 ## 7. Daemons
-Daemons are processes which possess two specific features:
+Daemons are processes that possess two specific features:
 
-1. The process should not be using a terminal
-2. The process should be running in the background, waiting for signals/events.
+1. The process is a child of init process.
+2. The process is not connected to any terminal, thus running in the background waiting for signals/events.
 
 ## 8. Process Schedulers [CPU Schedulers]
 CPU Schedulers or Process schedulers schedule processes to run on the CPUs, based on various factors such as priority, nice value etc..
 
-From 2.6 kernel versions onwards, Linux uses the `Completely Fair Scheduler`, also known as `CFS`.
+From 2.6 kernel versions onwards, Linux uses the `Completely Fair Queue` scheduler, also known as `CFQ`.
 
+>**From Wikipedia**:
+>In contrast to the previous O(1) scheduler used in older Linux 2.6 kernels, the CFS scheduler
+>implementation is not based on run queues. Instead, a red–black tree implements a "timeline" of
+>future task execution. Additionally, the scheduler uses nanosecond granularity accounting, the
+>atomic units by which an individual process' share of the CPU was allocated (thus making redundant
+>the previous notion of timeslices). This precise knowledge also means that no specific heuristics
+>are required to determine the interactivity of a process.
+
+>Like the old O(1) scheduler, CFS uses a concept called "sleeper fairness", which considers
+>sleeping or waiting tasks equivalent to those on the runqueue. This means that interactive tasks
+>which spend most of their time waiting for user input or other events get a comparable share of
+>CPU time when they need it.
+
+### 8.1. Pre-emptive Scheduling and Co-operative Scheduling
+
+#### 8.1.1. Co-operative scheduling
+
+In Co-operative scheduling, the process running on the CPU runs indefinitely or as long as it chooses.
+
+Ideally, the process should stop (out of courtesy to other processes) after some time, and pass the execution to other processes in the queue. But, badly written software can override this and take CPU execution cycles for an indefinite time, thus starving other processes of CPU cycles.
+
+This is not an optimal scheduling process, and almost all operating systems have moved away from this.
+
+#### 8.1.2. Pre-emptive scheduling
+
+Pre-emptive scheduling is the de-facto scheduling behavior on modern operating systems.
+
+In this mode of scheduling, a scheduler determines and allots a time slice for a process depending on its priority.
+
+Once the time slice is over, the scheduler moves the process to the starting of the run-queue and schedules the next process waiting for execution.
+
+The `Completely Fair Queue` scheduler and the `O(1)` scheduler prior, are all Pre-emptive in nature.
+
+### 8.2. O(1) process/CPU scheduler
+
+### 8.3. Process timeslice
+
+A process time-slice is the time period a process is allowed to execute on a CPU.
+
+Once the time slice is over, the process is moved to the end of the run queue and the next priority process is given the time slice.
 
 ## Appendix A. References
 1. Linux System Programming, 2nd Edition - Robert Love

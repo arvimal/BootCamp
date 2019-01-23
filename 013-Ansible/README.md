@@ -1,29 +1,34 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Ansible](#ansible)
+- [1. Basics](#1-basics)
+  - [1.1. Components:](#11-components)
+  - [1.2. What Ansible can and cannot](#12-what-ansible-can-and-cannot)
+  - [1.3. How does Ansible work?](#13-how-does-ansible-work)
+  - [1.4. Installation](#14-installation)
+  - [1.5. Inventory](#15-inventory)
+  - [1.6. Usage](#16-usage)
+  - [1.7. Configuration](#17-configuration)
+  - [1.8. Escalating privileges](#18-escalating-privileges)
+    - [1.8.1. How to enable privilege escalation?](#181-how-to-enable-privilege-escalation)
+  - [1.9. Command execution on Managed hosts](#19-command-execution-on-managed-hosts)
+  - [1.10. Connection settings for command execution on Managed hosts](#110-connection-settings-for-command-execution-on-managed-hosts)
+  - [1.11. Edit remote files](#111-edit-remote-files)
+  - [1.12. Handling multiple inventory files](#112-handling-multiple-inventory-files)
+  - [2. Ansible Playbooks](#2-ansible-playbooks)
+    - [Listing Ansible modules and documentation](#listing-ansible-modules-and-documentation)
+- [References](#references)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 Ansible
 =======
 
-References
-==========
-1. [SafariBooks - Ansible Fundamental LiveLessons, Sander Van Vught](https://www.safaribooksonline.com/library/view/ansible-fundamentals-livelessons/)
-2. [SafariBooks - LEARNING PATH: Ansible: Guide to Master Ansible 2](https://www.safaribooksonline.com/learning-paths/learning-path-ansible/9781789345216/)
+# 1. Basics
 
-
-Table of Contents
-=================
-
-  * [Ansible - Notes](#ansible---notes)
-    * [1. Components:](#1-components)
-    * [2. What Ansible can and cannot](#2-what-ansible-can-and-cannot)
-    * [3. How does Ansible work?](#3-how-does-ansible-work)
-    * [4. Use Cases](#4-use-cases)
-    * [5. Installation](#5-installation)
-    * [6. Inventory](#6-inventory)
-    * [7. Usage](#7-usage)
-    * [8. Configuration](#8-configuration)
-    * [9. Escalating privileges](#9-escalating-privileges)
-      * [How to enable privilege escalation?](#how-to-enable-privilege-escalation)
-    * [10. Ad-hoc commands](#10-ad-hoc-commands)
-
-## 1. Components:
+## 1.1. Components:
 
 * **Ansible Core**
 	The automation platform
@@ -35,7 +40,7 @@ Table of Contents
 	A website with a large catalogue of community created roles.
 
 
-## 2. What Ansible can and cannot
+## 1.2. What Ansible can and cannot
 
 * Ansible works by changing the state of a host machine to a pre-defined state.
 * Ansible can push configuration changes to the hosts
@@ -54,7 +59,7 @@ Table of Contents
 	etc..
 
 
-## 3. How does Ansible work?
+## 1.3. How does Ansible work?
 
 1. Ansible doesn't have a Client/Server architecture, hence is agentless.
 2. The `Control node` acts as the server, where Ansible is installed.
@@ -66,7 +71,7 @@ Table of Contents
 7. The `Playbook` is executed from the `Controller Node` which then connects to the `Managed Hosts` via passwordless SSH.
 
 
-## 4. Installation
+## 1.4. Installation
 
 1. Ansible for RHEL is not currently packaged, and hence needs to be installed from EPEL.
 2. Enable EPEL on the Ansible Control node, as well as the `Optional` child channel.
@@ -79,7 +84,7 @@ Table of Contents
 # yum install ansible
 ~~~
 
-## 6. Inventory
+## 1.5. Inventory
 
 1. Inventory is a list of hosts (either hostnames or IP addresses) used by Ansible to act upon.
 2. The default inventory file is at /etc/ansible/inventory.
@@ -89,7 +94,7 @@ Table of Contents
 # ansible -i <custom-inventory-file>
 ~~~
 
-## 7. Usage
+## 1.6. Usage
 
 Let's see how we can use the `ansible` command to parse the Inventory file in various ways.
 
@@ -287,7 +292,7 @@ NOTE: This is exclusion, and can be done between either groups, or groups and ho
 
 **NOTE**: Further complex use-cases are available with regular expressions, and can be seen at http://docs.ansible.com/ansible/intro_patterns.html
 
-## 8. Configuration
+## 1.7. Configuration
 
 Ansible looks for a configuration file in the following order. It stops at the first hit.
 
@@ -314,13 +319,13 @@ Using /etc/ansible/ansible.cfg as config file
     testnode1.testing.com
 ~~~
 
-## 9. Escalating privileges
+## 1.8. Escalating privileges
 
 While running Ansible commands as a normal user, it is possible to force ansible to ask for SUDO password for additional security.
 
 This is enabled by the `become_*` tags under the [privilege_escalation] section
 
-### 9.1. How to enable privilege escalation?
+### 1.8.1. How to enable privilege escalation?
 
 1. Check the ansible config file
 
@@ -359,7 +364,7 @@ SUDO password:      <<-- Prompting for a password.
     servera
 ~~~
 
-## 10. Command execution on Managed hosts
+## 1.9. Command execution on Managed hosts
 
 One of the most used features of Ansible is running commands on external or Managed hosts.
 
@@ -425,7 +430,7 @@ ansible2 | SUCCESS | rc=0 >>
 192.168.124.23  ansible2 # Manage host 1
 ~~~
 
-## 11. Connection settings for command execution on Managed hosts
+## 1.10. Connection settings for command execution on Managed hosts
 
 When the connection-related parameters have been read, Ansible proceeds with making connections to the managed host.
 
@@ -442,7 +447,7 @@ If you want the commands to be run as a different user on the Managed hosts, add
 
 **NOTE**: If Privilege escalation is used (mentioned in section 9.1), the command is run as the root user on the managed hosts.
 
-## 12. Edit remote files
+## 1.11. Edit remote files
 
 1. Append text in a file on a remote host
 
@@ -476,7 +481,7 @@ ansible2 | SUCCESS => {
 }
 ~~~
 
-## 13. Handling multiple inventory files
+## 1.12. Handling multiple inventory files
 
 Ansible can support reading from multiple inventory files in a single execution. Certain conditions exist though:
 
@@ -516,6 +521,84 @@ $ ansible -i inventoryA --list-hosts mygroup
 inventoryA:2: Section [myself:children] includes undefined group: mygroup
 ~~~
 
+# 2. Working with Ansible Playbooks
+
+
+## 2.1. Ansible modules and documentation
+
+* List the modules and a brief description
+
+```bash
+# ansible-doc -l
+```
+
+* List the documentation of a specific module
+
+```bash
+# ansible-doc shell
+```
+
+# 3. Ansible variables
+
+## 3.1. Group variables
+
+## 3.2. Host variables
+
+## 3.3.
+
+# 4. Ansible Arrays
+
+# 5. Ansible Facts
+
+* A `Fact` contains the discovered information of a host.
+* This set of information is used by the Ansible host to track state changes on managed hosts.
+* Hence, state changes of managed hosts are tracked by comparing two different set of facts.
+
+## 5.1. Gathering facts with `setup` module
+
+* The `setup` module is automatically called by Playbooks to gather host information.
+* This module can be also called directly from command line to list host information.
+
+```bash
+# ansible -i <inventory_file> -m setup <hostname>
+```
+
+## 5.2. Filtering the Fact output
+
+* A `fact` can dump a lot of information onto stdout.
+* A `filter` can help to grep out specifics from the fact output.
+
+```bash
+[root@managed lab_3]# ansible -i inventory_list -m setup node1.montypython -a 'filter=ansible_system_vendor'
+node1.montypython | SUCCESS => {
+    "ansible_facts": {
+        "ansible_system_vendor": "QEMU"
+    },
+    "changed": false
+}
+[root@managed lab_3]# ansible -i inventory_list -m setup node1.montypython -a 'filter=ansible_os_family'
+node1.montypython | SUCCESS => {
+    "ansible_facts": {
+        "ansible_os_family": "RedHat"
+    },
+    "changed": false
+}
+```
+
+## 5.3. Custom Ansible Fact
+
+* By default, all the facts (called `ansible_facts`) are displayed on stdout.
+* Custom facts can be created to display specific information about the host.
+* The format of custom facts are defined in a file using JSON or INI format.
+* The custom fact file should have the `.fact` extension.
+* The custom fact file should be stored under the `/etc/ansible/facts.d/`directory.
+
+# 6. Ansible Inclusions
+
+* `Inclusions` help to reduce the complexity of large playbooks.
+* Tasks can be moved to a separate YML file, and then called in the main playbook using `Inclusion`.
+* The `include_vars` directive is used to include a yml file, in the playbook.
+* Example: Inclusion is synonymous to importing a python module using `import`.
 
 
 
@@ -523,9 +606,8 @@ inventoryA:2: Section [myself:children] includes undefined group: mygroup
 
 
 
-
-
-
-
-
+References
+==========
+1. [SafariBooks - Ansible Fundamental LiveLessons, Sander Van Vught](https://www.safaribooksonline.com/library/view/ansible-fundamentals-livelessons/)
+2. [SafariBooks - LEARNING PATH: Ansible: Guide to Master Ansible 2](https://www.safaribooksonline.com/learning-paths/learning-path-ansible/9781789345216/)
 

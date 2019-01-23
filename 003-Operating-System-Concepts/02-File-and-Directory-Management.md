@@ -6,17 +6,35 @@
   - [Introduction](#introduction)
   - [1. Files and Metadata](#1-files-and-metadata)
     - [1.1. stat(), lstat(), and fstat()](#11-stat-lstat-and-fstat)
-    - [1.2. Permissions [chmod() and fchmod()]](#12-permissions-chmod-and-fchmod)
+      - [1.1.1. stat()](#111-stat)
+      - [1.1.2. fstat()](#112-fstat)
+      - [1.1.3. lstat()](#113-lstat)
+      - [1.1.4. Timestamp in the stat struct](#114-timestamp-in-the-stat-struct)
+    - [1.2. Permissions](#12-permissions)
     - [1.3. Ownership](#13-ownership)
-    - [1.4. Extended Attributes (xattrs)](#14-extended-attributes-xattrs)
-      - [1.4.1. Keys and Values](#141-keys-and-values)
-      - [1.4.2. Extended Attribute Namespace](#142-extended-attribute-namespace)
-      - [1.4.3. Extended Attribute Operations](#143-extended-attribute-operations)
+    - [1.4. umask](#14-umask)
+    - [1.5. Extended Attributes (xattrs)](#15-extended-attributes-xattrs)
+      - [1.5.1. Keys and Values](#151-keys-and-values)
+      - [1.5.2. Extended Attribute Namespace](#152-extended-attribute-namespace)
+      - [1.5.3. Extended Attribute Operations](#153-extended-attribute-operations)
+    - [1.6. Special files](#16-special-files)
+      - [1.6.1. Block device files](#161-block-device-files)
+      - [1.6.2. Character device files](#162-character-device-files)
+      - [1.6.3. Pipes](#163-pipes)
+      - [1.6.4. Sockets](#164-sockets)
+    - [1.7. Types of file access](#17-types-of-file-access)
+      - [1.7.1. Open](#171-open)
+      - [1.7.2. Close](#172-close)
+      - [1.7.3. Read](#173-read)
+      - [1.7.4. Write / Append](#174-write--append)
+      - [1.7.5. Seek](#175-seek)
+      - [1.7.6. Delete](#176-delete)
   - [2. Directories](#2-directories)
     - [2.1. The current working directory](#21-the-current-working-directory)
     - [2.2. Creating directories](#22-creating-directories)
     - [2.3. Removing directories](#23-removing-directories)
     - [2.4. Reading a directory's content](#24-reading-a-directorys-content)
+    - [2.5. Mounting a filesystem](#25-mounting-a-filesystem)
   - [3. Links](#3-links)
     - [3.1. Hard links](#31-hard-links)
     - [3.2. Soft / Symbolic links](#32-soft--symbolic-links)
@@ -40,6 +58,19 @@
   - [7. Inodes](#7-inodes)
     - [7.1. Metadata in inodes](#71-metadata-in-inodes)
     - [7.2. Access time, Modify time, Change time](#72-access-time-modify-time-change-time)
+  - [8. Hard and Soft links](#8-hard-and-soft-links)
+    - [8.1. Hard links](#81-hard-links)
+    - [8.2. Soft links](#82-soft-links)
+  - [15. I/O Schedulers](#15-io-schedulers)
+    - [15.1. Merging](#151-merging)
+    - [15.2. Sorting](#152-sorting)
+    - [15.3. Problems with simple sorting of I/O requests](#153-problems-with-simple-sorting-of-io-requests)
+    - [15.3. Types of I/O Schedulers](#153-types-of-io-schedulers)
+      - [15.3.1. The Linus Elevator (2.4 kernel series)](#1531-the-linus-elevator-24-kernel-series)
+      - [15.3.2. The Deadline Scheduler](#1532-the-deadline-scheduler)
+      - [15.3.3. The Anticipatory Scheduler](#1533-the-anticipatory-scheduler)
+      - [15.3.4. The CFQ I/O Scheduler (Completely-Fair-Queuing)](#1534-the-cfq-io-scheduler-completely-fair-queuing)
+      - [15.3.5. The Noop I/O Scheduler](#1535-the-noop-io-scheduler)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -48,27 +79,194 @@ File and Directory Management
 
 ## Introduction
 
+A file is the most basic abstraction layer in a Unix/Linux system.
+
+Linux tries to adhere to the `Everything-is-a-File` philosophy. It helps to access streams of data from a destination, either local or remote, and also access to certain devices that does not fall into normal file formats, such as character devices, sockets etc.
+
+A normal file in Linux is just a stream of bytes on the disk. Linux does not impose any sort of restriction or file formats for files.
 
 ## 1. Files and Metadata
 
 
 ### 1.1. stat(), lstat(), and fstat()
 
+The syscalls stat(), lstat(), fstat() all return information about a file or folder.
 
-### 1.2. Permissions [chmod() and fchmod()]
+Each system call differs slightly on what sort of handler they act on, but each one of them return file metadata through a **stat** struct.
+
+glibc provides the `stat()` wrapper around the actual `stat()` kernel API end-point.
+
+#### 1.1.1. stat()
+
+The `stat()` system call returns a **stat** struct, with metadata information.
+
+```bash
+        struct stat {
+            dev_t     st_dev;         /* ID of device containing file */
+            ino_t     st_ino;         /* Inode number */
+            mode_t    st_mode;        /* File type and mode */
+            nlink_t   st_nlink;       /* Number of hard links */
+            uid_t     st_uid;         /* User ID of owner */
+            gid_t     st_gid;         /* Group ID of owner */
+            dev_t     st_rdev;        /* Device ID (if special file) */
+            off_t     st_size;        /* Total size, in bytes */
+            blksize_t st_blksize;     /* Block size for filesystem I/O */
+            blkcnt_t  st_blocks;      /* Number of 512B blocks allocated */
+
+           /* Since Linux 2.6, the kernel supports nanosecond
+              precision for the following timestamp fields.
+              For the details before Linux 2.6, see NOTES. */
+
+            struct timespec st_atim;  /* Time of last access */
+            struct timespec st_mtim;  /* Time of last modification */
+            struct timespec st_ctim;  /* Time of last status change */
+
+           #define st_atime st_atim.tv_sec      /* Backward compatibility */
+           #define st_mtime st_mtim.tv_sec
+           #define st_ctime st_ctim.tv_sec
+           };
+```
+
+`stat()` can be called on both symbolic links and actual files (hard links as well). ie. it resolves and returns the information of the destination file.
+
+To read more on `stat()`, try:
+
+```bash
+# man 2 stat
+```
+
+#### 1.1.2. fstat()
+
+While `stat()` takes in a file-name as its argument, `fstat()` takes in a file-descriptor ID as its argument.
+
+It returns the same `stat` struct as the `stat()` syscall.
+
+#### 1.1.3. lstat()
+
+`lstat()` is similar to `stat()` and returns the `stat` struct.
+
+The major difference is when it's used on a symbolic link. `lstat()` returns the information of the symbolic link rather than the file the link is pointing to.
+
+#### 1.1.4. Timestamp in the stat struct
+
+There are three structs within the `stat` struct that shows different time stamps.
+
+* `st_atime` - Last access time (Data reads)
+* `st_mtime` - Last modification time (Data writes)
+* `st_ctime` - Last change time (Metadata change, not data  - Simple reads)
+
+Older linux kernels (prior kernel version 2.5.48) only supported time-stamps with a granularity of upto a **second**.
+
+From kernel version 2.5.48 onwards, all three of the above time stamps support a nano-second precision.
+
+### 1.2. Permissions
+
+Unix/Linux systems handle file/directory access through a series of permission fields.
+
+These permission fields contain three components, and is set for three level of users.
+
+The three permission fields and their corresponding values are:
+
+|Type|Value|
+----|----|
+|Read (r) | 4 |
+|Write (w) | 2 |
+|Execute (x) | 1 |
+
+
+The three level of user access is:
+* User
+* Group
+* Other (Universal / Other accounts on the system)
+
+A normal file listing looks as following:
+
+```bash
+ls -l /tmp
+total 168
+srwxrwxr-x.  1 user1 user1      0 Oct 17 11:46  atom-2dronS-fzeo6.sock
+drwx------.  2 user1 user1     40 Oct 17 11:46 'Atom Crashes'
+-rw-------.  1 user1 user1    659 Oct 18 23:38  dropbox-antifreeze-hIX0o8
+-rw-------.  1 user1 user1    659 Oct 18 23:38  dropbox-antifreeze-Uv7Ebe
+-rw-------.  1 user1 user1    575 Oct 17 10:58  dropbox-antifreeze-xr4T0W
+-rw-------.  1 user1 user1    579 Oct 18 23:38  dropbox-antifreeze-zDLKfd
+```
+
+**NOTE:**
+
+1. A directory can be listed only if the `read` bit is set for it.
+2. A directory can be changed **cd** into, only if `execute` bit is set for it.
+
+#### 1.2.1. chmod()
+
+#### 1.2.2. fchmod()
 
 
 ### 1.3. Ownership
 
 
-### 1.4. Extended Attributes (xattrs)
+### 1.4. umask
+
+022 for UIDs less than 199
+
+002 for UIDs greater than 199
+
+### 1.5. Extended Attributes (xattrs)
 
 
-#### 1.4.1. Keys and Values
+#### 1.5.1. Keys and Values
 
-#### 1.4.2. Extended Attribute Namespace
+#### 1.5.2. Extended Attribute Namespace
 
-#### 1.4.3. Extended Attribute Operations
+#### 1.5.3. Extended Attribute Operations
+
+### 1.6. Special files
+
+Apart from the stream of bytes that Linux see as a file, there are a few things that are represented as file objects for the sake of uniformity and adherence to `Everything-is-a-File` philosophy.
+
+These are called special files to identify them from the normal file abstraction, and they are:
+
+  1. Block device file
+  2. Character device file
+  3. Pipes
+  4. Sockets
+
+#### 1.6.1. Block device files
+
+A block device file usually points to a device that is accessed as an array of bytes, or in other words, a chunk of data.
+
+Storage devices such as SCSI, SATA, ATA, SAS, or devices such as CD/DVD, Floppy disks etc.. are all accessed in chunks and are addressed as block devices.
+
+#### 1.6.2. Character device files
+
+#### 1.6.3. Pipes
+
+Pipes are of two types:
+
+  * Named Pipes
+  * Regular Pipes
+
+Named pipes are used for InterProcess Communication.
+
+#### 1.6.4. Sockets
+
+The device driver for the block device reads and maps the content of the disk blocks (multiple sectors in a single go), and the application is free to read any block in that range, in any order.
+
+### 1.7. Types of file access
+
+#### 1.7.1. Open
+
+#### 1.7.2. Close
+
+#### 1.7.3. Read
+
+#### 1.7.4. Write / Append
+
+#### 1.7.5. Seek
+
+#### 1.7.6. Delete
+
+
 
 ## 2. Directories
 
@@ -76,9 +274,59 @@ File and Directory Management
 
 ### 2.2. Creating directories
 
+```bash
+# man 2 mkdir
+```
+
 ### 2.3. Removing directories
 
 ### 2.4. Reading a directory's content
+
+```bash
+# man 2 stat
+```
+
+The `stat()` system call, along with `fstat()`, and `lstat()`
+
+### 2.5. Mounting a filesystem
+
+A filesystem has to be mounted to the root directory structure in memory, prior accessing a file/folder on that particular filesystem.
+
+The process of mounting is synonymous to creating a link in kernel-space from a directory in the root filesystem to the destination filesystem, by placing a pointer to the root inode of the destination filesystem in the dentry structure of the source filesystem. (Oh GAWD!)
+
+The process of mounting a filesystem can be described as:
+
+  * The kernel is passed the name of the device and the mount-point, through the `mount()` syscall.
+  * The filesystem structure/signature is read by the kernel to identify the filesystem.
+  * The appropriate filesystem driver module is loaded in memory by the kernel.
+  * An entry is made in the kernel mount table that links the mount point, the device file, and the filesystem driver.
+
+* To see the list of mounted filesystems, use:
+
+```bash
+# cat /proc/mounts
+# cat /etc/mtab
+```
+
+* To see the filesystems supported by the kernel (as per the modules loaded), use:
+
+```bash
+# cat /proc/filesystems
+```
+
+## 2.6. Directory implementations
+
+### 2.6.1. Linked list
+
+### 2.6.2. Hash table
+
+## 2.7. Directory Entry cache (dentry cache)
+
+Listing the contents of folders involves reading the directory entry structure of the folder.
+
+This is usually an expensive operation, and thus the details returned are cached in memory. This cache is called the `dentry` cache.
+
+Dentry cache is a part of the overall cache maintained by the kernel.
 
 ## 3. Links
 
@@ -104,13 +352,28 @@ File and Directory Management
 
 ### 6.2. Mandatory data structures
 
+VFS requires the filesystems to provide a few mandatory data structures in order to work with them.
+
+Any filesystems that wants to work on Linux has to export these data structures to the VFS layer. Four important objects and a set of operations for each objects are mandatory to work with VFS.
+
+They are:
+
+* Inode object
+* Dentry object
+* Superblock object
+* File object
+
+The filesystems are not required to implement the same structure within the filesystems, but only export these functions to VFS. These functions should map the internal filesystem layout to the operations VFS expects from the filesystems.
+
 #### 6.2.1. inode object
 
-The `inode` object represents an individual file or directory.
+The `inode` object represents an individual file or directory. Accessing an inode object access the file.
 
 #### 6.2.2. superblock object
 
 The `superblock` object represents an entire filesystem. It carries information about the filesystem.
+
+Ho
 
 #### 6.2.3. dentry object
 
@@ -159,6 +422,25 @@ The main job of a CPU Scheduler boils down to two specific operations.
 * Merging
 * Sorting
 
+I/O schedulers can be changed/set for each block devices on the machine.
+
+* To check the current scheduler for a disk, use:
+
+```bash
+# cat /sys/block/<disk>/queue/scheduler
+```
+
+* To change the scheduler, echo the scheduler name to the file.
+
+```bash
+# cat /sys/block/vda/queue/scheduler
+[mq-deadline] kyber none
+# echo "kyber" > /sys/block/vda/queue/scheduler
+
+# cat /sys/block/vda/queue/scheduler
+mq-deadline [kyber] none
+```
+
 ### 15.1. Merging
 
 Merging is the process of taking two or more I/O adjacent requests and combining them into a single I/O request.
@@ -195,12 +477,31 @@ Since the default behaviour of Merging and Sorting does not cut for proper sched
 
 The Linus Scheduler used the same Merge/Sort algorithms, but came upon an improvement by introducing another list which was sorted based on the request time.
 
+It served the requests from the main queue, but takes a look at the request queue to see if there are any pending requests waiting for more than a threshold time period. If so, it stops serving the main queue and serves the pending I/O requests.
+
+This was better than basic sorting/merging where the requests for higher address locations were not serviced in the same priority as lower address locations. But this was still not perfect since the requests for higher sector addresses still had to wait the threshold time the scheduler checks the pending queue.
 
 #### 15.3.2. The Deadline Scheduler
+
+The Deadline scheduler works with a main queue which is sorted as FIFO (First In First Out). But it parallely maintains two separate queues, one for read I/O requests and another for write I/O requests.
+
+The read FIFO queue has a deadline threshold expiration value of **500 milliseconds**, whereas the write FIFO queue has a deadline of **5 seconds**.
+
+The Deadline scheduler starts off by scheduling the requests from the main queue. Once any I/O requests in either of the read and write queue hits their threshold value of 500 ms or 5 s, the scheduler serves that specific request.
 
 #### 15.3.3. The Anticipatory Scheduler
 
 #### 15.3.4. The CFQ I/O Scheduler (Completely-Fair-Queuing)
+
+The CFQ I/O scheduler is the default scheduler on Linux machines.
+
+It has a queue for each of the processes on the machine, and each queue contain both read and write requests. ie. CFQ does not maintain a separate queue for read and write requests.
+
+Each queue is assigned a time slice, and the scheduler goes to each queue in a round-robin fashion serving the read and write requests in the respective queues. It moves to the next process queue once the threshold value hits.
+
+If there are no requests for a process, it waits for 10ms to see if anything comes up, and then moves on to the next queue.
+
+Due to this approach, the CFQ I/O scheduler is fair to all processes, by giving the same time slice for execution.
 
 #### 15.3.5. The Noop I/O Scheduler
 * The most basic of all I/O schedulers.
