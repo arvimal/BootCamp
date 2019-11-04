@@ -18,6 +18,9 @@
 > This can be checked using:
 >   # git branch
 >   # cat .git/HEAD
+>
+
+
 ---
 | Command |  Operation |
 |----------| ---------- |
@@ -29,3 +32,7 @@
 | git diff HEAD | Show changes between working area and HEAD |
 | git remote add origin https://github.com/my_code | Set the origin/remote to github |
 | git push -u origin master | Push the `master` to `origin` |
+
+
+### References:
+1. https://stackoverflow.com/questions/2304087/what-is-head-in-git
