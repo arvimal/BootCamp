@@ -94,4 +94,10 @@
   * Similar to `dig`
   * Can use to perform DNSSEC (DNS Security Extensions) validation
 * New tool: `mdig`
-  *
+  * Sends multiple queries and wait for responses.
+  * `dig` used to send one query and wait for reply before sending the next.
+* `named` service checks for other named processes before startup.
+* Smaller size in zone transfers, reduces network bandwidth.
+* In RHEL8, `nslookup` and `host` ignores responses from name servers without recursion set.
+  * The BIND version in RHEL7 used to allow such responses.
+  * In RHEL8, the name lookup
