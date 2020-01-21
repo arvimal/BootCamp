@@ -104,6 +104,7 @@
 
 ## 7. Networking
 
+### 7.1. Utilities
 * In RHEL8, `ifup` and `ifdown` calls `nmcli` in the backend.
   * Hence, NetworkManager should be running for `ifup` and `ifdown` to work.
 * The legacy scripts are still available, in the package `network-scripts`
@@ -117,11 +118,27 @@
 # update-alternatives --config ifup
 ```
 
+### 7.2. NetworkManager
 * NetworkManager in RHEL8, now supports both the `dhclient` plugin and `internal` plugin.
   * In RHEL7, NetworkManager only supported the `internal` plugin.
 
+**NOTE**: Refer the `NetworkManager` page from ArchLinux, for more info on the same.
 
+![NetworkManager plugins](images/NetworkManager-plugin.png)
 
-NOTE: Refer the `NetworkManager` page from ArchLinux, for more info on the same.
+* `NetworkManager-config-server` is only installed in the `Server` and `Server with GUI` install profiles
+  * Install it manually, if required, and if on a different install profile.
+  * The `NetworkManager-config-server` adds a NetworkManager configuration file to make it behave more like the legacy "network" service.
+  * It stops NetworkManager from automatically running DHCP on unconfigured ethernet devices
+  * It also allows connections with static IP addresses to be brought up on ethernet devices with no carrier.
+  * This package is intended to be installed by default for server deployments.
 
-![images/NetworkManager-plugin.png]
+### 7.3. IPTables and NFTables
+
+* nfbtables replaces the following tools in RHEL8
+  * iptables
+  * ip6tables
+  * arptables
+  * ebtables
+
+* Advantages
