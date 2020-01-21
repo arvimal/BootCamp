@@ -101,3 +101,27 @@
 * In RHEL8, `nslookup` and `host` ignores responses from name servers without recursion set.
   * The BIND version in RHEL7 used to allow such responses.
   * In RHEL8, the name lookup
+
+## 7. Networking
+
+* In RHEL8, `ifup` and `ifdown` calls `nmcli` in the backend.
+  * Hence, NetworkManager should be running for `ifup` and `ifdown` to work.
+* The legacy scripts are still available, in the package `network-scripts`
+  * This is not installed by default.
+  * This also provides the legacy version of the `network` service init script.
+  * The `network` service is enabled by default, once the package is installed.
+  * If `network-scripts` are installed along NetworkManager, `network-scripts` takes precedence.
+  * If both are installed, and the administrator wants to switch to NetworkManager temporarily, use:
+
+```bash
+# update-alternatives --config ifup
+```
+
+* NetworkManager in RHEL8, now supports both the `dhclient` plugin and `internal` plugin.
+  * In RHEL7, NetworkManager only supported the `internal` plugin.
+
+
+
+NOTE: Refer the `NetworkManager` page from ArchLinux, for more info on the same.
+
+![images/NetworkManager-plugin.png]
