@@ -187,3 +187,24 @@ add table ip raw
   * Remote Direct Memory Access (RDMA) controller
   * Process number controller
   * Writeback controller
+* bpftool (packaged as bpftool)
+
+* Unavailable modules (and support)
+  * `fcoe.ko`
+  * `e1000` (`e1000e` is available)
+  * `tulip`
+
+## 9. Filesystems
+
+* `btrfs` removed
+  * `btrfs.ko` module
+  * `btrfs-progs` package
+  * `snapper` package
+
+* XFS supports shared Copy-On-Write
+  * This enables it to share the common data blocks between multiple files.
+  * Updating any one file breaks the link of that file to the common data blocks and a new copy is created.
+  * Shared COW is fast and space-efficient
+  * RHEL7 can only mount XFS filesystems with shared COW, in read-only mode.
+
+* EXT4 supports checksums on filesystem metadata
