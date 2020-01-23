@@ -147,3 +147,43 @@
   * New rules applied automatically
   * Possible to debug and trace using `nftrace` ruleset and `nft` tool
   * API for third-party applications (libnftables, libmnl libraries)
+
+* In RHEL8, the functionality of `ebtables` is in the `iptables-ebtables` package.
+  * `iptables-ebtables` is a reimplementation based on nftables specifics.
+  * Most of the output adheres to the old `ebtables` utility.
+
+* The `iptables-translate` and `ip6tables-translate` help to convert existing ebtables rules to nftable equivalent.
+
+* The existing iptables rules can also be converted to nftables in a single go.
+  * This is made possible by converting a dump of the existing iptables rules.
+
+```bash
+# Dump all the existing iptables rules to a text file
+[root@rhel8 ~]# iptables-save > d.dump
+
+# Translate the contents of the text file to nftables format
+[root@rhel8 ~]# iptables-restore-translate -f d.dump
+# Translated by iptables-restore-translate v1.8.2 on Thu Jan 23 07:20:08 2020
+add table ip filter
+add chain ip filter INPUT { type filter hook input priority 0; policy accept; }
+add chain ip filter FORWARD { type filter hook forward priority 0; policy accept; }
+add chain ip filter OUTPUT { type filter hook output priority 0; policy accept; }
+add table ip security
+add chain ip security INPUT { type filter hook input priority 0; policy accept; }
+add chain ip security FORWARD { type filter hook forward priority 0; policy accept; }
+add chain ip security OUTPUT { type filter hook output priority 0; policy accept; }
+add table ip raw
+...
+....
+```
+
+## 8. Kernel
+
+* CGroup v2 available as a tech-preview
+* CGroup v2 supports the following controllers to control resource usage.
+  * CPU controller
+  * Memory controller
+  * I/O controller
+  * Remote Direct Memory Access (RDMA) controller
+  * Process number controller
+  * Writeback controller
