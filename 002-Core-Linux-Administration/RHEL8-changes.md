@@ -207,4 +207,10 @@ add table ip raw
   * Shared COW is fast and space-efficient
   * RHEL7 can only mount XFS filesystems with shared COW, in read-only mode.
 
-* EXT4 supports checksums on filesystem metadata
+* EXT4 supports checksums on filesystem metadata.
+  * This ensures quick verification of filesystem integrity.
+
+* NFS configuration moved from `/etc/sysconfig/nfs` to `/etc/nfs.conf`.
+  * The configuration syntax differs from the previous format.
+  * RHEL8 automatically converts /etc/sysconfig/nfs to /etc/nfs.conf while upgrading from RHEL7.
+  *
