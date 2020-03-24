@@ -1,6 +1,6 @@
 # Systemd
 
-## Introduction
+## 1. Introduction
 
 Systemd is an initialization system for Linux, mostly replacing the traditional `init`.
 
@@ -13,9 +13,9 @@ Some of the previous init systems include:
 3. [Upstart](http://upstart.ubuntu.com/)
 4. [Systemd](https://systemd.io/)
 
-## Units and Unit files
+## 2. Units and Unit files
 
-### Units
+### 2.1. Units
 
 Any entity managed by Systemd is referred to as a `Unit`.
 
@@ -29,7 +29,7 @@ Hence, a Unit can be any of the following:
     * A swap file or a partition
     * etc..
 
-### Unit files
+### 2.2. Unit files
 
 A unit file controls the behavior of a unit in systemd.
 
