@@ -1,4 +1,13 @@
 ---
+# Example on specifying a variable which is not defined at all in the playbooks.
+# In this case, `build_id` is a variable that's only introduced when the playbook is called from CLI.
+# It is not defined anywhere within var files or the playbooks.
+# Usage:
+# 1. Without `--build_id`
+# ansible-playbook -i <hostname>, block_with_when.yml 
+# 2. With `--build_id`
+# ansible-playbook -i <hostname>, block_with_when.yml --extra-vars="build_id=100"
+
 - name: Enabling extra variables on command line with `--extra-vars`
   hosts: montypython
   gather_facts: no
