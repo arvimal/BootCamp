@@ -1,0 +1,27 @@
+---
+- name: Enabling extra variables on command line with `--extra-vars`
+  hosts: montypython
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: "Stop XINETD if BUILD_ID is not defined"
+      block:
+        - debug:
+            msg: "Check if BUILD_ID is NOT defined"
+        - name: "Stop Xinetd systemd service"
+          systemd:
+            name: xinetd.service
+            state: stopped
+      when: build_id is not defined
+
+    - name: "Testing is BUILD_ID is defined"
+      block:
+        - debug:
+            msg: "Check if BUILD_ID is defined"
+        - name: "Start Xinetd systemd service"
+          systemd:
+            name: xinetd.service
+            state: started
+      when: build_id is defined
+...
